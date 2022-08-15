@@ -1,0 +1,36 @@
+add_namespace = SSW_ACO
+country_event = {
+	id = SSW_ACO.1
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event SSW_ACO.1"
+	}
+	title = SSW_ACO.1.t
+	desc = SSW_ACO.1.desc
+	picture = GFX
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = SSW_ACO.1.a
+		ai_chance = {
+			factor = 98
+		}
+	}
+}
+
+country_event = {
+	id = SSW_ACO.2
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event SSW_ACO.1"
+	}
+	title = SSW_ACO.2.t
+	desc = SSW_ACO.2.desc
+	picture = GFX
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = SSW_ACO.2.a
+		ai_chance = {
+			factor = 98
+		}
+	}
+}

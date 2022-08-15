@@ -4,9 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node ./src/main.ts"
+    "start": "ts-node ./src/main.ts",
+    "gen-parser": "nearleyc clausewitz.ne -o clausewitz.js"
   },
   "devDependencies": {
+    "@types/nearley": "^2.11.2",
+    "@types/node": "^18.7.2",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.21.0",
@@ -15,6 +18,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "jomini": "^0.7.0"
+    "jomini": "^0.7.0",
+    "nearley": "^2.20.1"
   }
 }
