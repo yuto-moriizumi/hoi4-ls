@@ -23,7 +23,7 @@ async function main() {
   const grammar = require("../clausewitz.js");
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
   // eslint-disable-next-line no-useless-escape
-  parser.feed("add_namespace = SSW_ACO");
+  parser.feed("id = SSW_ACO.1 id = SSW_ACO.2");
   console.dir(parser.results, { depth: null });
 }
 

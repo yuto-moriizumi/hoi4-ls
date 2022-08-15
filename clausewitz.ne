@@ -16,7 +16,7 @@ const lexer = moo.compile({
 %}
 @lexer lexer
 
-input -> _ pairs _  {% (d) => d[1] %}
+root -> _ pairs _  {% (d) => d[1] %}
 
 value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %} | array {% id %} | object {% id %}
 
@@ -26,7 +26,7 @@ unquoted -> %unquoted {% (d) => d[0].value %}
 boolean -> "yes" {% () => true %} | "no" {% () => false %}
 
 object -> "{" _ "}" {% () => {} %}
-    | "{" _ pairs _ "}" {% (d) => d[2] %}
+    | "{" root "}" {% (d) => d[1] %}
 
 array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
@@ -40,11 +40,11 @@ _ -> null | %space {% () => null %}
 @{%
 
 function extractPair(kv, output) {
-    if(kv[0]) { output[kv[0]] = kv[1]; }
+    if(kv[0]) { output.push([kv[0], kv[1]]); }
 }
 
 function extractPairs(d) {
-    let output = {};
+    let output = [];
     extractPair(d[0], output);
     for (let i in d[1]) {
         extractPair(d[1][i][1], output);

@@ -21,27 +21,15 @@ const lexer = moo.compile({
 
 
 function extractPair(kv, output) {
-    if(kv[0]) { output[kv[0]] = kv[1]; }
+    if(kv[0]) { output.push([kv[0], kv[1]]); }
 }
 
 function extractPairs(d) {
-    let output = {};
+    let output = [];
     extractPair(d[0], output);
     for (let i in d[1]) {
         extractPair(d[1][i][1], output);
     }
-    return output;
-}
-
-function extractObject(d) {
-    let output = {};
-
-    extractPair(d[2], output);
-
-    for (let i in d[3]) {
-        extractPair(d[3][i][3], output);
-    }
-
     return output;
 }
 
@@ -58,7 +46,7 @@ function extractArray(d) {
 var grammar = {
     Lexer: lexer,
     ParserRules: [
-    {"name": "input", "symbols": ["_", "pairs", "_"], "postprocess": (d) => d[1]},
+    {"name": "root", "symbols": ["_", "pairs", "_"], "postprocess": (d) => d[1]},
     {"name": "value", "symbols": ["number"], "postprocess": id},
     {"name": "value", "symbols": ["boolean"], "postprocess": id},
     {"name": "value", "symbols": ["quoted"], "postprocess": id},
@@ -71,7 +59,7 @@ var grammar = {
     {"name": "boolean", "symbols": [{"literal":"yes"}], "postprocess": () => true},
     {"name": "boolean", "symbols": [{"literal":"no"}], "postprocess": () => false},
     {"name": "object", "symbols": [{"literal":"{"}, "_", {"literal":"}"}], "postprocess": () => {}},
-    {"name": "object", "symbols": [{"literal":"{"}, "_", "pairs", "_", {"literal":"}"}], "postprocess": (d) => d[2]},
+    {"name": "object", "symbols": [{"literal":"{"}, "root", {"literal":"}"}], "postprocess": (d) => d[1]},
     {"name": "array$ebnf$1", "symbols": []},
     {"name": "array$ebnf$1$subexpression$1", "symbols": ["_", {"literal":","}, "_", "value"]},
     {"name": "array$ebnf$1", "symbols": ["array$ebnf$1", "array$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
@@ -85,7 +73,7 @@ var grammar = {
     {"name": "_", "symbols": []},
     {"name": "_", "symbols": [(lexer.has("space") ? {type: "space"} : space)], "postprocess": () => null}
 ]
-  , ParserStart: "input"
+  , ParserStart: "root"
 }
 if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
    module.exports = grammar;
