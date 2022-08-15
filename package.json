@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "jomini": "^0.7.0",
+    "moo": "^0.5.1",
     "nearley": "^2.20.1"
   }
 }

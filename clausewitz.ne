@@ -1,19 +1,65 @@
-input -> value  {% id %}
+@{%
+const moo = require('moo');
+const lexer = moo.compile({
+    space: {match: /\s+/, lineBreaks: true},
+    number: /-?(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?\b/,
+    quoted: /"(?:\\["bfnrt\/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
+    '{': '{',
+    '}': '}',
+    '[': '[',
+    ']': ']',
+    '=': '=',
+    yes: 'yes',
+    no: 'no',
+    unquoted: /(?:[^"\\\n\s])+/,
+});
+%}
+@lexer lexer
 
-value -> number {% id %} | boolean {% id %} | quoted {% id %} | standard_characters {% (data, _, reject) => data[0] === "yes" ? reject : `"${data[0]}"` %} | array {% id %}
+input -> _ pairs _  {% (d) => d[1] %}
 
-number -> digits "." digits {% (data) => Number(data.join("")) %} | digits {% (data) => Number(data.join("")) %}
-digits -> digit {% id %} | digit digits {% (data) => Number(data.join("")) %}
-digit -> [0-9] {% id %}
+value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %} | array {% id %} | object {% id %}
 
+number -> %number {% (d) => parseFloat(d[0].value) %}
+quoted -> %quoted {% (d) => JSON.parse(d[0].value) %}
+unquoted -> %unquoted {% (d) => d[0].value %}
 boolean -> "yes" {% () => true %} | "no" {% () => false %}
 
-quoted -> "\"" any_characters "\"" {% (data) => data[1] %}
-any_characters -> any_character {% id %} | any_character any_characters {% (data) => data[0] + data[1] %}
-any_character -> [^\"]
+object -> "{" _ "}" {% () => {} %}
+    | "{" _ pairs _ "}" {% (d) => d[2] %}
 
-standard_characters -> standard_character {% id %} | standard_character standard_characters {% (data) => data[0] + data[1] %}
-standard_character -> [a-zA-Z]
+array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
-array -> "[" array_items "]" {% (data) => data[1] %}
-array_items -> value {% (data) => [data[0]] %} | value "," array_items {% (data) => [data[0], ...data[2]] %}
+pair -> key _ "=" _ value {% (d) => [d[0], d[4]] %}
+pairs -> pair (%space pair):* {% extractPairs %}
+
+key -> unquoted {% id %}
+
+_ -> null | %space {% () => null %}
+
+@{%
+
+function extractPair(kv, output) {
+    if(kv[0]) { output[kv[0]] = kv[1]; }
+}
+
+function extractPairs(d) {
+    let output = {};
+    extractPair(d[0], output);
+    for (let i in d[1]) {
+        extractPair(d[1][i][1], output);
+    }
+    return output;
+}
+
+function extractArray(d) {
+    let output = [d[2]];
+
+    for (let i in d[3]) {
+        output.push(d[3][i][3]);
+    }
+
+    return output;
+}
+
+%}

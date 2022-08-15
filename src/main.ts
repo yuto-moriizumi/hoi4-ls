@@ -22,7 +22,8 @@ async function main() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const grammar = require("../clausewitz.js");
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-  parser.feed(`["kind of token",12.3,yes,3]`);
+  // eslint-disable-next-line no-useless-escape
+  parser.feed("add_namespace = SSW_ACO");
   console.dir(parser.results, { depth: null });
 }
 
