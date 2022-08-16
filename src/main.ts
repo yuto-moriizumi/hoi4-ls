@@ -25,10 +25,11 @@ async function main() {
   // // eslint-disable-next-line no-useless-escape
   // parser.feed("id = SSW_ACO.1 id = SSW_ACO.2");
 
-  // const text = fs.readFileSync("ssw_ACO copy.txt").toString();
-  const text = "a = yes"
+  const text = fs.readFileSync("ssw_ACO copy.txt").toString();
+  // const text = fs.readFileSync("ssw_ACO.txt").toString();
+  // const text = "a=yes b=yes c={a=yes}"
   parser.feed(text);
-  console.dir(parser.results, { depth: null });
+  console.dir(parser.results[0], { depth: null });
 }
 
 main();

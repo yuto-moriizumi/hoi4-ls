@@ -11,13 +11,15 @@ const lexer = moo.compile({
     '=': '=',
     yes: 'yes',
     no: 'no',
-    unquoted: /(?:[^"\\\n\s#])+/,
+    unquoted: /(?:[^"\\\n\s#=])+/,
     comment: /#.*$/,
 });
 %}
 @lexer lexer
 
-root -> _ pairs _  {% d=>d[1] %}
+# input -> comments:? root {% (d) => [d[0],d[1]] %}
+
+root -> _ pairs _  {% extractRoot %}
 
 value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %} | array {% id %} | object {% id %}
 
@@ -36,12 +38,14 @@ pairs -> pair (__ pair):* {% extractPairs %}
 
 key -> unquoted {% id %}
 
-# comment -> %comment {% (d) => d[0] %}
+comment -> %comment {% (d) => ["comment", d[0].value] %}
+# comments -> comment comments {% (d) => [d[0], ...d[1]] %}
 
-__ -> %space
-    # | _ comment __ {% extractComments %}
+# inline_comment -> %space comment {% (d) => d[1] %}
 
-_ -> null | __ {% id %}
+_ -> null | %space {% () => null %} | _ comment _ {% () => null %}
+
+__ -> %space {% () => null %} | _ comment _ {% () => null %}
 
 @{%
 
@@ -68,8 +72,8 @@ function extractPairs(d) {
 }
 
 function extractComments(d) {
-    let output = [...d[1]];
-    // if(d[2]) output.push(d[2]);
+    let output = [...d[0]];
+    if(d[1]) output.push(d[1]);
     return output;
 }
 

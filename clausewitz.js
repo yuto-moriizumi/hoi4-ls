@@ -15,7 +15,7 @@ const lexer = moo.compile({
     '=': '=',
     yes: 'yes',
     no: 'no',
-    unquoted: /(?:[^"\\\n\s#])+/,
+    unquoted: /(?:[^"\\\n\s#=])+/,
     comment: /#.*$/,
 });
 
@@ -44,8 +44,8 @@ function extractPairs(d) {
 }
 
 function extractComments(d) {
-    let output = [...d[1]];
-    // if(d[2]) output.push(d[2]);
+    let output = [...d[0]];
+    if(d[1]) output.push(d[1]);
     return output;
 }
 
@@ -62,7 +62,7 @@ function extractArray(d) {
 var grammar = {
     Lexer: lexer,
     ParserRules: [
-    {"name": "root", "symbols": ["_", "pairs", "_"], "postprocess": d=>d[1]},
+    {"name": "root", "symbols": ["_", "pairs", "_"], "postprocess": extractRoot},
     {"name": "value", "symbols": ["number"], "postprocess": id},
     {"name": "value", "symbols": ["boolean"], "postprocess": id},
     {"name": "value", "symbols": ["quoted"], "postprocess": id},
@@ -86,9 +86,12 @@ var grammar = {
     {"name": "pairs$ebnf$1", "symbols": ["pairs$ebnf$1", "pairs$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "pairs", "symbols": ["pair", "pairs$ebnf$1"], "postprocess": extractPairs},
     {"name": "key", "symbols": ["unquoted"], "postprocess": id},
-    {"name": "__", "symbols": [(lexer.has("space") ? {type: "space"} : space)]},
+    {"name": "comment", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment)], "postprocess": (d) => ["comment", d[0].value]},
     {"name": "_", "symbols": []},
-    {"name": "_", "symbols": ["__"], "postprocess": id}
+    {"name": "_", "symbols": [(lexer.has("space") ? {type: "space"} : space)], "postprocess": () => null},
+    {"name": "_", "symbols": ["_", "comment", "_"], "postprocess": () => null},
+    {"name": "__", "symbols": [(lexer.has("space") ? {type: "space"} : space)], "postprocess": () => null},
+    {"name": "__", "symbols": ["_", "comment", "_"], "postprocess": () => null}
 ]
   , ParserStart: "root"
 }
