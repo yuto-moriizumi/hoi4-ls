@@ -33,18 +33,15 @@ object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}
 
 array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
-pair -> key _ "=" _ value {% (d) => [d[0], d[4]] %}
+pair -> unquoted _ "=" _ value {% (d) => [d[0], d[4]] %}
 pairs -> pair (__ pair):* {% extractPairs %}
 
-key -> unquoted {% id %}
-
 comment -> %comment {% (d) => ["comment", d[0].value] %}
-# comments -> comment comments {% (d) => [d[0], ...d[1]] %}
 
-# inline_comment -> %space comment {% (d) => d[1] %}
+# Null allowed space
+_ -> null | __ {% () => null %} 
 
-_ -> null | %space {% () => null %} | _ comment _ {% () => null %}
-
+# Non-null space
 __ -> %space {% () => null %} | _ comment _ {% () => null %}
 
 @{%

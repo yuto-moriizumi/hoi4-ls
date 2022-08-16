@@ -88,8 +88,7 @@ var grammar = {
     {"name": "key", "symbols": ["unquoted"], "postprocess": id},
     {"name": "comment", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment)], "postprocess": (d) => ["comment", d[0].value]},
     {"name": "_", "symbols": []},
-    {"name": "_", "symbols": [(lexer.has("space") ? {type: "space"} : space)], "postprocess": () => null},
-    {"name": "_", "symbols": ["_", "comment", "_"], "postprocess": () => null},
+    {"name": "_", "symbols": ["__"], "postprocess": () => null},
     {"name": "__", "symbols": [(lexer.has("space") ? {type: "space"} : space)], "postprocess": () => null},
     {"name": "__", "symbols": ["_", "comment", "_"], "postprocess": () => null}
 ]
