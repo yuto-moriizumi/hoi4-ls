@@ -36,10 +36,10 @@ function extractPair(kv, output) {
 function extractPairs(d) {
     let output = [];
     extractPair(d[0], output);
-    //extractPair(d[1], output);
-    for (let i in d[1]) {
-        extractPair(d[1][i][1], output);
-    }
+    d[1].forEach(e => {
+        if(e[0]) output.push(...e[0]);
+        extractPair(e[1], output);
+    });
     return output;
 }
 

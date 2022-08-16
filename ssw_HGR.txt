@@ -1,0 +1,7270 @@
+add_namespace = ssw_hgr
+country_event = {
+	id = ssw_hgr.0
+	title = ssw_hgr.0.title
+	desc = ssw_hgr.0.desc
+	is_triggered_only = yes
+	option = {
+		name = ssw_hgr.0.a
+		ai_chance = {
+			base = 100
+		}
+		add_war_support = 0.03
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.2
+				days = 5
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ssw_hgr.1
+	title = ssw_hgr.1.title
+	desc = ssw_hgr.1.desc
+	is_triggered_only = yes
+	option = {
+		name = ssw_hgr.1.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = -0.05
+	}
+}
+
+country_event = {
+	id = ssw_hgr.2
+	title = ssw_hgr.2.title
+	desc = ssw_hgr.2.desc
+	is_triggered_only = yes
+	option = {
+		name = ssw_hgr.2.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = -0.1
+	}
+}
+
+country_event = {
+	id = ssw_hgr.3
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.3"
+	}
+	title = ssw_hgr.3.title
+	desc = ssw_hgr.3.desc
+	is_triggered_only = no
+	trigger = {
+		tag = ENG
+		surrender_progress > 0.5
+		is_in_london_agreement = yes
+		has_war_with = GER
+		is_in_faction_with = ITA
+		is_faction_leader = yes
+		ITA = {
+			has_capitulated = yes
+		}
+		has_global_flag = world_war_iii
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 1
+	}
+	option = {
+		name = ssw_hgr.3.a
+		ai_chance = {
+			base = 100
+		}
+		GER = {
+			country_event = {
+				id = ssw_hgr.4
+				days = 1
+			}
+		}
+	}
+	option = {
+		name = ssw_hgr.3.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+country_event = {
+	id = ssw_hgr.4
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.4"
+	}
+	title = ssw_hgr.4.title
+	desc = ssw_hgr.4.desc
+	is_triggered_only = yes
+	option = {
+		name = ssw_hgr.4.a
+		ai_chance = {
+			base = 100
+		}
+		every_country = {
+			limit = {
+				is_in_faction_with = ENG
+				has_war_with = GER
+			}
+			white_peace = GER
+		}
+		hidden_effect = {
+			set_global_flag = ww3_finish
+			if = {
+				limit = {
+					ENG = {
+						is_faction_leader = yes
+					}
+				}
+				ENG = {
+					dismantle_faction = yes
+				}
+			}
+			every_country = {
+				limit = {
+					is_in_london_agreement = yes
+				}
+				leave_london_agreement = yes
+			}
+			every_country = {
+				limit = {
+					is_subject_of = ENG
+				}
+				ENG = {
+					end_puppet = PREV
+				}
+			}
+			every_country = {
+				limit = {
+					is_subject_of = ITA
+				}
+				ITA = {
+					end_puppet = PREV
+				}
+			}
+			ENG = {
+				set_cosmetic_tag = ENG_kingdom
+				set_popularities = {
+					national_fascism = 70
+					authority_despotism = 30
+				}
+				set_politics = {
+					ruling_party = national_fascism
+					elections_allowed = no
+				}
+				add_country_leader_role = {
+					character = ENG_oswald_mosley
+					country_leader = {
+						ideology = national_fascism_ideology
+						traits = {
+						}
+						expire = "1980.12.3"
+					}
+					promote_leader = yes
+				}
+			}
+			NIR = {
+				transfer_state = 119
+			}
+			SCO = {
+				transfer_state = 120
+				transfer_state = 121
+				transfer_state = 133
+				transfer_state = 136
+			}
+			GER = {
+				transfer_state = 39
+				transfer_state = 123
+				add_state_claim = 123
+				annex_country = {
+					target = ITA
+					transfer_troops = no
+				}
+				set_autonomy = {
+					target = NIR
+					autonomous_state = reichskommissariat
+				}
+				set_autonomy = {
+					target = SCO
+					autonomous_state = reichskommissariat
+				}
+			}
+			news_event = {
+				id = ssw_hgr.78
+				hours = 6
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ssw_hgr.5
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.5"
+	}
+	title = ssw_hgr.5.title
+	desc = ssw_hgr.5.desc
+	is_triggered_only = no
+	trigger = {
+		tag = GER
+		surrender_progress > 0.5
+		has_war_with = ENG
+		has_war_with = ITA
+		ENG = {
+			is_in_faction_with = ITA
+			is_in_london_agreement = yes
+		}
+		has_global_flag = world_war_iii
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 1
+	}
+	option = {
+		name = ssw_hgr.5.a
+		ai_chance = {
+			base = 100
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+		ENG = {
+			country_event = {
+				id = ssw_hgr.6
+				days = 1
+			}
+		}
+	}
+	option = {
+		name = ssw_hgr.5.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+country_event = {
+	id = ssw_hgr.6
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.6"
+	}
+	title = ssw_hgr.6.title
+	desc = ssw_hgr.6.desc
+	is_triggered_only = yes
+	option = {
+		name = ssw_hgr.6.a
+		ai_chance = {
+			base = 100
+		}
+		every_country = {
+			limit = {
+				is_in_faction_with = GER
+				has_war_with = ENG
+				has_war_with = ITA
+			}
+			white_peace = ENG
+			white_peace = ITA
+		}
+		hidden_effect = {
+			set_global_flag = ww3_finish
+			if = {
+				limit = {
+					GER = {
+						is_faction_leader = yes
+					}
+				}
+				GER = {
+					dismantle_faction = yes
+				}
+			}
+			every_country = {
+				limit = {
+					is_in_germania_accords = yes
+				}
+				leave_germania_accords = yes
+			}
+			every_country = {
+				limit = {
+					is_subject_of = GER
+					NOT = {
+						tag = BAL
+						tag = CCS
+						tag = DON
+						tag = FIN
+						tag = MOS
+						tag = PET
+						tag = POL
+						tag = RKU
+					}
+				}
+				ENG = {
+					annex_country = {
+						target = PREV
+						transfer_troops = no
+					}
+				}
+			}
+			if = {
+				limit = {
+					SOV = {
+						exists = yes
+					}
+				}
+				SOV = {
+					annex_country = {
+						target = BAL
+						transfer_troops = no
+					}
+					annex_country = {
+						target = CCS
+						transfer_troops = no
+					}
+					annex_country = {
+						target = DON
+						transfer_troops = no
+					}
+					annex_country = {
+						target = FIN
+						transfer_troops = no
+					}
+					annex_country = {
+						target = MOS
+						transfer_troops = no
+					}
+					annex_country = {
+						target = PET
+						transfer_troops = no
+					}
+					annex_country = {
+						target = POL
+						transfer_troops = no
+					}
+					annex_country = {
+						target = RKU
+						transfer_troops = no
+					}
+				}
+			}
+			else = {
+				ENG = {
+					annex_country = {
+						target = BAL
+						transfer_troops = no
+					}
+					annex_country = {
+						target = CCS
+						transfer_troops = no
+					}
+					annex_country = {
+						target = DON
+						transfer_troops = no
+					}
+					annex_country = {
+						target = FIN
+						transfer_troops = no
+					}
+					annex_country = {
+						target = MOS
+						transfer_troops = no
+					}
+					annex_country = {
+						target = PET
+						transfer_troops = no
+					}
+					annex_country = {
+						target = POL
+						transfer_troops = no
+					}
+					annex_country = {
+						target = RKU
+						transfer_troops = no
+					}
+				}
+			}
+			ENG = {
+				transfer_state = 1026
+				transfer_state = 1037
+				add_state_claim = 1026
+				add_state_claim = 1037
+				annex_country = {
+					target = GER
+					transfer_troops = no
+				}
+			}
+			ITA = {
+				transfer_state = 1
+				transfer_state = 102
+				transfer_state = 735
+				transfer_state = 839
+				transfer_state = 939
+				transfer_state = 940
+				add_state_claim = 1
+				add_state_claim = 102
+				add_state_claim = 735
+				add_state_claim = 839
+				add_state_claim = 939
+				add_state_claim = 940
+			}
+			news_event = {
+				id = ssw_hgr.78
+				hours = 6
+			}
+		}
+	}
+}
+
+country_event = {
+	#ゲッベルスの運命
+	id = ssw_hgr.7
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.7"
+	}
+	title = ssw_hgr.7.title
+	desc = ssw_hgr.7.desc
+	is_triggered_only = yes
+	option = {
+		#追放
+		name = ssw_hgr.7.a
+		ai_chance = {
+			base = 50
+		}
+		add_political_power = 100
+		add_stability = 0.05
+		set_global_flag = goebbels_alive
+	}
+	option = {
+		#処刑
+		name = ssw_hgr.7.b
+		ai_chance = {
+			base = 50
+		}
+		add_stability = 0.1
+		set_global_flag = goebbels_dead
+	}
+}
+
+country_event = {
+	#再招集令
+	id = ssw_hgr.8
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.8"
+	}
+	title = ssw_hgr.8.title
+	desc = ssw_hgr.8.desc
+	is_triggered_only = yes
+	option = {
+		#承諾
+		name = ssw_hgr.8.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#これからの方針
+	id = ssw_hgr.9
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.9"
+	}
+	title = ssw_hgr.9.title
+	desc = ssw_hgr.9.desc
+	is_triggered_only = yes
+	option = {
+		#現状維持
+		name = ssw_hgr.9.a
+		ai_chance = {
+			base = 50
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_CONSERVATIVES
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_RADICAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_SCHORNER_COUP
+				}
+			}
+		}
+		complete_national_focus = GER_exercise_power
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.82
+				hours = 6
+			}
+		}
+	}
+	option = {
+		#改革
+		name = ssw_hgr.9.b
+		ai_chance = {
+			base = 50
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_ORIGINAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_THALMANN_COUP
+				}
+			}
+		}
+		complete_national_focus = GER_blow_new_winds
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.81
+				hours = 6
+			}
+		}
+	}
+}
+
+country_event = {
+	#シュペーアとの会談
+	id = ssw_hgr.10
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.10"
+	}
+	title = ssw_hgr.10.title
+	desc = ssw_hgr.10.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.10.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 50
+	}
+}
+
+country_event = {
+	#ユダヤ人政策
+	id = ssw_hgr.11
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.11"
+	}
+	title = ssw_hgr.11.title
+	desc = ssw_hgr.11.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.11.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+		add_stability = -0.05
+	}
+}
+
+country_event = {
+	#ラインの労働者の実態
+	id = ssw_hgr.12
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.12"
+	}
+	title = ssw_hgr.12.title
+	desc = ssw_hgr.12.desc
+	is_triggered_only = yes
+	option = {
+		#仕方ない
+		name = ssw_hgr.12.a
+		ai_chance = {
+			base = 100
+		}
+		add_timed_idea = {
+			idea = hgr_ideas_9
+			days = 120
+		}
+	}
+}
+
+country_event = {
+	#SSの運命
+	id = ssw_hgr.13
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.13"
+	}
+	title = ssw_hgr.13.title
+	desc = ssw_hgr.13.desc
+	is_triggered_only = yes
+	option = {
+		#くたばれ!
+		name = ssw_hgr.13.a
+		ai_chance = {
+			base = 100
+		}
+		add_war_support = 0.05
+	}
+}
+
+country_event = {
+	#シュトラッサーの帰国
+	id = ssw_hgr.14
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.14"
+	}
+	title = ssw_hgr.14.title
+	desc = ssw_hgr.14.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.14.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 50
+	}
+}
+
+country_event = {
+	#総統であり皇帝
+	id = ssw_hgr.15
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.15"
+	}
+	title = ssw_hgr.15.title
+	desc = ssw_hgr.15.desc
+	is_triggered_only = yes
+	option = {
+		#万歳
+		name = ssw_hgr.15.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#ドイツからの特使
+	id = ssw_hgr.16
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.16"
+	}
+	title = ssw_hgr.16.title
+	desc = ssw_hgr.16.desc
+	is_triggered_only = yes
+	option = {
+		#承諾
+		name = ssw_hgr.16.a
+		ai_chance = {
+			base = 50
+		}
+		add_political_power = 50
+		give_military_access = GER
+		GER = {
+			give_military_access = ROOT
+		}
+	}
+	option = {
+		#拒否
+		name = ssw_hgr.16.b
+		ai_chance = {
+			base = 50
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#国境付近の挑発
+	id = ssw_hgr.17
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.17"
+	}
+	title = ssw_hgr.17.title
+	desc = ssw_hgr.17.desc
+	is_triggered_only = yes
+	option = {
+		#ばかめ
+		name = ssw_hgr.17.a
+		ai_chance = {
+			base = 100
+		}
+		add_war_support = 0.03
+		country_event = {
+			id = ssw_hgr.18
+			days = 5
+		}
+	}
+}
+
+country_event = {
+	#対独包囲網
+	id = ssw_hgr.18
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.18"
+	}
+	title = ssw_hgr.18.title
+	desc = ssw_hgr.18.desc
+	is_triggered_only = yes
+	option = {
+		#やりましょう!
+		name = ssw_hgr.18.a
+		ai_chance = {
+			base = 100
+		}
+		ENG = {
+			country_event = {
+				id = ssw_hgr.19
+				days = 1
+			}
+		}
+	}
+}
+
+country_event = {
+	#イタリアからの誘い
+	id = ssw_hgr.19
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.19"
+	}
+	title = ssw_hgr.19.title
+	desc = ssw_hgr.19.desc
+	is_triggered_only = yes
+	option = {
+		#交渉成立
+		name = ssw_hgr.19.a
+		ai_chance = {
+			base = 50
+		}
+		ITA = {
+			country_event = {
+				id = ssw_hgr.20
+				days = 3
+			}
+		}
+	}
+	option = {
+		#交渉失敗
+		name = ssw_hgr.19.b
+		ai_chance = {
+			base = 50
+		}
+		ITA = {
+			country_event = {
+				id = ssw_hgr.21
+				days = 3
+			}
+		}
+	}
+}
+
+country_event = {
+	#交渉成立
+	id = ssw_hgr.20
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.20"
+	}
+	title = ssw_hgr.20.title
+	desc = ssw_hgr.20.desc
+	is_triggered_only = yes
+	option = {
+		#やったぜ
+		name = ssw_hgr.20.a
+		ai_chance = {
+			base = 100
+		}
+		every_country = {
+			limit = {
+				is_in_faction_with = ITA
+			}
+			set_country_flag = italian_supporter
+		}
+		every_country = {
+			limit = {
+				is_in_roma_entente = yes
+			}
+			leave_roma_entente = yes
+		}
+		every_country = {
+			limit = {
+				is_in_commonwealth = yes
+			}
+			leave_commonwealth = yes
+		}
+		if = {
+			limit = {
+				ENG = {
+					is_faction_leader = yes
+				}
+			}
+			ENG = {
+				set_faction_name = london_agreement_faction
+			}
+		}
+		else = {
+			ENG = {
+				create_faction = london_agreement_faction
+			}
+		}
+		if = {
+			limit = {
+				ITA = {
+					is_faction_leader = yes
+				}
+			}
+			ITA = {
+				dismantle_faction = yes
+			}
+		}
+		every_country = {
+			limit = {
+				has_country_flag = italian_supporter
+			}
+			ENG = {
+				add_to_faction = ITA
+				add_to_faction = PREV
+			}
+		}
+		every_country = {
+			limit = {
+				is_in_faction_with = ENG
+			}
+			join_to_london_agreement = yes
+			ENG = {
+				join_to_london_agreement = yes
+			}
+		}
+	}
+}
+
+country_event = {
+	#交渉失敗
+	id = ssw_hgr.21
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.21"
+	}
+	title = ssw_hgr.21.title
+	desc = ssw_hgr.21.desc
+	is_triggered_only = yes
+	option = {
+		#くそ
+		name = ssw_hgr.21.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 50
+	}
+}
+
+country_event = {
+	#マルティン・ボルマンとの会談
+	id = ssw_hgr.22
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.22"
+	}
+	title = ssw_hgr.22.title
+	desc = ssw_hgr.22.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.22.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#ルドルフ・ヘスの釈放
+	id = ssw_hgr.23
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.23"
+	}
+	title = ssw_hgr.23.title
+	desc = ssw_hgr.23.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.23.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#シェルナー元帥との取引
+	id = ssw_hgr.24
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.24"
+	}
+	title = ssw_hgr.24.title
+	desc = ssw_hgr.24.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.24.a
+		ai_chance = {
+			base = 100
+		}
+		add_war_support = 0.05
+	}
+}
+
+country_event = {
+	#シーラッハとの面会
+	id = ssw_hgr.25
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.25"
+	}
+	title = ssw_hgr.25.title
+	desc = ssw_hgr.25.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.25.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#改革の天才
+	id = ssw_hgr.26
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.26"
+	}
+	title = ssw_hgr.26.title
+	desc = ssw_hgr.26.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.26.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#シュパイデルとの接触
+	id = ssw_hgr.27
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.27"
+	}
+	title = ssw_hgr.27.title
+	desc = ssw_hgr.27.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.27.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 100
+	}
+}
+
+country_event = {
+	#共産主義最後の日
+	id = ssw_hgr.28
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.28"
+	}
+	title = ssw_hgr.28.title
+	desc = ssw_hgr.28.desc
+	is_triggered_only = yes
+	option = {
+		#やったぜ
+		name = ssw_hgr.28.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.07
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.29
+				days = 170
+			}
+		}
+	}
+}
+
+country_event = {
+	#ブーヘンヴァルト収容所爆破事件
+	id = ssw_hgr.29
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.29"
+	}
+	title = ssw_hgr.29.title
+	desc = ssw_hgr.29.desc
+	is_triggered_only = yes
+	option = {
+		#捕まえろ
+		name = ssw_hgr.29.a
+		ai_chance = {
+			base = 70
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_THALMANN_COUP
+				}
+			}
+		}
+		add_stability = -0.05
+	}
+	option = {
+		#なんとかなるべ
+		name = ssw_hgr.29.b
+		ai_chance = {
+			base = 30
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_ORIGINAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_CONSERVATIVES
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_RADICAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_SCHORNER_COUP
+				}
+			}
+		}
+		add_stability = -0.1
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.30
+				days = 7
+			}
+		}
+	}
+}
+
+country_event = {
+	#不穏な動き
+	id = ssw_hgr.30
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.30"
+	}
+	title = ssw_hgr.30.title
+	desc = ssw_hgr.30.desc
+	is_triggered_only = yes
+	option = {
+		#統制
+		name = ssw_hgr.30.a
+		ai_chance = {
+			base = 70
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_THALMANN_COUP
+				}
+			}
+		}
+		add_stability = -0.1
+		add_political_power = 100
+	}
+	option = {
+		#気にするな
+		name = ssw_hgr.30.b
+		ai_chance = {
+			base = 30
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_ORIGINAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_CONSERVATIVES
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_RADICAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_SCHORNER_COUP
+				}
+			}
+		}
+		add_stability = -0.18
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.31
+				days = 7
+			}
+		}
+	}
+}
+
+country_event = {
+	#NSDAP左派の指導者が交代
+	id = ssw_hgr.31
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.31"
+	}
+	title = ssw_hgr.31.title
+	desc = ssw_hgr.31.desc
+	is_triggered_only = yes
+	option = {
+		#捕まえろ
+		name = ssw_hgr.31.a
+		ai_chance = {
+			base = 0
+		}
+		add_stability = -0.2
+		add_political_power = 50
+	}
+	option = {
+		#なんてこった
+		name = ssw_hgr.31.b
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.32
+				days = 28
+			}
+		}
+	}
+}
+
+country_event = {
+	#左派のクーデター
+	id = ssw_hgr.32
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.32"
+	}
+	title = ssw_hgr.32.title
+	desc = ssw_hgr.32.desc
+	is_triggered_only = yes
+	option = {
+		#捕まえろ
+		name = ssw_hgr.32.a
+		ai_chance = {
+			base = 0
+		}
+		add_stability = -0.3
+	}
+	option = {
+		#負けた
+		name = ssw_hgr.32.b
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			NOT = {
+				has_country_flag = conservative_revolt
+			}
+		}
+		add_stability = -0.3
+		set_politics = {
+			ruling_party = classical_communism
+			elections_allowed = no
+		}
+		add_popularity = {
+			ideology = classical_communism
+			popularity = 0.6
+		}
+		retire_ideology_leader = classical_communism
+		GER_wilhelm_ackermann = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = totalitarianism_ideology
+					expire = "1965.1.1"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.33
+				days = 50
+			}
+		}
+	}
+}
+
+country_event = {
+	#悪夢
+	id = ssw_hgr.33
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.33"
+	}
+	title = ssw_hgr.33.title
+	desc = ssw_hgr.33.desc
+	is_triggered_only = yes
+	trigger = {
+		NOT = {
+			has_country_flag = conservative_revolt
+		}
+	}
+	option = {
+		#悲しぃなぁ
+		name = ssw_hgr.33.a
+		ai_chance = {
+			base = 100
+		}
+		add_popularity = {
+			ideology = classical_communism
+			popularity = 0.05
+		}
+		retire_ideology_leader = classical_communism
+		GER_ernst_thalmann = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = totalitarianism_ideology
+					expire = "1965.1.1"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+		set_party_name = {
+			ideology = classical_communism
+			long_name = GER_end_of_nsdap_party_kpd_long
+			name = GER_end_of_nsdap_party_kpd
+		}
+		set_country_flag = thalmann_revolt
+		mark_focus_tree_layout_dirty = yes
+		complete_national_focus = GER_jigoku_kara_yomigaetta_otoko
+		hidden_effect = {
+			GER_hermann_goring = {
+				remove_country_leader_role = {
+					ideology = authority_democracy_ideology
+				}
+				remove_country_leader_role = {
+					ideology = reform_national_socialism_ideology
+				}
+				remove_country_leader_role = {
+					ideology = national_socialism_ideology
+				}
+				remove_country_leader_role = {
+					ideology = neo_national_socialism_idology
+				}
+			}
+			every_country = {
+				limit = {
+					is_subject_of = GER
+					has_socialist_government = no
+				}
+				GER = {
+					end_puppet = PREV
+					create_wargoal = {
+						type = annex_everything
+						target = PREV
+					}
+				}
+				leave_germania_accords = yes
+				leave_faction = yes
+			}
+			news_event = {
+				id = ssw_hgr.34
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_national_syndicalist_republic
+		}
+	}
+}
+
+news_event = {
+	#エルンスト・テールマンのクーデター
+	id = ssw_hgr.34
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.34"
+	}
+	title = ssw_hgr.34.title
+	desc = ssw_hgr.34.desc
+	is_triggered_only = yes
+	major = yes
+	option = {
+		#欧州の新秩序
+		name = ssw_hgr.34.a
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = no
+		}
+		set_country_flag = ssw_superevent_GER_devil_in_the_west
+	}
+	option = {
+		#欧州の新秩序(AI)
+		name = ssw_hgr.34.b
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = yes
+		}
+	}
+}
+
+country_event = {
+	#不穏な噂
+	id = ssw_hgr.35
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.35"
+	}
+	title = ssw_hgr.35.title
+	desc = ssw_hgr.35.desc
+	is_triggered_only = yes
+	option = {
+		#動け
+		name = ssw_hgr.35.a
+		ai_chance = {
+			base = 70
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_SCHORNER_COUP
+				}
+			}
+		}
+		add_stability = -0.05
+	}
+	option = {
+		#無視
+		name = ssw_hgr.35.b
+		ai_chance = {
+			base = 30
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_ORIGINAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_CONSERVATIVES
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_RADICAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_THALMANN_COUP
+				}
+			}
+		}
+		add_stability = -0.1
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.36
+				days = 50
+			}
+		}
+	}
+}
+
+country_event = {
+	#軍部の陰謀
+	id = ssw_hgr.36
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.36"
+	}
+	title = ssw_hgr.36.title
+	desc = ssw_hgr.36.desc
+	is_triggered_only = yes
+	option = {
+		#取り締まれ
+		name = ssw_hgr.36.a
+		ai_chance = {
+			base = 70
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_SCHORNER_COUP
+				}
+			}
+		}
+		add_stability = -0.1
+		add_political_power = 100
+	}
+	option = {
+		#信用する
+		name = ssw_hgr.36.b
+		ai_chance = {
+			base = 30
+		}
+		trigger = {
+			NOT = {
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_ORIGINAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_CONSERVATIVES
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_REFORM_RADICAL
+				}
+				has_game_rule = {
+					rule = ai_country_route_HGR
+					option = AI_COUNTRY_ROUTE_HGR_THALMANN_COUP
+				}
+			}
+		}
+		add_stability = -0.18
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.37
+				days = 67
+			}
+		}
+	}
+}
+
+country_event = {
+	#シェルナーの動き
+	id = ssw_hgr.37
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.37"
+	}
+	title = ssw_hgr.37.title
+	desc = ssw_hgr.37.desc
+	is_triggered_only = yes
+	trigger = {
+		has_socialist_government = no
+	}
+	option = {
+		#ジーク・ハイル
+		name = ssw_hgr.37.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = -0.5
+		set_politics = {
+			ruling_party = national_socialism
+			elections_allowed = no
+		}
+		add_popularity = {
+			ideology = national_socialism
+			popularity = 0.7
+		}
+		GER_hermann_goring = {
+			remove_country_leader_role = {
+				ideology = authority_democracy_ideology
+			}
+			remove_country_leader_role = {
+				ideology = reform_national_socialism_ideology
+			}
+			remove_country_leader_role = {
+				ideology = national_socialism_ideology
+			}
+			remove_country_leader_role = {
+				ideology = neo_national_socialism_idology
+			}
+		}
+		add_country_leader_role = {
+			character = GER_ferdinand_schorner
+			country_leader = {
+				ideology = national_socialism_ideology
+				traits = {
+				}
+				expire = "1973.7.2"
+			}
+			promote_leader = yes
+		}
+		set_party_name = {
+			ideology = national_socialism
+			long_name = GER_nsdap_party_military_long
+			name = GER_nsdap_party_military
+		}
+		set_country_flag = conservative_revolt
+		mark_focus_tree_layout_dirty = yes
+		complete_national_focus = GER_doitsu_saidai_no_kyouhu
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.38
+				hours = 6
+			}
+		}
+	}
+}
+
+news_event = {
+	#フェルディナント・シェルナーがドイツを席巻
+	id = ssw_hgr.38
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.38"
+	}
+	title = ssw_hgr.38.title
+	desc = ssw_hgr.38.desc
+	is_triggered_only = yes
+	major = yes
+	option = {
+		#欧州最後の日
+		name = ssw_hgr.38.a
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = no
+		}
+		set_country_flag = ssw_superevent_GER_devil_in_the_west
+	}
+	option = {
+		#欧州最後の日(AI)
+		name = ssw_hgr.38.b
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = yes
+		}
+	}
+}
+
+country_event = {
+	#NSDAPの解散
+	id = ssw_hgr.39
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.39"
+	}
+	title = ssw_hgr.39.title
+	desc = ssw_hgr.39.desc
+	is_triggered_only = yes
+	option = {
+		#万歳
+		name = ssw_hgr.39.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.05
+		set_politics = {
+			ruling_party = social_liberalism
+			elections_allowed = no
+		}
+		add_popularity = {
+			ideology = social_liberalism
+			popularity = 0.05
+		}
+		retire_ideology_leader = social_liberalism
+		GER_franz_von_papen = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = market_liberalism_ideology
+					expire = "1969.5.2"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+		set_country_flag = revive_democratic
+		mark_focus_tree_layout_dirty = yes
+		complete_national_focus = GER_democratic_no_kagaribi
+		hidden_effect = {
+			add_ideas = {
+				hgr_ideas_30
+				hgr_ideas_72
+			}
+			news_event = {
+				id = ssw_hgr.40
+				hours = 6
+			}
+			country_event = {
+				id = ssw_hgr.41
+				days = 100
+			}
+			country_event = {
+				id = ssw_hgr.42
+				days = 70
+			}
+			GER_hermann_goring = {
+				remove_country_leader_role = {
+					ideology = authority_democracy_ideology
+				}
+				remove_country_leader_role = {
+					ideology = reform_national_socialism_ideology
+				}
+				remove_country_leader_role = {
+					ideology = national_socialism_ideology
+				}
+				remove_country_leader_role = {
+					ideology = neo_national_socialism_idology
+				}
+			}
+			set_party_name = {
+				ideology = anarchism
+				long_name = anarchism
+				name = anarchism
+			}
+			set_party_name = {
+				ideology = progressive_communism
+				long_name = progressive_communism
+				name = progressive_communism
+			}
+			set_party_name = {
+				ideology = classical_communism
+				long_name = classical_communism
+				name = classical_communism
+			}
+			set_party_name = {
+				ideology = social_democracy
+				long_name = GER_end_of_nsdap_party_dfp_long
+				name = GER_end_of_nsdap_party_dfp
+			}
+			set_party_name = {
+				ideology = social_liberalism
+				long_name = GER_end_of_nsdap_party_ldpd_long
+				name = GER_end_of_nsdap_party_ldpd
+			}
+			set_party_name = {
+				ideology = social_conservatism
+				long_name = GER_end_of_nsdap_party_cdu_csu_long
+				name = GER_end_of_nsdap_party_cdu_csu
+			}
+			set_party_name = {
+				ideology = authority_democracy
+				long_name = GER_end_of_nsdap_party_dvlp_long
+				name = GER_end_of_nsdap_party_dvlp
+			}
+			set_party_name = {
+				ideology = authority_despotism
+				long_name = authority_despotism
+				name = authority_despotism
+			}
+			set_party_name = {
+				ideology = national_fascism
+				long_name = GER_end_of_nsdap_party_rep_long
+				name = GER_end_of_nsdap_party_rep
+			}
+			set_party_name = {
+				ideology = national_socialism
+				long_name = national_socialism
+				name = national_socialism
+			}
+			set_party_name = {
+				ideology = ultranationalism
+				long_name = ultranationalism
+				name = ultranationalism
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_federal_republic
+		}
+	}
+}
+
+news_event = {
+	#NSDAPの解散
+	id = ssw_hgr.40
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.40"
+	}
+	title = ssw_hgr.40.title
+	desc = ssw_hgr.40.desc
+	is_triggered_only = yes
+	major = yes
+	option = {
+		#万歳
+		name = ssw_hgr.40.a
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = no
+		}
+		set_country_flag = ssw_superevent_GER_last_day_of_NASDAP
+	}
+	option = {
+		#万歳(AI)
+		name = ssw_hgr.40.b
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = yes
+		}
+	}
+}
+
+country_event = {
+	#二大政党の復活
+	id = ssw_hgr.41
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.41"
+	}
+	title = ssw_hgr.41.title
+	desc = ssw_hgr.41.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.41.a
+		ai_chance = {
+			base = 100
+		}
+		if = {
+			limit = {
+				has_idea = hgr_ideas_30
+			}
+			swap_ideas = {
+				remove_idea = hgr_ideas_30
+				add_idea = hgr_ideas_68
+			}
+		}
+		else = {
+			add_ideas = hgr_ideas_68
+		}
+		set_country_flag = lots_of_parties_system
+		mark_focus_tree_layout_dirty = yes
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.43
+				days = 9
+			}
+			set_party_name = {
+				ideology = authority_despotism
+				long_name = GER_end_of_nsdap_party_dnvp_long
+				name = GER_end_of_nsdap_party_dnvp
+			}
+			GER_hermann_goring = {
+				remove_country_leader_role = {
+					ideology = reform_national_socialism_ideology
+				}
+			}
+			GER_otto_von_bismarck_iii = {
+				add_country_leader_role = {
+					country_leader = {
+						ideology = authority_despotism_ideology
+						expire = "1975.12.24"
+						id = -1
+						traits = {
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	#〇〇年の選挙
+	id = ssw_hgr.42
+	immediate = {
+		hidden_effect = {
+			log = "[GetDateText]: [Root.GetName]: event ssw_hgr.42"
+			clear_elections_datas = yes
+			if = {
+				limit = {
+					has_socialist_government = no
+				}
+				country_event = {
+					id = ssw_hgr.42
+					days = 1095
+				}
+			}
+		}
+	}
+	title = ssw_hgr.42.title
+	desc = ssw_hgr.42.desc
+	is_triggered_only = yes
+	option = {
+		#共和党
+		name = ssw_hgr.42.a
+		ai_chance = {
+			base = 20
+		}
+		add_popularity = {
+			ideology = national_fascism
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = national_fascism
+			elections_allowed = no
+		}
+		set_country_flag = republican_party
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.88
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_national_republic
+		}
+	}
+	option = {
+		#祖国党
+		name = ssw_hgr.42.b
+		ai_chance = {
+			base = 20
+		}
+		add_popularity = {
+			ideology = authority_democracy
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = authority_democracy
+			elections_allowed = no
+		}
+		set_country_flag = motherland_party
+		hidden_effect = {
+			GER_albert_speer = {
+				remove_country_leader_role = {
+					ideology = reactionary_ideology
+				}
+			}
+			GER_hermann_goring = {
+				remove_country_leader_role = {
+					ideology = authority_democracy_ideology
+				}
+				remove_country_leader_role = {
+					ideology = reform_national_socialism_ideology
+				}
+				remove_country_leader_role = {
+					ideology = national_socialism_ideology
+				}
+				remove_country_leader_role = {
+					ideology = neo_national_socialism_idology
+				}
+			}
+			add_country_leader_role = {
+				character = GER_albert_speer
+				country_leader = {
+					ideology = reactionary_ideology
+					traits = {
+					}
+					expire = "1981.9.1"
+				}
+				promote_leader = yes
+			}
+			country_event = {
+				id = ssw_hgr.44
+				days = 10
+			}
+			news_event = {
+				id = ssw_hgr.89
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_national_republic
+		}
+	}
+	option = {
+		#CDU/CSU
+		name = ssw_hgr.42.c
+		ai_chance = {
+			base = 20
+		}
+		add_popularity = {
+			ideology = social_conservatism
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = social_conservatism
+			elections_allowed = no
+		}
+		set_country_flag = conservative_party
+		hidden_effect = {
+			GER_hans_speidel = {
+				remove_country_leader_role = {
+					ideology = peasantism_ideology
+				}
+			}
+			 retire_ideology_leader = social_conservatism
+			GER_konrad_adenauer = {
+				add_country_leader_role = {
+					country_leader = {
+						ideology = christian_rightist_democracy_ideology
+						expire = "1967.4.19"
+						id = -1
+						traits = {
+						}
+					}
+				}
+			}
+			country_event = {
+				id = ssw_hgr.45
+				days = 10
+			}
+			news_event = {
+				id = ssw_hgr.90
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_federal_republic
+		}
+	}
+	option = {
+		#自由民主党
+		name = ssw_hgr.42.d
+		ai_chance = {
+			base = 20
+		}
+		add_popularity = {
+			ideology = social_liberalism
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = social_liberalism
+			elections_allowed = no
+		}
+		set_country_flag = market_liberal_party
+		hidden_effect = {
+			retire_ideology_leader = social_liberalism
+			GER_franz_von_papen = {
+				add_country_leader_role = {
+					country_leader = {
+						ideology = market_liberalism_ideology
+						expire = "1969.5.2"
+						id = -1
+						traits = {
+						}
+					}
+				}
+			}
+			country_event = {
+				id = ssw_hgr.46
+				days = 10
+			}
+			news_event = {
+				id = ssw_hgr.91
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_federal_republic
+		}
+	}
+	option = {
+		#進歩党
+		name = ssw_hgr.42.e
+		ai_chance = {
+			base = 20
+		}
+		add_popularity = {
+			ideology = social_democracy
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = social_democracy
+			elections_allowed = no
+		}
+		set_party_name = {
+			ideology = social_democracy
+			long_name = GER_end_of_nsdap_party_dfp_long
+			name = GER_end_of_nsdap_party_dfp
+		}
+		set_country_flag = progressivist_party
+		retire_ideology_leader = social_democracy
+		GER_otto_strasser = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = reformism_ideology
+					expire = "1974.8.27"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.92
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_social_republic
+		}
+	}
+	option = {
+		#社会民主党
+		name = ssw_hgr.42.f
+		ai_chance = {
+			base = 20
+		}
+		trigger = {
+			has_country_flag = lots_of_parties_system
+		}
+		add_popularity = {
+			ideology = social_democracy
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = social_democracy
+			elections_allowed = no
+		}
+		set_party_name = {
+			ideology = social_democracy
+			long_name = GER_end_of_nsdap_party_spd_long
+			name = GER_end_of_nsdap_party_spd
+		}
+		set_country_flag = social_democrat_party
+		retire_ideology_leader = social_democracy
+		GER_helmut_schmidt = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = christian_leftist_democracy_ideology
+					expire = "2015.11.10"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.93
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_federal_republic
+		}
+	}
+	option = {
+		#国家人民党
+		name = ssw_hgr.42.g
+		ai_chance = {
+			base = 20
+		}
+		trigger = {
+			has_country_flag = lots_of_parties_system
+		}
+		add_popularity = {
+			ideology = authority_despotism
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = authority_despotism
+			elections_allowed = no
+		}
+		set_country_flag = monarchist_party
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.94
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_confederate_states
+		}
+	}
+	option = {
+		#共産党
+		name = ssw_hgr.42.h
+		ai_chance = {
+			base = 20
+		}
+		trigger = {
+			has_country_flag = lots_of_parties_system
+			has_country_flag = allowed_kpd
+		}
+		add_popularity = {
+			ideology = classical_communism
+			popularity = 0.6
+		}
+		set_politics = {
+			ruling_party = classical_communism
+			elections_allowed = no
+		}
+		set_country_flag = socialist_party
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.47
+				days = 1095
+			}
+			news_event = {
+				id = ssw_hgr.95
+				hours = 6
+			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = GER_democratic_republic
+		}
+	}
+}
+
+country_event = {
+	#共産党の承認
+	id = ssw_hgr.43
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.43"
+	}
+	title = ssw_hgr.43.title
+	desc = ssw_hgr.43.desc
+	is_triggered_only = yes
+	option = {
+		#認めん!
+		name = ssw_hgr.43.a
+		ai_chance = {
+			base = 0
+		}
+		add_political_power = 77
+	}
+	option = {
+		#よかろう
+		name = ssw_hgr.43.b
+		ai_chance = {
+			base = 100
+		}
+		if = {
+			limit = {
+				has_idea = hgr_ideas_30
+			}
+			swap_ideas = {
+				remove_idea = hgr_ideas_30
+				add_idea = hgr_ideas_31
+			}
+		}
+		else_if = {
+			limit = {
+				has_idea = hgr_ideas_68
+			}
+			swap_ideas = {
+				remove_idea = hgr_ideas_68
+				add_idea = hgr_ideas_31
+			}
+		}
+		else = {
+			add_ideas = hgr_ideas_31
+		}
+		set_country_flag = allowed_kpd
+		mark_focus_tree_layout_dirty = yes
+		set_party_name = {
+			ideology = classical_communism
+			long_name = GER_end_of_nsdap_party_kpd_long
+			name = GER_end_of_nsdap_party_kpd
+		}
+	}
+}
+
+country_event = {
+	#祖国党の総裁
+	id = ssw_hgr.44
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.44"
+	}
+	title = ssw_hgr.44.title
+	desc = ssw_hgr.44.desc
+	is_triggered_only = yes
+	option = {
+		#シュペーア
+		name = ssw_hgr.44.a
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		#ゲーリング
+		name = ssw_hgr.44.b
+		ai_chance = {
+			base = 50
+		}
+		GER_hermann_goring = {
+			remove_country_leader_role = {
+				ideology = authority_democracy_ideology
+			}
+			remove_country_leader_role = {
+				ideology = reform_national_socialism_ideology
+			}
+			remove_country_leader_role = {
+				ideology = national_socialism_ideology
+			}
+			remove_country_leader_role = {
+				ideology = neo_national_socialism_idology
+			}
+		}
+		add_country_leader_role = {
+			character = GER_hermann_goring
+			country_leader = {
+				ideology = authority_democracy_ideology
+				traits = {
+				}
+				expire = "1965.1.1"
+			}
+			promote_leader = yes
+		}
+	}
+}
+
+country_event = {
+	#CDU/CSUの総裁
+	id = ssw_hgr.45
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.45"
+	}
+	title = ssw_hgr.45.title
+	desc = ssw_hgr.45.desc
+	is_triggered_only = yes
+	option = {
+		#アデナウアー
+		name = ssw_hgr.45.a
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		#シュパイデル
+		name = ssw_hgr.45.b
+		ai_chance = {
+			base = 50
+		}
+		retire_ideology_leader = social_conservatism
+		add_country_leader_role = {
+			character = GER_hans_speidel
+			country_leader = {
+				ideology = peasantism_ideology
+				traits = {
+				}
+				expire = "1984.11.28"
+			}
+			promote_leader = yes
+		}
+	}
+}
+
+country_event = {
+	#自由民主党の総裁
+	id = ssw_hgr.46
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.46"
+	}
+	title = ssw_hgr.46.title
+	desc = ssw_hgr.46.desc
+	is_triggered_only = yes
+	option = {
+		#パーペン
+		name = ssw_hgr.46.a
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		#ホイス
+		name = ssw_hgr.46.b
+		ai_chance = {
+			base = 50
+		}
+		retire_ideology_leader = social_liberalism
+		GER_theodor_heuss = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = market_liberalism_ideology
+					expire = "1963.12.12"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	#書記長選
+	id = ssw_hgr.47
+	immediate = {
+		hidden_effect = {
+			log = "[GetDateText]: [Root.GetName]: event ssw_hgr.47"
+			retire_ideology_leader = classical_communism
+			country_event = {
+				id = ssw_hgr.47
+				days = 1095
+			}
+		}
+	}
+	title = ssw_hgr.47.title
+	desc = ssw_hgr.47.desc
+	is_triggered_only = yes
+	option = {
+		#ホーネッカー
+		name = ssw_hgr.47.a
+		ai_chance = {
+			base = 50
+		}
+		GER_erich_honecker = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = vanguardism_ideology
+					expire = "1994.5.29"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+	}
+	option = {
+		#シュトフ
+		name = ssw_hgr.47.b
+		ai_chance = {
+			base = 50
+		}
+		GER_willi_stoph = {
+			add_country_leader_role = {
+				country_leader = {
+					ideology = radical_socialism_ideology
+					expire = "1994.5.29"
+					id = -1
+					traits = {
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	#ドイツからの誘い
+	id = ssw_hgr.48
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.48"
+	}
+	title = ssw_hgr.48.title
+	desc = ssw_hgr.48.desc
+	is_triggered_only = yes
+	option = {
+		#承諾
+		name = ssw_hgr.48.a
+		ai_chance = {
+			base = 99
+		}
+		join_to_central_european_unity_organization = yes
+		GER = {
+			add_to_faction = ROOT
+		}
+	}
+	option = {
+		#拒否
+		name = ssw_hgr.48.b
+		ai_chance = {
+			base = 1
+		}
+		add_political_power = 40
+	}
+}
+
+country_event = {
+	#ドイツとの和解
+	id = ssw_hgr.49
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.49"
+	}
+	title = ssw_hgr.49.title
+	desc = ssw_hgr.49.desc
+	is_triggered_only = yes
+	option = {
+		#やったぜ
+		name = ssw_hgr.49.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.1
+	}
+}
+
+country_event = {
+	#ドイツとの友好条約
+	id = ssw_hgr.50
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.50"
+	}
+	title = ssw_hgr.50.title
+	desc = ssw_hgr.50.desc
+	is_triggered_only = yes
+	option = {
+		#やったぜ
+		name = ssw_hgr.50.a
+		ai_chance = {
+			base = 50
+		}
+		GER = {
+			give_guarantee = ROOT
+		}
+	}
+	option = {
+		#余計なお世話
+		name = ssw_hgr.50.b
+		ai_chance = {
+			base = 50
+		}
+		add_political_power = 40
+	}
+}
+
+country_event = {
+	#防共協定
+	id = ssw_hgr.51
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.51"
+	}
+	title = ssw_hgr.51.title
+	desc = ssw_hgr.51.desc
+	is_triggered_only = yes
+	option = {
+		#承諾
+		name = ssw_hgr.51.a
+		ai_chance = {
+			base = 50
+		}
+		add_ideas = hgr_ideas_49
+	}
+	option = {
+		#拒否
+		name = ssw_hgr.51.b
+		ai_chance = {
+			base = 50
+		}
+		add_political_power = 40
+	}
+}
+
+country_event = {
+	#ドイツとの絶交
+	id = ssw_hgr.52
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.52"
+	}
+	title = ssw_hgr.52.title
+	desc = ssw_hgr.52.desc
+	is_triggered_only = yes
+	option = {
+		#ひでぇ!
+		name = ssw_hgr.52.a
+		ai_chance = {
+			base = 100
+		}
+		add_opinion_modifier = {
+			target = GER
+			modifier = GER_worst_relationship
+		}
+		reverse_add_opinion_modifier = {
+			target = GER
+			modifier = GER_worst_relationship
+		}
+	}
+}
+
+country_event = {
+	#ドイツとの同盟
+	id = ssw_hgr.53
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.53"
+	}
+	title = ssw_hgr.53.title
+	desc = ssw_hgr.53.desc
+	is_triggered_only = yes
+	option = {
+		#承諾
+		name = ssw_hgr.53.a
+		ai_chance = {
+			base = 99
+		}
+		GER = {
+			country_event = ssw_hgr.54
+		}
+	}
+	option = {
+		#拒否
+		name = ssw_hgr.53.b
+		ai_chance = {
+			base = 1
+		}
+		GER = {
+			country_event = ssw_hgr.55
+		}
+	}
+}
+
+country_event = {
+	#交渉成立
+	id = ssw_hgr.54
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.54"
+	}
+	title = ssw_hgr.54.title
+	desc = ssw_hgr.54.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.54.a
+		ai_chance = {
+			base = 100
+		}
+		join_to_commonwealth = yes
+		ENG = {
+			add_to_faction = GER
+		}
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.75
+				hours = 6
+			}
+		}
+	}
+}
+
+country_event = {
+	#交渉失敗
+	id = ssw_hgr.55
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.55"
+	}
+	title = ssw_hgr.55.title
+	desc = ssw_hgr.55.desc
+	is_triggered_only = yes
+	option = {
+		#悲しいなぁ
+		name = ssw_hgr.55.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 50
+	}
+}
+
+country_event = {
+	#ホーエンツォレルン家の帰還
+	id = ssw_hgr.56
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.56"
+	}
+	title = ssw_hgr.56.title
+	desc = ssw_hgr.56.desc
+	is_triggered_only = yes
+	option = {
+		#やったぜ
+		name = ssw_hgr.56.a
+		ai_chance = {
+			base = 100
+		}
+		add_ideas = idea_wilhelm_iv
+		drop_cosmetic_tag = yes
+		set_cosmetic_tag = GER_empire
+	}
+}
+
+country_event = {
+	#失われた栄光
+	id = ssw_hgr.57
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.57"
+	}
+	title = ssw_hgr.57.title
+	desc = ssw_hgr.57.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.57.a
+		ai_chance = {
+			base = 100
+		}
+		add_war_support = 0.03
+	}
+}
+
+country_event = {
+	#ホーエンツォレルン家とサヴォイア家
+	id = ssw_hgr.58
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.58"
+	}
+	title = ssw_hgr.58.title
+	desc = ssw_hgr.58.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.58.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.03
+		add_opinion_modifier = {
+			target = GER
+			modifier = SSW_friendly
+		}
+		reverse_add_opinion_modifier = {
+			target = GER
+			modifier = SSW_friendly
+		}
+	}
+}
+
+country_event = {
+	#半世紀前の絆
+	id = ssw_hgr.59
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.59"
+	}
+	title = ssw_hgr.59.title
+	desc = ssw_hgr.59.desc
+	is_triggered_only = yes
+	option = {
+		#承諾
+		name = ssw_hgr.59.a
+		ai_chance = {
+			base = 99
+		}
+		GER = {
+			country_event = ssw_hgr.60
+		}
+	}
+	option = {
+		#拒否
+		name = ssw_hgr.59.b
+		ai_chance = {
+			base = 1
+		}
+		GER = {
+			country_event = ssw_hgr.55
+		}
+	}
+}
+
+country_event = {
+	#中独同盟
+	id = ssw_hgr.60
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.60"
+	}
+	title = ssw_hgr.60.title
+	desc = ssw_hgr.60.desc
+	is_triggered_only = yes
+	option = {
+		#万歳
+		name = ssw_hgr.60.a
+		ai_chance = {
+			base = 100
+		}
+		CHI = {
+			leave_all_economic_spheres = yes
+			leave_faction = yes
+			join_to_central_european_unity_organization = yes
+		}
+		GER = {
+			add_to_faction = CHI
+		}
+	}
+}
+
+country_event = {
+	#宇宙への憧れ
+	id = ssw_hgr.61
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.61"
+	}
+	title = ssw_hgr.61.title
+	desc = ssw_hgr.61.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.61.a
+		ai_chance = {
+			base = 100
+		}
+		add_tech_bonus = {
+			name = secret_bonus
+			bonus = 1
+			uses = 2
+			category = jet_technology
+			category = rocketry
+		}
+	}
+}
+
+country_event = {
+	#宇宙開発の中心
+	id = ssw_hgr.62
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.62"
+	}
+	title = ssw_hgr.62.title
+	desc = ssw_hgr.62.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.62.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 150
+	}
+}
+
+country_event = {
+	#宇宙船の命名
+	id = ssw_hgr.63
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.63"
+	}
+	title = ssw_hgr.63.title
+	desc = ssw_hgr.63.desc
+	is_triggered_only = yes
+	option = {
+		#大変結構
+		name = ssw_hgr.63.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.03
+	}
+}
+
+country_event = {
+	#アインハイト1号が地球を飛び立つ
+	id = ssw_hgr.64
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.64"
+	}
+	title = ssw_hgr.64.title
+	desc = ssw_hgr.64.desc
+	is_triggered_only = yes
+	option = {
+		#大変結構
+		name = ssw_hgr.64.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.65
+				days = 5
+			}
+		}
+	}
+}
+
+country_event = {
+	#人類の大きな一歩
+	id = ssw_hgr.65
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.65"
+	}
+	title = ssw_hgr.65.title
+	desc = ssw_hgr.65.desc
+	is_triggered_only = yes
+	option = {
+		#やったぜ
+		name = ssw_hgr.65.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			set_country_flag = reached_the_moon
+			news_event = {
+				id = ssw_hgr.66
+				hours = 6
+			}
+		}
+	}
+}
+
+news_event = {
+	#有人月面探査
+	id = ssw_hgr.66
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.66"
+	}
+	title = ssw_hgr.66.title
+	desc = ssw_hgr.66.desc
+	is_triggered_only = yes
+	major = yes
+	option = {
+		#レーテ万歳!
+		name = ssw_hgr.66.a
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			OR = {
+				has_socialist_government = yes
+				tag = GER
+			}
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			set_country_flag = ssw_superevent_HGR_exploration_of_the_moon
+		}
+	}
+	option = {
+		#協力した甲斐があった。
+		name = ssw_hgr.66.b
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			has_socialist_government = no
+			OR = {
+				tag = ENG
+				tag = JAP
+			}
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			set_country_flag = ssw_superevent_HGR_exploration_of_the_moon
+		}
+	}
+	option = {
+		#次は我々が!
+		name = ssw_hgr.66.c
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			has_socialist_government = no
+			OR = {
+				tag = ALF
+				tag = CHI
+				tag = FSA
+				tag = ITA
+				tag = RUS
+				tag = SOV
+				tag = USA
+			}
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			set_country_flag = ssw_superevent_HGR_exploration_of_the_moon
+		}
+	}
+	option = {
+		#月はアカだった!？
+		name = ssw_hgr.66.d
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			has_socialist_government = no
+			NOT = {
+				tag = ALF
+				tag = CHI
+				tag = ENG
+				tag = FSA
+				tag = GER
+				tag = ITA
+				tag = JAP
+				tag = RUS
+				tag = SOV
+				tag = USA
+			}
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			set_country_flag = ssw_superevent_HGR_exploration_of_the_moon
+		}
+	}
+}
+
+country_event = {
+	#月にたなびく三色旗
+	id = ssw_hgr.67
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.67"
+	}
+	title = ssw_hgr.67.title
+	desc = ssw_hgr.67.desc
+	is_triggered_only = yes
+	option = {
+		#やったぜ
+		name = ssw_hgr.67.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.03
+	}
+}
+
+country_event = {
+	#フォン・ブラウンとの会談
+	id = ssw_hgr.68
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.68"
+	}
+	title = ssw_hgr.68.title
+	desc = ssw_hgr.68.desc
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.68.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 150
+	}
+}
+
+country_event = {
+	#セルゲイ・コロリョフの招待
+	id = ssw_hgr.69
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.69"
+	}
+	title = ssw_hgr.69.title
+	desc = ssw_hgr.69.desc
+	is_triggered_only = yes
+	option = {
+		#大変結構
+		name = ssw_hgr.69.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 150
+	}
+}
+
+country_event = {
+	#選りすぐりの搭乗者
+	id = ssw_hgr.70
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.70"
+	}
+	title = ssw_hgr.70.title
+	desc = ssw_hgr.70.desc
+	is_triggered_only = yes
+	option = {
+		#面白い
+		name = ssw_hgr.70.a
+		ai_chance = {
+			base = 100
+		}
+		add_political_power = 150
+	}
+}
+
+country_event = {
+	#有人月面探査計画
+	id = ssw_hgr.71
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.71"
+	}
+	title = ssw_hgr.71.title
+	desc = ssw_hgr.71.desc
+	is_triggered_only = yes
+	option = {
+		#面白い
+		name = ssw_hgr.71.a
+		ai_chance = {
+			base = 100
+		}
+		custom_effect_tooltip = start_manned_lunar_exploration_plan_tt
+		hidden_effect = {
+			set_country_flag = manned_lunar_exploration_plan
+		}
+	}
+}
+
+country_event = {
+	#有人火星探査計画
+	id = ssw_hgr.72
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.72"
+	}
+	title = ssw_hgr.72.title
+	desc = ssw_hgr.72.desc
+	is_triggered_only = yes
+	option = {
+		#面白い
+		name = ssw_hgr.72.a
+		ai_chance = {
+			base = 100
+		}
+		custom_effect_tooltip = start_manned_mars_exploration_plan_tt
+		hidden_effect = {
+			set_country_flag = manned_mars_exploration_plan
+		}
+	}
+}
+
+news_event = {
+	#有人火星探査
+	id = ssw_hgr.73
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.73"
+	}
+	title = ssw_hgr.73.title
+	desc = ssw_hgr.73.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#面白い
+		name = ssw_hgr.73.a
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = no
+		}
+		set_country_flag = ssw_superevent_HGR_exploration_of_the_mars
+	}
+	option = {
+		#面白い(AI)
+		name = ssw_hgr.73.b
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = yes
+		}
+	}
+}
+
+news_event = {
+	#中央ヨーロッパの大東亜共栄圏
+	id = ssw_hgr.74
+	title = ssw_hgr.74.title
+	desc = ssw_hgr.74.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#面白い
+		name = ssw_hgr.74.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#独英同盟
+	id = ssw_hgr.75
+	title = ssw_hgr.75.title
+	desc = ssw_hgr.75.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#面白い
+		name = ssw_hgr.75.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#ロシアが核兵器の餌食に
+	id = ssw_hgr.76
+	title = ssw_hgr.76.title
+	desc = ssw_hgr.76.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#残念だな
+		name = ssw_hgr.76.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#第二次バルバロッサ作戦
+	id = ssw_hgr.77
+	title = ssw_hgr.77.title
+	desc = ssw_hgr.77.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#また戻ってきたか
+		name = ssw_hgr.77.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#第三次世界大戦の終焉
+	id = ssw_hgr.78
+	title = ssw_hgr.78.title
+	desc = ssw_hgr.78.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#次はいつだ
+		name = ssw_hgr.78.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#第三次世界大戦
+	id = ssw_hgr.79
+	title = ssw_hgr.79.title
+	desc = ssw_hgr.79.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#幕開けだ
+		name = ssw_hgr.79.a
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = no
+		}
+		set_country_flag = ssw_superevent_world_war_3
+	}
+	option = {
+		#幕開けだ(AI)
+		name = ssw_hgr.79.b
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_ai = yes
+		}
+	}
+}
+
+news_event = {
+	#ドイツの崩壊
+	id = ssw_hgr.80
+	title = ssw_hgr.80.title
+	desc = ssw_hgr.80.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.80.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#ドイツが改革を開始
+	id = ssw_hgr.81
+	title = ssw_hgr.81.title
+	desc = ssw_hgr.81.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.81.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#ドイツは従来の体制を維持
+	id = ssw_hgr.82
+	title = ssw_hgr.82.title
+	desc = ssw_hgr.82.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.82.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#ドイツで保守派が優勢
+	id = ssw_hgr.83
+	title = ssw_hgr.83.title
+	desc = ssw_hgr.83.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.83.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#ドイツで改革派が優勢
+	id = ssw_hgr.84
+	title = ssw_hgr.84.title
+	desc = ssw_hgr.84.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.84.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#マルティン・ボルマンがドイツを掌握
+	id = ssw_hgr.85
+	title = ssw_hgr.85.title
+	desc = ssw_hgr.85.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.85.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#ルドルフ・ヘスがドイツを掌握
+	id = ssw_hgr.86
+	title = ssw_hgr.86.title
+	desc = ssw_hgr.86.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.86.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#フェルディナント・シェルナーが強権を維持
+	id = ssw_hgr.87
+	title = ssw_hgr.87.title
+	desc = ssw_hgr.87.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.87.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#共和党が選挙で勝利
+	id = ssw_hgr.88
+	title = ssw_hgr.88.title
+	desc = ssw_hgr.88.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.88.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#祖国党が選挙で勝利
+	id = ssw_hgr.89
+	title = ssw_hgr.89.title
+	desc = ssw_hgr.89.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.89.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#CDU/CSUが選挙で勝利
+	id = ssw_hgr.90
+	title = ssw_hgr.90.title
+	desc = ssw_hgr.90.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.90.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#自由民主党が選挙で勝利
+	id = ssw_hgr.91
+	title = ssw_hgr.91.title
+	desc = ssw_hgr.91.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.91.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#進歩党が選挙で勝利
+	id = ssw_hgr.92
+	title = ssw_hgr.92.title
+	desc = ssw_hgr.92.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.92.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#社会民主党が選挙で勝利
+	id = ssw_hgr.93
+	title = ssw_hgr.93.title
+	desc = ssw_hgr.93.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.93.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#国家人民党が選挙で勝利
+	id = ssw_hgr.94
+	title = ssw_hgr.94.title
+	desc = ssw_hgr.94.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.94.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+news_event = {
+	#共産党が選挙で勝利
+	id = ssw_hgr.95
+	title = ssw_hgr.95.title
+	desc = ssw_hgr.95.desc
+	major = yes
+	is_triggered_only = yes
+	option = {
+		#なるほど
+		name = ssw_hgr.95.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#アインハイト2号は火星を目指す
+	id = ssw_hgr.96
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.96"
+	}
+	title = ssw_hgr.96.title
+	desc = ssw_hgr.96.desc
+	is_triggered_only = yes
+	option = {
+		#いってらっしゃい
+		name = ssw_hgr.96.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.97
+				days = 330
+			}
+		}
+	}
+}
+
+country_event = {
+	#人類の進歩
+	id = ssw_hgr.97
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.97"
+	}
+	title = ssw_hgr.97.title
+	desc = ssw_hgr.97.desc
+	is_triggered_only = yes
+	option = {
+		#感動だ
+		name = ssw_hgr.97.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			news_event = {
+				id = ssw_hgr.73
+				hours = 6
+			}
+		}
+	}
+}
+
+country_event = {
+	#最終改革
+	id = ssw_hgr.98
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.98"
+	}
+	title = ssw_hgr.98.title
+	desc = ssw_hgr.98.desc
+	is_triggered_only = yes
+	option = {
+		#合法に
+		name = ssw_hgr.98.a
+		ai_chance = {
+			base = 50
+		}
+		add_war_support = 0.15
+		add_stability = 0.05
+	}
+	option = {
+		#戒厳令
+		name = ssw_hgr.98.b
+		ai_chance = {
+			base = 50
+		}
+		add_stability = -0.1
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.99
+				days = 2
+			}
+		}
+	}
+}
+
+country_event = {
+	#権威の失墜
+	id = ssw_hgr.99
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.99"
+	}
+	title = ssw_hgr.99.title
+	desc = ssw_hgr.99.desc
+	is_triggered_only = yes
+	option = {
+		#さよなら
+		name = ssw_hgr.99.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_in_germania_accords = yes
+				}
+				leave_germania_accords = yes
+			}
+			every_country = {
+				limit = {
+					is_in_central_european_unity_organization = yes
+				}
+				leave_central_european_unity_organization = yes
+			}
+			every_country = {
+				limit = {
+					is_subject_of = GER
+				}
+				GER = {
+					end_puppet = PREV
+				}
+			}
+			000 = {
+				annex_country = {
+					target = GER
+					transfer_troops = no
+				}
+				change_tag_from = ROOT
+				country_event = {
+					id = ssw_hgr.100
+					days = 21
+				}
+				news_event = {
+					id = ssw_hgr.80
+					hours = 6
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	#ドイツの未来
+	id = ssw_hgr.100
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.100"
+	}
+	title = ssw_hgr.100.title
+	desc = ssw_hgr.100.desc
+	is_triggered_only = yes
+	option = {
+		#悲惨だな
+		name = ssw_hgr.100.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.103
+				days = 10
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ssw_hgr.101
+	title = ssw_hgr.101.title
+	desc = ssw_hgr.101.desc
+	is_triggered_only = no
+	trigger = {
+		tag = SOV
+		000 = {
+			owns_state = 249
+			owns_state = 251
+			owns_state = 398
+			owns_state = 403
+			owns_state = 566
+			owns_state = 568
+			owns_state = 571
+			owns_state = 572
+			owns_state = 578
+			owns_state = 582
+			owns_state = 651
+			owns_state = 653
+		}
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 1
+	}
+	option = {
+		name = ssw_hgr.101.a
+		ai_chance = {
+			base = 100
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_war_with = SOV
+				}
+				white_peace = SOV
+			}
+			every_country = {
+				limit = {
+					is_subject_of = SOV
+				}
+				SOV = {
+					end_puppet = PREV
+				}
+			}
+			every_country = {
+				limit = {
+					is_in_international = yes
+				}
+				leave_international = yes
+			}
+			if = {
+				limit = {
+					SOV = {
+						is_faction_leader = yes
+					}
+				}
+				SOV = {
+					dismantle_faction = yes
+				}
+			}
+			000 = {
+				annex_country = {
+					target = SOV
+					transfer_troops = no
+				}
+				change_tag_from = ROOT
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ssw_hgr.102
+	title = ssw_hgr.102.title
+	desc = ssw_hgr.102.desc
+	is_triggered_only = no
+	trigger = {
+		tag = GER
+		has_war = no
+		SOV = {
+			exists = no
+		}
+		000 = {
+			OR = {
+				owns_state = 249
+				owns_state = 251
+				owns_state = 398
+				owns_state = 403
+				owns_state = 566
+				owns_state = 568
+				owns_state = 571
+				owns_state = 572
+				owns_state = 578
+				owns_state = 582
+				owns_state = 651
+				owns_state = 653
+			}
+		}
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 1
+	}
+	option = {
+		name = ssw_hgr.102.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			annex_country = {
+				target = 0
+				transfer_troops = no
+			}
+		}
+	}
+}
+
+country_event = {
+	#ドイツの春
+	id = ssw_hgr.103
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.103"
+	}
+	title = ssw_hgr.103.title
+	desc = ssw_hgr.103.desc
+	is_triggered_only = yes
+	option = {
+		#ふむ
+		name = ssw_hgr.103.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.104
+				days = 10
+			}
+		}
+	}
+}
+
+country_event = {
+	#政府の再建運動
+	id = ssw_hgr.104
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.104"
+	}
+	title = ssw_hgr.104.title
+	desc = ssw_hgr.104.desc
+	is_triggered_only = yes
+	option = {
+		#よし!
+		name = ssw_hgr.104.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			country_event = {
+				id = ssw_hgr.105
+				days = 10
+			}
+		}
+	}
+}
+
+country_event = {
+	#臨時政府の再建
+	id = ssw_hgr.105
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.105"
+	}
+	trigger = {
+		always = no
+	}
+	title = ssw_hgr.105.title
+	desc = ssw_hgr.105.desc
+	is_triggered_only = yes
+	option = {
+		#よし
+		name = ssw_hgr.105.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.106
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.106"
+	}
+	title = ssw_hgr.106.title
+	desc = ssw_hgr.106.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.106.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.107
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.107"
+	}
+	title = ssw_hgr.107.title
+	desc = ssw_hgr.107.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.107.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.108
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.108"
+	}
+	title = ssw_hgr.108.title
+	desc = ssw_hgr.108.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.108.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.109
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.109"
+	}
+	title = ssw_hgr.109.title
+	desc = ssw_hgr.109.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.109.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.110
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.110"
+	}
+	title = ssw_hgr.110.title
+	desc = ssw_hgr.110.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.110.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.111
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.111"
+	}
+	title = ssw_hgr.111.title
+	desc = ssw_hgr.111.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.111.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.112
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.112"
+	}
+	title = ssw_hgr.112.title
+	desc = ssw_hgr.112.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.112.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.113
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.113"
+	}
+	title = ssw_hgr.113.title
+	desc = ssw_hgr.113.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.113.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.114
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.114"
+	}
+	title = ssw_hgr.114.title
+	desc = ssw_hgr.114.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.114.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.115
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.115"
+	}
+	title = ssw_hgr.115.title
+	desc = ssw_hgr.115.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.115.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.116
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.116"
+	}
+	title = ssw_hgr.116.title
+	desc = ssw_hgr.116.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.116.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.117
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.117"
+	}
+	title = ssw_hgr.117.title
+	desc = ssw_hgr.117.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.117.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.118
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.118"
+	}
+	title = ssw_hgr.118.title
+	desc = ssw_hgr.118.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.118.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.119
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.119"
+	}
+	title = ssw_hgr.119.title
+	desc = ssw_hgr.119.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.119.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.120
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.120"
+	}
+	title = ssw_hgr.120.title
+	desc = ssw_hgr.120.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.120.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.121
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.121"
+	}
+	title = ssw_hgr.121.title
+	desc = ssw_hgr.121.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.121.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.122
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.122"
+	}
+	title = ssw_hgr.122.title
+	desc = ssw_hgr.122.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.122.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.123
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.123"
+	}
+	title = ssw_hgr.123.title
+	desc = ssw_hgr.123.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.123.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.124
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.124"
+	}
+	title = ssw_hgr.124.title
+	desc = ssw_hgr.124.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.124.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.125
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.125"
+	}
+	title = ssw_hgr.125.title
+	desc = ssw_hgr.125.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.125.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.126
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.126"
+	}
+	title = ssw_hgr.126.title
+	desc = ssw_hgr.126.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.126.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.127
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.127"
+	}
+	title = ssw_hgr.127.title
+	desc = ssw_hgr.127.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.127.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.128
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.128"
+	}
+	title = ssw_hgr.128.title
+	desc = ssw_hgr.128.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.128.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.129
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.129"
+	}
+	title = ssw_hgr.129.title
+	desc = ssw_hgr.129.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.129.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.130
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.130"
+	}
+	title = ssw_hgr.130.title
+	desc = ssw_hgr.130.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.130.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.131
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.131"
+	}
+	title = ssw_hgr.131.title
+	desc = ssw_hgr.131.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.131.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.132
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.132"
+	}
+	title = ssw_hgr.132.title
+	desc = ssw_hgr.132.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.132.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.133
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.133"
+	}
+	title = ssw_hgr.133.title
+	desc = ssw_hgr.133.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.133.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.134
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.134"
+	}
+	title = ssw_hgr.134.title
+	desc = ssw_hgr.134.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.134.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.135
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.135"
+	}
+	title = ssw_hgr.135.title
+	desc = ssw_hgr.135.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.135.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.136
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.136"
+	}
+	title = ssw_hgr.136.title
+	desc = ssw_hgr.136.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.136.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.137
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.137"
+	}
+	title = ssw_hgr.137.title
+	desc = ssw_hgr.137.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.137.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.138
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.138"
+	}
+	title = ssw_hgr.138.title
+	desc = ssw_hgr.138.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.138.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.139
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.139"
+	}
+	title = ssw_hgr.139.title
+	desc = ssw_hgr.139.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.139.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.140
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.140"
+	}
+	title = ssw_hgr.140.title
+	desc = ssw_hgr.140.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.140.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.141
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.141"
+	}
+	title = ssw_hgr.141.title
+	desc = ssw_hgr.141.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.141.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.142
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.142"
+	}
+	title = ssw_hgr.142.title
+	desc = ssw_hgr.142.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.142.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.143
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.143"
+	}
+	title = ssw_hgr.143.title
+	desc = ssw_hgr.143.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.143.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.144
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.144"
+	}
+	title = ssw_hgr.144.title
+	desc = ssw_hgr.144.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.144.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.145
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.145"
+	}
+	title = ssw_hgr.145.title
+	desc = ssw_hgr.145.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.145.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.146
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.146"
+	}
+	title = ssw_hgr.146.title
+	desc = ssw_hgr.146.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.146.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.147
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.147"
+	}
+	title = ssw_hgr.147.title
+	desc = ssw_hgr.147.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.147.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.148
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.148"
+	}
+	title = ssw_hgr.148.title
+	desc = ssw_hgr.148.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.148.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.149
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.149"
+	}
+	title = ssw_hgr.149.title
+	desc = ssw_hgr.149.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.149.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.150
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.150"
+	}
+	title = ssw_hgr.150.title
+	desc = ssw_hgr.150.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.150.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.151
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.151"
+	}
+	title = ssw_hgr.151.title
+	desc = ssw_hgr.151.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.151.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.152
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.152"
+	}
+	title = ssw_hgr.152.title
+	desc = ssw_hgr.152.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.152.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.153
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.153"
+	}
+	title = ssw_hgr.153.title
+	desc = ssw_hgr.153.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.153.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.154
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.154"
+	}
+	title = ssw_hgr.154.title
+	desc = ssw_hgr.154.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.154.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.155
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.155"
+	}
+	title = ssw_hgr.155.title
+	desc = ssw_hgr.155.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.155.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.156
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.156"
+	}
+	title = ssw_hgr.156.title
+	desc = ssw_hgr.156.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.156.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.157
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.157"
+	}
+	title = ssw_hgr.157.title
+	desc = ssw_hgr.157.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.157.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.158
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.158"
+	}
+	title = ssw_hgr.158.title
+	desc = ssw_hgr.158.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.158.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.159
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.159"
+	}
+	title = ssw_hgr.159.title
+	desc = ssw_hgr.159.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.159.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.160
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.160"
+	}
+	title = ssw_hgr.160.title
+	desc = ssw_hgr.160.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.160.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.161
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.161"
+	}
+	title = ssw_hgr.161.title
+	desc = ssw_hgr.161.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.161.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.162
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.162"
+	}
+	title = ssw_hgr.162.title
+	desc = ssw_hgr.162.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.162.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.163
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.163"
+	}
+	title = ssw_hgr.163.title
+	desc = ssw_hgr.163.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.163.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.164
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.164"
+	}
+	title = ssw_hgr.164.title
+	desc = ssw_hgr.164.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.164.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.165
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.165"
+	}
+	title = ssw_hgr.165.title
+	desc = ssw_hgr.165.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.165.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.166
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.166"
+	}
+	title = ssw_hgr.166.title
+	desc = ssw_hgr.166.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.166.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.167
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.167"
+	}
+	title = ssw_hgr.167.title
+	desc = ssw_hgr.167.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.167.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.168
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.168"
+	}
+	title = ssw_hgr.168.title
+	desc = ssw_hgr.168.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.168.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.169
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.169"
+	}
+	title = ssw_hgr.169.title
+	desc = ssw_hgr.169.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.169.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.170
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.170"
+	}
+	title = ssw_hgr.170.title
+	desc = ssw_hgr.170.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.170.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.171
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.171"
+	}
+	title = ssw_hgr.171.title
+	desc = ssw_hgr.171.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.171.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.172
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.172"
+	}
+	title = ssw_hgr.172.title
+	desc = ssw_hgr.172.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.172.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.173
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.173"
+	}
+	title = ssw_hgr.173.title
+	desc = ssw_hgr.173.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.173.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.174
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.174"
+	}
+	title = ssw_hgr.174.title
+	desc = ssw_hgr.174.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.174.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.175
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.175"
+	}
+	title = ssw_hgr.175.title
+	desc = ssw_hgr.175.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.175.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.176
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.176"
+	}
+	title = ssw_hgr.176.title
+	desc = ssw_hgr.176.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.176.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.177
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.177"
+	}
+	title = ssw_hgr.177.title
+	desc = ssw_hgr.177.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.177.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.178
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.178"
+	}
+	title = ssw_hgr.178.title
+	desc = ssw_hgr.178.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.178.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.179
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.179"
+	}
+	title = ssw_hgr.179.title
+	desc = ssw_hgr.179.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.179.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.180
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.180"
+	}
+	title = ssw_hgr.180.title
+	desc = ssw_hgr.180.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.180.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.181
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.181"
+	}
+	title = ssw_hgr.181.title
+	desc = ssw_hgr.181.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.181.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.182
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.182"
+	}
+	title = ssw_hgr.182.title
+	desc = ssw_hgr.182.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.182.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.183
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.183"
+	}
+	title = ssw_hgr.183.title
+	desc = ssw_hgr.183.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.183.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.184
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.184"
+	}
+	title = ssw_hgr.184.title
+	desc = ssw_hgr.184.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.184.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.185
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.185"
+	}
+	title = ssw_hgr.185.title
+	desc = ssw_hgr.185.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.185.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.186
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.186"
+	}
+	title = ssw_hgr.186.title
+	desc = ssw_hgr.186.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.186.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.187
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.187"
+	}
+	title = ssw_hgr.187.title
+	desc = ssw_hgr.187.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.187.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.188
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.188"
+	}
+	title = ssw_hgr.188.title
+	desc = ssw_hgr.188.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.188.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.189
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.189"
+	}
+	title = ssw_hgr.189.title
+	desc = ssw_hgr.189.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.189.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.190
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.190"
+	}
+	title = ssw_hgr.190.title
+	desc = ssw_hgr.190.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.190.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.191
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.191"
+	}
+	title = ssw_hgr.191.title
+	desc = ssw_hgr.191.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.191.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.192
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.192"
+	}
+	title = ssw_hgr.192.title
+	desc = ssw_hgr.192.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.192.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.193
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.193"
+	}
+	title = ssw_hgr.193.title
+	desc = ssw_hgr.193.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.193.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.194
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.194"
+	}
+	title = ssw_hgr.194.title
+	desc = ssw_hgr.194.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.194.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.195
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.195"
+	}
+	title = ssw_hgr.195.title
+	desc = ssw_hgr.195.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.195.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.196
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.196"
+	}
+	title = ssw_hgr.196.title
+	desc = ssw_hgr.196.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.196.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.197
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.197"
+	}
+	title = ssw_hgr.197.title
+	desc = ssw_hgr.197.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.197.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.198
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.198"
+	}
+	title = ssw_hgr.198.title
+	desc = ssw_hgr.198.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.198.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.199
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.199"
+	}
+	title = ssw_hgr.199.title
+	desc = ssw_hgr.199.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.199.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.200
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.200"
+	}
+	title = ssw_hgr.200.title
+	desc = ssw_hgr.200.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.200.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.201
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.201"
+	}
+	title = ssw_hgr.201.title
+	desc = ssw_hgr.201.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.201.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.202
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.202"
+	}
+	title = ssw_hgr.202.title
+	desc = ssw_hgr.202.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.202.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.203
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.203"
+	}
+	title = ssw_hgr.203.title
+	desc = ssw_hgr.203.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.203.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.204
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.204"
+	}
+	title = ssw_hgr.204.title
+	desc = ssw_hgr.204.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.204.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.205
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.205"
+	}
+	title = ssw_hgr.205.title
+	desc = ssw_hgr.205.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.205.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.206
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.206"
+	}
+	title = ssw_hgr.206.title
+	desc = ssw_hgr.206.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.206.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.207
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.207"
+	}
+	title = ssw_hgr.207.title
+	desc = ssw_hgr.207.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.207.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.208
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.208"
+	}
+	title = ssw_hgr.208.title
+	desc = ssw_hgr.208.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.208.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.209
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.209"
+	}
+	title = ssw_hgr.209.title
+	desc = ssw_hgr.209.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.209.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.210
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.210"
+	}
+	title = ssw_hgr.210.title
+	desc = ssw_hgr.210.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.210.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.211
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.211"
+	}
+	title = ssw_hgr.211.title
+	desc = ssw_hgr.211.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.211.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.212
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.212"
+	}
+	title = ssw_hgr.212.title
+	desc = ssw_hgr.212.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.212.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.213
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.213"
+	}
+	title = ssw_hgr.213.title
+	desc = ssw_hgr.213.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.213.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.214
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.214"
+	}
+	title = ssw_hgr.214.title
+	desc = ssw_hgr.214.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.214.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.215
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.215"
+	}
+	title = ssw_hgr.215.title
+	desc = ssw_hgr.215.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.215.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.216
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.216"
+	}
+	title = ssw_hgr.216.title
+	desc = ssw_hgr.216.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.216.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.217
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.217"
+	}
+	title = ssw_hgr.217.title
+	desc = ssw_hgr.217.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.217.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.218
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.218"
+	}
+	title = ssw_hgr.218.title
+	desc = ssw_hgr.218.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.218.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.219
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.219"
+	}
+	title = ssw_hgr.219.title
+	desc = ssw_hgr.219.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.219.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.220
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.220"
+	}
+	title = ssw_hgr.220.title
+	desc = ssw_hgr.220.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.220.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.221
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.221"
+	}
+	title = ssw_hgr.221.title
+	desc = ssw_hgr.221.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.221.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.222
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.222"
+	}
+	title = ssw_hgr.222.title
+	desc = ssw_hgr.222.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.222.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.223
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.223"
+	}
+	title = ssw_hgr.223.title
+	desc = ssw_hgr.223.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.223.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.224
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.224"
+	}
+	title = ssw_hgr.224.title
+	desc = ssw_hgr.224.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.224.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.225
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.225"
+	}
+	title = ssw_hgr.225.title
+	desc = ssw_hgr.225.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.225.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.226
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.226"
+	}
+	title = ssw_hgr.226.title
+	desc = ssw_hgr.226.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.226.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.227
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.227"
+	}
+	title = ssw_hgr.227.title
+	desc = ssw_hgr.227.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.227.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.228
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.228"
+	}
+	title = ssw_hgr.228.title
+	desc = ssw_hgr.228.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.228.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.229
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.229"
+	}
+	title = ssw_hgr.229.title
+	desc = ssw_hgr.229.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.229.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.230
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.230"
+	}
+	title = ssw_hgr.230.title
+	desc = ssw_hgr.230.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.230.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.231
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.231"
+	}
+	title = ssw_hgr.231.title
+	desc = ssw_hgr.231.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.231.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.232
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.232"
+	}
+	title = ssw_hgr.232.title
+	desc = ssw_hgr.232.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.232.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.233
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.233"
+	}
+	title = ssw_hgr.233.title
+	desc = ssw_hgr.233.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.233.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.234
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.234"
+	}
+	title = ssw_hgr.234.title
+	desc = ssw_hgr.234.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.234.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.235
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.235"
+	}
+	title = ssw_hgr.235.title
+	desc = ssw_hgr.235.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.235.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.236
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.236"
+	}
+	title = ssw_hgr.236.title
+	desc = ssw_hgr.236.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.236.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.237
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.237"
+	}
+	title = ssw_hgr.237.title
+	desc = ssw_hgr.237.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.237.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.238
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.238"
+	}
+	title = ssw_hgr.238.title
+	desc = ssw_hgr.238.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.238.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.239
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.239"
+	}
+	title = ssw_hgr.239.title
+	desc = ssw_hgr.239.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.239.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.240
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.240"
+	}
+	title = ssw_hgr.240.title
+	desc = ssw_hgr.240.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.240.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.241
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.241"
+	}
+	title = ssw_hgr.241.title
+	desc = ssw_hgr.241.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.241.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.242
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.242"
+	}
+	title = ssw_hgr.242.title
+	desc = ssw_hgr.242.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.242.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.243
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.243"
+	}
+	title = ssw_hgr.243.title
+	desc = ssw_hgr.243.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.243.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.244
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.244"
+	}
+	title = ssw_hgr.244.title
+	desc = ssw_hgr.244.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.244.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.245
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.245"
+	}
+	title = ssw_hgr.245.title
+	desc = ssw_hgr.245.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.245.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.246
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.246"
+	}
+	title = ssw_hgr.246.title
+	desc = ssw_hgr.246.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.246.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.247
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.247"
+	}
+	title = ssw_hgr.247.title
+	desc = ssw_hgr.247.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.247.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.248
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.248"
+	}
+	title = ssw_hgr.248.title
+	desc = ssw_hgr.248.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.248.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.249
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.249"
+	}
+	title = ssw_hgr.249.title
+	desc = ssw_hgr.249.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.249.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.250
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.250"
+	}
+	title = ssw_hgr.250.title
+	desc = ssw_hgr.250.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.250.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.251
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.251"
+	}
+	title = ssw_hgr.251.title
+	desc = ssw_hgr.251.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.251.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.252
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.252"
+	}
+	title = ssw_hgr.252.title
+	desc = ssw_hgr.252.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.252.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.253
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.253"
+	}
+	title = ssw_hgr.253.title
+	desc = ssw_hgr.253.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.253.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.254
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.254"
+	}
+	title = ssw_hgr.254.title
+	desc = ssw_hgr.254.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.254.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.255
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.255"
+	}
+	title = ssw_hgr.255.title
+	desc = ssw_hgr.255.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.255.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.256
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.256"
+	}
+	title = ssw_hgr.256.title
+	desc = ssw_hgr.256.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.256.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.257
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.257"
+	}
+	title = ssw_hgr.257.title
+	desc = ssw_hgr.257.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.257.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.258
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.258"
+	}
+	title = ssw_hgr.258.title
+	desc = ssw_hgr.258.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.258.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.259
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.259"
+	}
+	title = ssw_hgr.259.title
+	desc = ssw_hgr.259.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.259.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.260
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.260"
+	}
+	title = ssw_hgr.260.title
+	desc = ssw_hgr.260.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.260.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.261
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.261"
+	}
+	title = ssw_hgr.261.title
+	desc = ssw_hgr.261.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.261.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.262
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.262"
+	}
+	title = ssw_hgr.262.title
+	desc = ssw_hgr.262.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.262.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.263
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.263"
+	}
+	title = ssw_hgr.263.title
+	desc = ssw_hgr.263.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.263.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.264
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.264"
+	}
+	title = ssw_hgr.264.title
+	desc = ssw_hgr.264.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.264.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.265
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.265"
+	}
+	title = ssw_hgr.265.title
+	desc = ssw_hgr.265.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.265.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.266
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.266"
+	}
+	title = ssw_hgr.266.title
+	desc = ssw_hgr.266.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.266.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.267
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.267"
+	}
+	title = ssw_hgr.267.title
+	desc = ssw_hgr.267.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.267.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.268
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.268"
+	}
+	title = ssw_hgr.268.title
+	desc = ssw_hgr.268.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.268.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.269
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.269"
+	}
+	title = ssw_hgr.269.title
+	desc = ssw_hgr.269.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.269.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.270
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.270"
+	}
+	title = ssw_hgr.270.title
+	desc = ssw_hgr.270.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.270.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.271
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.271"
+	}
+	title = ssw_hgr.271.title
+	desc = ssw_hgr.271.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.271.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.272
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.272"
+	}
+	title = ssw_hgr.272.title
+	desc = ssw_hgr.272.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.272.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.273
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.273"
+	}
+	title = ssw_hgr.273.title
+	desc = ssw_hgr.273.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.273.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.274
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.274"
+	}
+	title = ssw_hgr.274.title
+	desc = ssw_hgr.274.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.274.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.275
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.275"
+	}
+	title = ssw_hgr.275.title
+	desc = ssw_hgr.275.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.275.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.276
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.276"
+	}
+	title = ssw_hgr.276.title
+	desc = ssw_hgr.276.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.276.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.277
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.277"
+	}
+	title = ssw_hgr.277.title
+	desc = ssw_hgr.277.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.277.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.278
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.278"
+	}
+	title = ssw_hgr.278.title
+	desc = ssw_hgr.278.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.278.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.279
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.279"
+	}
+	title = ssw_hgr.279.title
+	desc = ssw_hgr.279.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.279.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.280
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.280"
+	}
+	title = ssw_hgr.280.title
+	desc = ssw_hgr.280.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.280.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.281
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.281"
+	}
+	title = ssw_hgr.281.title
+	desc = ssw_hgr.281.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.281.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.282
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.282"
+	}
+	title = ssw_hgr.282.title
+	desc = ssw_hgr.282.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.282.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.283
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.283"
+	}
+	title = ssw_hgr.283.title
+	desc = ssw_hgr.283.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.283.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.284
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.284"
+	}
+	title = ssw_hgr.284.title
+	desc = ssw_hgr.284.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.284.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.285
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.285"
+	}
+	title = ssw_hgr.285.title
+	desc = ssw_hgr.285.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.285.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.286
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.286"
+	}
+	title = ssw_hgr.286.title
+	desc = ssw_hgr.286.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.286.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.287
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.287"
+	}
+	title = ssw_hgr.287.title
+	desc = ssw_hgr.287.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.287.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.288
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.288"
+	}
+	title = ssw_hgr.288.title
+	desc = ssw_hgr.288.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.288.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.289
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.289"
+	}
+	title = ssw_hgr.289.title
+	desc = ssw_hgr.289.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.289.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.290
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.290"
+	}
+	title = ssw_hgr.290.title
+	desc = ssw_hgr.290.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.290.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.291
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.291"
+	}
+	title = ssw_hgr.291.title
+	desc = ssw_hgr.291.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.291.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.292
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.292"
+	}
+	title = ssw_hgr.292.title
+	desc = ssw_hgr.292.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.292.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.293
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.293"
+	}
+	title = ssw_hgr.293.title
+	desc = ssw_hgr.293.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.293.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.294
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.294"
+	}
+	title = ssw_hgr.294.title
+	desc = ssw_hgr.294.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.294.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.295
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.295"
+	}
+	title = ssw_hgr.295.title
+	desc = ssw_hgr.295.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.295.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.296
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.296"
+	}
+	title = ssw_hgr.296.title
+	desc = ssw_hgr.296.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.296.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.297
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.297"
+	}
+	title = ssw_hgr.297.title
+	desc = ssw_hgr.297.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.297.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.298
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.298"
+	}
+	title = ssw_hgr.298.title
+	desc = ssw_hgr.298.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.298.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.299
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.299"
+	}
+	title = ssw_hgr.299.title
+	desc = ssw_hgr.299.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.299.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = {
+	#
+	id = ssw_hgr.300
+	immediate = {
+		log = "[GetDateText]: [Root.GetName]: event ssw_hgr.300"
+	}
+	title = ssw_hgr.300.title
+	desc = ssw_hgr.300.desc
+	is_triggered_only = yes
+	option = {
+		#
+		name = ssw_hgr.300.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
