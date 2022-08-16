@@ -39,10 +39,10 @@ pairs -> pair (__ pair):* {% extractPairs %}
 comment -> %comment {% (d) => ["comment", d[0].value] %}
 
 # Null allowed space
-_ -> null | __ {% () => null %} 
+_ -> null | __ {% (d) => d[0] || null %} 
 
 # Non-null space
-__ -> %space {% () => null %} | _ comment _ {% () => null %}
+__ -> %space {% () => null %} | _ comment _ {% extractComments %}
 
 @{%
 
@@ -69,8 +69,10 @@ function extractPairs(d) {
 }
 
 function extractComments(d) {
-    let output = [...d[0]];
-    if(d[1]) output.push(d[1]);
+    let output = [];
+    if(d[0]) output.push(...d[0]);
+    output.push(d[1]);
+    if(d[2]) output.push(...d[2]);
     return output;
 }
 

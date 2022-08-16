@@ -44,8 +44,10 @@ function extractPairs(d) {
 }
 
 function extractComments(d) {
-    let output = [...d[0]];
-    if(d[1]) output.push(d[1]);
+    let output = [];
+    if(d[0]) output.push(...d[0]);
+    output.push(d[1]);
+    if(d[2]) output.push(...d[2]);
     return output;
 }
 
@@ -87,9 +89,9 @@ var grammar = {
     {"name": "pairs", "symbols": ["pair", "pairs$ebnf$1"], "postprocess": extractPairs},
     {"name": "comment", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment)], "postprocess": (d) => ["comment", d[0].value]},
     {"name": "_", "symbols": []},
-    {"name": "_", "symbols": ["__"], "postprocess": () => null},
+    {"name": "_", "symbols": ["__"], "postprocess": (d) => d[0] || null},
     {"name": "__", "symbols": [(lexer.has("space") ? {type: "space"} : space)], "postprocess": () => null},
-    {"name": "__", "symbols": ["_", "comment", "_"], "postprocess": () => null}
+    {"name": "__", "symbols": ["_", "comment", "_"], "postprocess": extractComments}
 ]
   , ParserStart: "root"
 }
