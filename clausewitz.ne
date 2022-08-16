@@ -1,7 +1,7 @@
 @{%
 const moo = require('moo');
 const lexer = moo.compile({
-    space: {match: /\s+/, lineBreaks: true},
+    space: { match: /\s+/, lineBreaks: true },
     number: /-?(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?\b/,
     quoted: /"(?:\\["bfnrt\/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
     '{': '{',
@@ -11,12 +11,13 @@ const lexer = moo.compile({
     '=': '=',
     yes: 'yes',
     no: 'no',
-    unquoted: /(?:[^"\\\n\s])+/,
+    unquoted: /(?:[^"\\\n\s#])+/,
+    comment: /#.*$/,
 });
 %}
 @lexer lexer
 
-root -> _ pairs _  {% (d) => d[1] %}
+root -> _ pairs _  {% d=>d[1] %}
 
 value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %} | array {% id %} | object {% id %}
 
@@ -25,19 +26,32 @@ quoted -> %quoted {% (d) => JSON.parse(d[0].value) %}
 unquoted -> %unquoted {% (d) => d[0].value %}
 boolean -> "yes" {% () => true %} | "no" {% () => false %}
 
-object -> "{" _ "}" {% () => {} %}
+object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}
     | "{" root "}" {% (d) => d[1] %}
 
 array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
 pair -> key _ "=" _ value {% (d) => [d[0], d[4]] %}
-pairs -> pair (%space pair):* {% extractPairs %}
+pairs -> pair (__ pair):* {% extractPairs %}
 
 key -> unquoted {% id %}
 
-_ -> null | %space {% () => null %}
+# comment -> %comment {% (d) => d[0] %}
+
+__ -> %space
+    # | _ comment __ {% extractComments %}
+
+_ -> null | __ {% id %}
 
 @{%
+
+function extractRoot(d) {
+    const output = [];
+    if(d[0]) output.push(...d[0]);
+    output.push(...d[1]);
+    if(d[2]) output.push(...d[2]);
+    return output;
+}
 
 function extractPair(kv, output) {
     if(kv[0]) { output.push([kv[0], kv[1]]); }
@@ -46,9 +60,16 @@ function extractPair(kv, output) {
 function extractPairs(d) {
     let output = [];
     extractPair(d[0], output);
+    //extractPair(d[1], output);
     for (let i in d[1]) {
         extractPair(d[1][i][1], output);
     }
+    return output;
+}
+
+function extractComments(d) {
+    let output = [...d[1]];
+    // if(d[2]) output.push(d[2]);
     return output;
 }
 

@@ -22,8 +22,12 @@ async function main() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const grammar = require("../clausewitz.js");
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-  // eslint-disable-next-line no-useless-escape
-  parser.feed("id = SSW_ACO.1 id = SSW_ACO.2");
+  // // eslint-disable-next-line no-useless-escape
+  // parser.feed("id = SSW_ACO.1 id = SSW_ACO.2");
+
+  // const text = fs.readFileSync("ssw_ACO copy.txt").toString();
+  const text = "a = yes"
+  parser.feed(text);
   console.dir(parser.results, { depth: null });
 }
 
