@@ -1,6 +1,7 @@
-import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver';
+import { Diagnostic, DiagnosticSeverity } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { connection, getDocumentSettings, hasDiagnosticRelatedInformationCapability } from "./server";
+import { hasDiagnosticRelatedInformationCapability } from './initialize';
+import { connection, getDocumentSettings } from "./server";
 
 export async function validateTextDocument(
   textDocument: TextDocument
