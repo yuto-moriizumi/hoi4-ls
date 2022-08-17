@@ -1,9 +1,9 @@
 import { DocumentFormattingParams, TextEdit } from "vscode-languageserver";
-import { connection, documents } from "./server";
+import { Context } from "./server";
 
-export const format = (params: DocumentFormattingParams) => {
-  connection.console.log("received format request");
-  const document = documents.get(params.textDocument.uri);
+export const format = (context: Context, params: DocumentFormattingParams) => {
+  context.connection.console.log("received format request");
+  const document = context.documents.get(params.textDocument.uri);
   if (document === undefined) return undefined;
   const textEdit: TextEdit = {
     range: {

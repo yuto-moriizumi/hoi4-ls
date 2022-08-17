@@ -1,10 +1,10 @@
 import {
-	DidChangeConfigurationNotification,
+  DidChangeConfigurationNotification,
   InitializeParams,
   InitializeResult,
   TextDocumentSyncKind,
 } from "vscode-languageserver";
-import { connection } from './server';
+import { Context } from "./server";
 
 export let hasConfigurationCapability = false;
 export let hasWorkspaceFolderCapability = false;
@@ -47,7 +47,7 @@ export const onInitialize = (params: InitializeParams) => {
   return result;
 };
 
-export const onInitialized = () => {
+export const onInitialized = ({ connection }: Context) => {
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
     connection.client.register(
