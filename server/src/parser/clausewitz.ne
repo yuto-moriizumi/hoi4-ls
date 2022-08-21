@@ -14,6 +14,7 @@ const lexer = moo.compile({
     unquoted: /(?:[^"\\\n\s#=])+/,
     comment: /#.*$/,
 });
+const comment = require("./syntax/Comment.ts");
 %}
 @lexer lexer
 
@@ -37,7 +38,8 @@ pair -> unquoted _ "=" _ value {% (d) => [d[0], d[4]] %}
 pairs -> pair (__ pair):* {% extractPairs %}
 
 # comment -> %comment {% (d) => ["comment", d[0].value] %}
-comment -> %comment {% (d) => d[0] %}
+# comment -> %comment {% (d) => d[0] %}
+comment -> %comment {% (d) => new comment.Comment(d[0].text) %}
 
 # Null allowed space
 _ -> null | __ {% (d) => d[0] || null %} 
@@ -46,7 +48,6 @@ _ -> null | __ {% (d) => d[0] || null %}
 __ -> %space {% () => null %} | _ comment _ {% extractComments %}
 
 @{%
-
 function extractRoot(d) {
     const output = [];
     if(d[0]) output.push(...d[0]);
