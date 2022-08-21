@@ -2,6 +2,7 @@
 // import { readFileSync } from "fs";
 import { readFileSync } from "fs";
 import { Grammar, Parser } from "nearley";
+import { Root } from "./syntax/Root";
 
 export async function parse() {
   // text: string
@@ -13,7 +14,7 @@ export async function parse() {
   // ).toString();
   const text = readFileSync("./src/parser/ssw_ACO copy.txt").toString();
   parser.feed(text);
-  const result = parser.results[0];
+  const result = new Root(parser.results[0]);
   console.dir(result, { depth: null });
 }
 

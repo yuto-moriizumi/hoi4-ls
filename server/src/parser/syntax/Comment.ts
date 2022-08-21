@@ -1,7 +1,7 @@
 import { Writer } from "jomini/dist/umd/jomini";
 
 export class Comment {
-  public readonly value: string;
+  private readonly value: string;
 
   constructor(value: string) {
     this.value = value;

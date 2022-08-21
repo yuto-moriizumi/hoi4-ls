@@ -4,8 +4,8 @@ import { Pairs } from "./Pairs";
 
 type Value = Pairs | string | boolean | number;
 export class Pair {
-  public readonly key: string;
-  public readonly value: Value;
+  private readonly key: string;
+  private readonly value: Value;
 
   constructor(key: string, value: Value) {
     this.key = key;
