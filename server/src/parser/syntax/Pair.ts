@@ -1,11 +1,28 @@
 import { Writer } from "jomini/dist/umd/jomini";
+import { Pairs } from "./Pairs";
 
+type Value = Pairs | string | boolean;
 export class Pair {
-  public key!: string;
-  public value!: { format: () => void } | any;
+  public readonly key: string;
+  public readonly value: Value;
+
+  constructor(key: string, value: Value) {
+    this.key = key;
+    this.value = value;
+  }
+
   public format(writer: Writer) {
     writer.write_unquoted(this.key);
-    this.value.format();
+    if (typeof this.value === "string") {
+      writer.write_unquoted(this.value);
+      return;
+    }
+    if (typeof this.value === "boolean") {
+      writer.write_bool(this.value);
+      return;
+    }
+    writer.write_object_start();
+    this.value.format(writer);
     writer.write_end();
   }
 }
