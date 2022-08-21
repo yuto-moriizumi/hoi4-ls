@@ -1,4 +1,4 @@
-import { Writer } from "jomini/dist/umd/jomini";
+import type { Writer } from "jomini/dist/umd/jomini";
 
 export class Comment {
   private readonly value: string;

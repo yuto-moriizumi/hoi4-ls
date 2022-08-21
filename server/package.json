@@ -18,9 +18,11 @@
   },
   "scripts": {
     "start": "ts-node ./src/parser/parse.ts",
-    "gen-parser": "nearleyc ./src/parser/clausewitz.ne -o ./src/parser/clausewitz.js"
+    "gen-parser": "nearleyc ./src/parser/clausewitz.ne -o ./src/parser/clausewitz.js",
+    "compile": "tsc -b"
   },
   "devDependencies": {
+    "@types/nearley": "^2.11.2",
     "moo": "^0.5.1",
     "nearley": "^2.20.1",
     "ts-node": "^10.9.1"

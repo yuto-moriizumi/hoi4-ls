@@ -1,4 +1,4 @@
-import { Writer } from "jomini/dist/umd/jomini";
+import type { Writer } from "jomini/dist/umd/jomini";
 import { Comment } from "./Comment";
 import { Pairs } from "./Pairs";
 

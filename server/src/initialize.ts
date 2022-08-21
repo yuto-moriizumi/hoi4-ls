@@ -60,4 +60,5 @@ export const onInitialized = ({ connection }: Context) => {
       connection.console.log("Workspace folder change event received.");
     });
   }
+  connection.console.log("Hello!");
 };
