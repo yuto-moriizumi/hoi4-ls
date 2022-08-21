@@ -19,6 +19,7 @@ const lexer = moo.compile({
     comment: /#.*$/,
 });
 const comment = require("./syntax/Comment.ts");
+const pair = require("./syntax/Pair.ts");
 
 
 function extractRoot(d) {
