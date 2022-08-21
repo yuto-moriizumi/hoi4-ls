@@ -1,4 +1,5 @@
 import { Writer } from "jomini/dist/umd/jomini";
+import { Comment } from "./Comment";
 import { Pairs } from "./Pairs";
 
 type Value = Pairs | string | boolean | number;
@@ -8,7 +9,13 @@ export class Pair {
 
   constructor(key: string, value: Value) {
     this.key = key;
-    this.value = value;
+    if (
+      value instanceof Array &&
+      value.length > 0 &&
+      (value[0] instanceof Comment || value[0] instanceof Pair)
+    ) {
+      this.value = new Pairs(value);
+    } else this.value = value;
   }
 
   public format(writer: Writer) {

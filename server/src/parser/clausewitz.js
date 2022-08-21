@@ -31,16 +31,18 @@ function extractRoot(d) {
 }
 
 function extractPair(kv, output) {
-    if(kv[0]) { output.push([kv[0], kv[1]]); }
+    if(kv[0]) { output.push(kv[0]); }
 }
 
 function extractPairs(d) {
     let output = [];
     extractPair(d[0], output);
-    d[1].forEach(e => {
-        if(e[0]) output.push(...e[0]);
-        extractPair(e[1], output);
-    });
+    if(d[1]) {
+        d[1].forEach(e => {
+            if(e[0]) output.push(...e[0]);
+            extractPair(e[1], output);
+        });
+    }
     return output;
 }
 
@@ -83,7 +85,7 @@ var grammar = {
     {"name": "array$ebnf$1$subexpression$1", "symbols": ["_", {"literal":","}, "_", "value"]},
     {"name": "array$ebnf$1", "symbols": ["array$ebnf$1", "array$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "array", "symbols": [{"literal":"["}, "_", "value", "array$ebnf$1", "_", {"literal":"]"}], "postprocess": extractArray},
-    {"name": "pair", "symbols": ["unquoted", "_", {"literal":"="}, "_", "value"], "postprocess": (d) => [d[0], d[4]]},
+    {"name": "pair", "symbols": ["unquoted", "_", {"literal":"="}, "_", "value"], "postprocess": (d) => [new pair.Pair(d[0], d[4])]},
     {"name": "pairs$ebnf$1", "symbols": []},
     {"name": "pairs$ebnf$1$subexpression$1", "symbols": ["__", "pair"]},
     {"name": "pairs$ebnf$1", "symbols": ["pairs$ebnf$1", "pairs$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},

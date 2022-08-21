@@ -1,5 +1,4 @@
 import { Writer } from "jomini/dist/umd/jomini";
-import { Pair } from "./Pair";
 
 export class Comment {
   public readonly value: string;

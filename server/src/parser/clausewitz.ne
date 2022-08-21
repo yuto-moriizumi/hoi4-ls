@@ -35,8 +35,8 @@ object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}
 
 array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
-# pair -> unquoted _ "=" _ value {% (d) => new pair.Pair(d[0], d[4]) %}
-pair -> unquoted _ "=" _ value {% (d) => [d[0], d[4]] %}
+pair -> unquoted _ "=" _ value {% (d) => [new pair.Pair(d[0], d[4])] %}
+# pair -> unquoted _ "=" _ value {% (d) => [d[0], d[4]] %}
 pairs -> pair (__ pair):* {% extractPairs %}
 
 # comment -> %comment {% (d) => ["comment", d[0].value] %}
@@ -59,16 +59,18 @@ function extractRoot(d) {
 }
 
 function extractPair(kv, output) {
-    if(kv[0]) { output.push([kv[0], kv[1]]); }
+    if(kv[0]) { output.push(kv[0]); }
 }
 
 function extractPairs(d) {
     let output = [];
     extractPair(d[0], output);
-    d[1].forEach(e => {
-        if(e[0]) output.push(...e[0]);
-        extractPair(e[1], output);
-    });
+    if(d[1]) {
+        d[1].forEach(e => {
+            if(e[0]) output.push(...e[0]);
+            extractPair(e[1], output);
+        });
+    }
     return output;
 }
 
