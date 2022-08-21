@@ -1,5 +1,5 @@
 import { Jomini } from "jomini";
-import fs from "fs";
+
 import { GenericSyntax } from "./GenericSyntax";
 
 // async function main() {
@@ -25,7 +25,9 @@ async function main() {
   // // eslint-disable-next-line no-useless-escape
   // parser.feed("id = SSW_ACO.1 id = SSW_ACO.2");
 
-  const text = fs.readFileSync("_ssw_Fate_of_Countries_Eastern_Europe.txt").toString();
+  const text = fs
+    .readFileSync("_ssw_Fate_of_Countries_Eastern_Europe.txt")
+    .toString();
   // const text = fs.readFileSync("ssw_ACO.txt").toString();
   // const text = "a=yes b=yes c={a=yes}"
   parser.feed(text);

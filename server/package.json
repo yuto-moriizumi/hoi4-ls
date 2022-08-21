@@ -1,23 +1,28 @@
 {
-	"name": "lsp-sample-server",
-	"description": "Example implementation of a language server in node.",
-	"version": "1.0.0",
-	"author": "Microsoft Corporation",
-	"license": "MIT",
-	"engines": {
-		"node": "*"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
-	},
-	"dependencies": {
-		"vscode-languageserver": "^7.0.0",
-		"vscode-languageserver-textdocument": "^1.0.4"
-	},
-	"scripts": {},
-	"devDependencies": {
-		"moo": "^0.5.1",
-		"nearley": "^2.20.1"
-	}
+  "name": "lsp-sample-server",
+  "description": "Example implementation of a language server in node.",
+  "version": "1.0.0",
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/vscode-extension-samples"
+  },
+  "dependencies": {
+    "jomini": "^0.7.0",
+    "vscode-languageserver": "^7.0.0",
+    "vscode-languageserver-textdocument": "^1.0.4"
+  },
+  "scripts": {
+    "start": "ts-node ./src/parser/parse.ts",
+    "gen-parser": "nearleyc ./src/parser/clausewitz.ne -o ./src/parser/clausewitz.js"
+  },
+  "devDependencies": {
+    "moo": "^0.5.1",
+    "nearley": "^2.20.1",
+    "ts-node": "^10.9.1"
+  }
 }
