@@ -8,6 +8,6 @@ export class Comment {
   }
 
   public format(writer: Writer) {
-    writer.write_unquoted(this.value);
+    writer.write_header(this.value);
   }
 }

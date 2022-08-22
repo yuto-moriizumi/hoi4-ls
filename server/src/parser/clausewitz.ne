@@ -1,9 +1,12 @@
+@preprocessor typescript
 @{%
-const moo = require('moo');
-const lexer = moo.compile({
+import { Comment } from "./syntax/Comment";
+import { Pair } from "./syntax/Pair";
+import { compile } from "moo";
+const lexer = compile({
     space: { match: /\s+/, lineBreaks: true },
     number: /-?(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?\b/,
-    quoted: /"(?:\\["bfnrt\/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
+    quoted: /"(?:\\["bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
     '{': '{',
     '}': '}',
     '[': '[',
@@ -14,8 +17,6 @@ const lexer = moo.compile({
     unquoted: /(?:[^"\\\n\s#=])+/,
     comment: /#.*$/,
 });
-const comment = require("./syntax/Comment.ts");
-const pair = require("./syntax/Pair.ts");
 %}
 @lexer lexer
 
@@ -35,13 +36,13 @@ object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}
 
 array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
-pair -> unquoted _ "=" _ value {% (d) => [new pair.Pair(d[0], d[4])] %}
+pair -> unquoted _ "=" _ value {% (d) => [new Pair(d[0], d[4])] %}
 # pair -> unquoted _ "=" _ value {% (d) => [d[0], d[4]] %}
 pairs -> pair (__ pair):* {% extractPairs %}
 
 # comment -> %comment {% (d) => ["comment", d[0].value] %}
 # comment -> %comment {% (d) => d[0] %}
-comment -> %comment {% (d) => new comment.Comment(d[0].text) %}
+comment -> %comment {% (d) => new Comment(d[0].text) %}
 
 # Null allowed space
 _ -> null | __ {% (d) => d[0] || null %} 
@@ -50,7 +51,7 @@ _ -> null | __ {% (d) => d[0] || null %}
 __ -> %space {% () => null %} | _ comment _ {% extractComments %}
 
 @{%
-function extractRoot(d) {
+function extractRoot(d: any[]) {
     const output = [];
     if(d[0]) output.push(...d[0]);
     output.push(...d[1]);
@@ -58,15 +59,15 @@ function extractRoot(d) {
     return output;
 }
 
-function extractPair(kv, output) {
+function extractPair(kv: any[], output: any[]) {
     if(kv[0]) { output.push(kv[0]); }
 }
 
-function extractPairs(d) {
-    let output = [];
+function extractPairs(d: any[]) {
+    const output: any[] = [];
     extractPair(d[0], output);
     if(d[1]) {
-        d[1].forEach(e => {
+        d[1].forEach((e: any) => {
             if(e[0]) output.push(...e[0]);
             extractPair(e[1], output);
         });
@@ -74,16 +75,16 @@ function extractPairs(d) {
     return output;
 }
 
-function extractComments(d) {
-    let output = [];
+function extractComments(d: any[]) {
+    const output: any[] = [];
     if(d[0]) output.push(...d[0]);
     output.push(d[1]);
     if(d[2]) output.push(...d[2]);
     return output;
 }
 
-function extractArray(d) {
-    let output = [d[2]];
+function extractArray(d: any[]) {
+    const output: any[] = [d[2]];
 
     for (let i in d[3]) {
         output.push(d[3][i][3]);
