@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // Generated automatically by nearley, version 2.20.1
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
@@ -17,7 +18,6 @@ import { compile } from "moo";
 import {
   extractArray,
   extractRoot,
-  extractPair,
   extractPairs,
   extractComments,
 } from "./postProcess";
@@ -129,7 +129,7 @@ const grammar: Grammar = {
     {
       name: "pair",
       symbols: ["unquoted", "_", { literal: "=" }, "_", "value"],
-      postprocess: (d) => [new Pair(d[0], d[4])],
+      postprocess: (d) => new Pair(d[0], d[4]),
     },
     { name: "pairs$ebnf$1", symbols: [] },
     { name: "pairs$ebnf$1$subexpression$1", symbols: ["__", "pair"] },

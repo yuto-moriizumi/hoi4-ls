@@ -48,12 +48,12 @@ export function extractRoot(
 
 type PairOrCommentArr = (Pair | Comment)[];
 
-export function extractPairs(d: [[Pair], [CommentArrOrNull, [Pair]][] | null]) {
+export function extractPairs(d: [Pair, [CommentArrOrNull, Pair][] | null]) {
   const output: PairOrCommentArr = [];
-  const [[pair], tupleArr] = d;
+  const [pair, tupleArr] = d;
   if (pair) output.push(pair);
   if (tupleArr) {
-    tupleArr.forEach(([commentArr, [pair]]) => {
+    tupleArr.forEach(([commentArr, pair]) => {
       if (commentArr) output.push(...commentArr);
       if (pair) output.push(pair);
     });

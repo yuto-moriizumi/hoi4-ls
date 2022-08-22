@@ -36,7 +36,7 @@ object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}
 
 array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
-pair -> unquoted _ "=" _ value {% (d) => [new Pair(d[0], d[4])] %}
+pair -> unquoted _ "=" _ value {% (d) => new Pair(d[0], d[4]) %}
 
 pairs -> pair (__ pair):* {% extractPairs %}
 
