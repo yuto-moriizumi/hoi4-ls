@@ -3,7 +3,7 @@
 import { Comment } from "./syntax/Comment";
 import { Pair } from "./syntax/Pair";
 import { compile } from "moo";
-import { extractArray, extractRoot, extractPair, extractPairs, extractComments } from "./postProcess";
+import { extractArray, extractRoot, extractPairs, extractComments } from "./postProcess";
 
 const lexer = compile({
     space: { match: /\s+/, lineBreaks: true },
