@@ -3,8 +3,8 @@ import { Token } from "moo";
 export class Comment {
   private readonly value!: string;
 
-  constructor(token: Token) {
-    this.value = token.text;
+  constructor(token: Token | string) {
+    this.value = typeof token === "object" ? token.text : token;
   }
 
   public format(indent: number) {

@@ -7,8 +7,8 @@ export class Pair {
   private readonly key: string;
   private readonly value: Value;
 
-  constructor(key: Token, value: Value | Token) {
-    this.key = key.text;
+  constructor(key: Token | string, value: Value | Token) {
+    this.key = typeof key === "object" ? key.text : key;
     if (
       value instanceof Array &&
       value.length > 0 &&

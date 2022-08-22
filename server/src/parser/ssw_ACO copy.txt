@@ -1,10 +1,10 @@
 # hello.
 #hi?
-add_namespace=SSW_ACO
+add_namespace = SSW_ACO
 # hellO!
 #hi?
-country_event = { 
-	# test
+country_event = {
+	# tests
 	# test1
 	id = SSW_ACO.1
 	immediate = {
@@ -23,7 +23,6 @@ country_event = {
 		}
 	}
 }
-
 country_event = {
 	#
 	id = SSW_ACO.2

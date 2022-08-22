@@ -1,7 +1,7 @@
 // Generated automatically by nearley, version 2.20.1
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
-
+// @ts-nocheck
 function id(d: any[]): any {
   return d[0];
 }
@@ -14,6 +14,14 @@ declare let space: any;
 import { Comment } from "./syntax/Comment";
 import { Pair } from "./syntax/Pair";
 import { compile } from "moo";
+import {
+  extractArray,
+  extractRoot,
+  extractPair,
+  extractPairs,
+  extractComments,
+} from "./postProcess";
+
 const lexer = compile({
   space: { match: /\s+/, lineBreaks: true },
   number: /-?(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?\b/,
@@ -28,50 +36,6 @@ const lexer = compile({
   unquoted: /(?:[^"\\\n\s#=])+/,
   comment: /#.*$/,
 });
-
-function extractRoot(d: any[]) {
-  const output = [];
-  if (d[0]) output.push(...d[0]);
-  output.push(...d[1]);
-  if (d[2]) output.push(...d[2]);
-  return output;
-}
-
-function extractPair(kv: any[], output: any[]) {
-  if (kv[0]) {
-    output.push(kv[0]);
-  }
-}
-
-function extractPairs(d: any[]) {
-  const output: any[] = [];
-  extractPair(d[0], output);
-  if (d[1]) {
-    d[1].forEach((e: any) => {
-      if (e[0]) output.push(...e[0]);
-      extractPair(e[1], output);
-    });
-  }
-  return output;
-}
-
-function extractComments(d: any[]) {
-  const output: any[] = [];
-  if (d[0]) output.push(...d[0]);
-  output.push(d[1]);
-  if (d[2]) output.push(...d[2]);
-  return output;
-}
-
-function extractArray(d: any[]) {
-  const output: any[] = [d[2]];
-
-  for (const i in d[3]) {
-    output.push(d[3][i][3]);
-  }
-
-  return output;
-}
 
 interface NearleyToken {
   value: any;
@@ -89,11 +53,7 @@ interface NearleyLexer {
 interface NearleyRule {
   name: string;
   symbols: NearleySymbol[];
-  postprocess?: (
-    d: any[],
-    loc?: number,
-    reject?: Record<string, unknown>
-  ) => any;
+  postprocess?: (d: any[], loc?: number, reject?: {}) => any;
 }
 
 type NearleySymbol =
