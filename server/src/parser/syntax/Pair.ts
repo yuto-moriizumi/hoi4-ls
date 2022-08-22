@@ -23,8 +23,14 @@ export class Pair {
       return res + this.value + "\n";
     if (typeof this.value === "boolean")
       return res + (this.value ? "yes" : "no") + "\n";
-    return (
-      res + "{\n" + this.value.format(indent + 1) + "\t".repeat(indent) + "}\n"
-    );
+    if (this.value instanceof Pairs)
+      return (
+        res +
+        "{\n" +
+        this.value.format(indent + 1) +
+        "\t".repeat(indent) +
+        "}\n"
+      );
+    throw new Error("unexpected value type: " + this.value);
   }
 }
