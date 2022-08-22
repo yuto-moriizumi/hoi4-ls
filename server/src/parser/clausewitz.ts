@@ -33,7 +33,7 @@ const lexer = compile({
   "=": "=",
   yes: "yes",
   no: "no",
-  unquoted: /(?:[^"\\\n\s#=])+/,
+  unquoted: /(?:[^"\\\n\s#={}[\],])+/,
   comment: /#.*$/,
 });
 
@@ -75,7 +75,6 @@ const grammar: Grammar = {
     { name: "value", symbols: ["boolean"], postprocess: id },
     { name: "value", symbols: ["quoted"], postprocess: id },
     { name: "value", symbols: ["unquoted"], postprocess: id },
-    { name: "value", symbols: ["array"], postprocess: id },
     { name: "value", symbols: ["object"], postprocess: id },
     {
       name: "number",
@@ -103,28 +102,6 @@ const grammar: Grammar = {
       name: "object",
       symbols: [{ literal: "{" }, "root", { literal: "}" }],
       postprocess: (d) => d[1],
-    },
-    { name: "array$ebnf$1", symbols: [] },
-    {
-      name: "array$ebnf$1$subexpression$1",
-      symbols: ["_", { literal: "," }, "_", "value"],
-    },
-    {
-      name: "array$ebnf$1",
-      symbols: ["array$ebnf$1", "array$ebnf$1$subexpression$1"],
-      postprocess: (d) => d[0].concat([d[1]]),
-    },
-    {
-      name: "array",
-      symbols: [
-        { literal: "[" },
-        "_",
-        "value",
-        "array$ebnf$1",
-        "_",
-        { literal: "]" },
-      ],
-      postprocess: extractArray,
     },
     {
       name: "pair",

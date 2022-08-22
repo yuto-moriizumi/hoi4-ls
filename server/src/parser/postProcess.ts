@@ -21,15 +21,12 @@ export const extractArray = (
   output.push(value);
   if (items)
     output.push(
-      ...items
-        .map(([preComments, _, postComments, value]) => {
-          const output: ValueOrCommentArr = [];
-          if (preComments) output.push(...preComments);
-          if (postComments) output.push(...postComments);
-          output.push(value);
-          return output;
-        })
-        .reduce((acc, cv) => [...acc, cv], [])
+      ...items.reduce((acc, [preComments, _, postComments, value]) => {
+        if (preComments) acc.push(...preComments);
+        if (postComments) acc.push(...postComments);
+        acc.push(value);
+        return acc;
+      }, [] as ValueOrCommentArr)
     );
   if (postComments) output.push(...postComments);
   return output;
