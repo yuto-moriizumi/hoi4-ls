@@ -1,8 +1,10 @@
-export class Comment {
-  private readonly value: string;
+import { Token } from "moo";
 
-  constructor(value: string) {
-    this.value = value;
+export class Comment {
+  private readonly value!: string;
+
+  constructor(token: Token) {
+    this.value = token.text;
   }
 
   public format(indent: number) {

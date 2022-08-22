@@ -3,6 +3,8 @@
 import { Comment } from "./syntax/Comment";
 import { Pair } from "./syntax/Pair";
 import { compile } from "moo";
+import { extractArray } from "./postProcess";
+
 const lexer = compile({
     space: { match: /\s+/, lineBreaks: true },
     number: /-?(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?\b/,
@@ -27,7 +29,7 @@ root -> _ pairs _  {% extractRoot %}
 value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %} | array {% id %} | object {% id %}
 
 number -> %number {% (d) => parseFloat(d[0].value) %}
-quoted -> %quoted {% (d) => d[0].value %}
+quoted -> %quoted {% (d) => d[0] %}
 unquoted -> %unquoted {% (d) => d[0].value %}
 boolean -> "yes" {% () => true %} | "no" {% () => false %}
 
@@ -37,11 +39,9 @@ object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}
 array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
 pair -> unquoted _ "=" _ value {% (d) => [new Pair(d[0], d[4])] %}
-# pair -> unquoted _ "=" _ value {% (d) => [d[0], d[4]] %}
+
 pairs -> pair (__ pair):* {% extractPairs %}
 
-# comment -> %comment {% (d) => ["comment", d[0].value] %}
-# comment -> %comment {% (d) => d[0] %}
 comment -> %comment {% (d) => new Comment(d[0].text) %}
 
 # Null allowed space
@@ -82,15 +82,4 @@ function extractComments(d: any[]) {
     if(d[2]) output.push(...d[2]);
     return output;
 }
-
-function extractArray(d: any[]) {
-    const output: any[] = [d[2]];
-
-    for (let i in d[3]) {
-        output.push(d[3][i][3]);
-    }
-
-    return output;
-}
-
 %}

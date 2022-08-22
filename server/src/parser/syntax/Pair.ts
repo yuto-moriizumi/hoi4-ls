@@ -1,3 +1,4 @@
+import { Token } from "moo";
 import { Comment } from "./Comment";
 import { Pairs } from "./Pairs";
 
@@ -6,15 +7,26 @@ export class Pair {
   private readonly key: string;
   private readonly value: Value;
 
-  constructor(key: string, value: Value) {
-    this.key = key;
+  constructor(key: Token, value: Value | Token) {
+    this.key = key.text;
     if (
       value instanceof Array &&
       value.length > 0 &&
       (value[0] instanceof Comment || value[0] instanceof Pair)
     ) {
       this.value = new Pairs(value);
-    } else this.value = value;
+      return;
+    }
+    if (
+      typeof value === "string" ||
+      typeof value === "boolean" ||
+      typeof value === "number" ||
+      value instanceof Pairs
+    ) {
+      this.value = value;
+      return;
+    }
+    this.value = value.text;
   }
 
   public format(indent: number) {
