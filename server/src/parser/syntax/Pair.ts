@@ -1,4 +1,3 @@
-import type { Writer } from "jomini/dist/umd/jomini";
 import { Comment } from "./Comment";
 import { Pairs } from "./Pairs";
 
@@ -18,22 +17,14 @@ export class Pair {
     } else this.value = value;
   }
 
-  public format(writer: Writer) {
-    writer.write_unquoted(this.key);
-    if (typeof this.value === "string") {
-      writer.write_unquoted(this.value);
-      return;
-    }
-    if (typeof this.value === "boolean") {
-      writer.write_bool(this.value);
-      return;
-    }
-    if (typeof this.value === "number") {
-      writer.write_integer(this.value);
-      return;
-    }
-    writer.write_object_start();
-    this.value.format(writer);
-    writer.write_end();
+  public format(indent: number) {
+    const res = "\t".repeat(indent) + this.key + " = ";
+    if (typeof this.value === "string" || typeof this.value === "number")
+      return res + this.value + "\n";
+    if (typeof this.value === "boolean")
+      return res + (this.value ? "yes" : "no") + "\n";
+    return (
+      res + "{\n" + this.value.format(indent + 1) + "\t".repeat(indent) + "}\n"
+    );
   }
 }

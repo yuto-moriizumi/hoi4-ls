@@ -1,5 +1,3 @@
-import type { Writer } from "jomini/dist/umd/jomini";
-
 export class Comment {
   private readonly value: string;
 
@@ -7,8 +5,7 @@ export class Comment {
     this.value = value;
   }
 
-  public format(writer: Writer) {
-    writer.write_unquoted(this.value);
-    writer.write_operator("" as any);
+  public format(indent: number) {
+    return "\t".repeat(indent) + this.value + "\n";
   }
 }
