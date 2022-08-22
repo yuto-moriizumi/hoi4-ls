@@ -27,7 +27,7 @@ root -> _ pairs _  {% extractRoot %}
 value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %} | array {% id %} | object {% id %}
 
 number -> %number {% (d) => parseFloat(d[0].value) %}
-quoted -> %quoted {% (d) => JSON.parse(d[0].value) %}
+quoted -> %quoted {% (d) => d[0].value %}
 unquoted -> %unquoted {% (d) => d[0].value %}
 boolean -> "yes" {% () => true %} | "no" {% () => false %}
 

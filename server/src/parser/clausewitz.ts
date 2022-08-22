@@ -125,7 +125,7 @@ const grammar: Grammar = {
     {
       name: "quoted",
       symbols: [lexer.has("quoted") ? { type: "quoted" } : quoted],
-      postprocess: (d) => JSON.parse(d[0].value),
+      postprocess: (d) => d[0].value,
     },
     {
       name: "unquoted",
