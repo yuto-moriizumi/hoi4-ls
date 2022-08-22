@@ -8,7 +8,9 @@
     "strict": true,
     "outDir": "out",
     "rootDir": "src",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowJs": true,
+    "esModuleInterop": true
   },
   "include": ["src"],
   "exclude": ["node_modules", ".vscode-test"]

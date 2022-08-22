@@ -3,11 +3,12 @@
 // import { readFileSync } from "fs";
 import { Grammar, Parser } from "nearley";
 import { Root } from "./syntax/Root";
+import grammar from "./clausewitz";
 
 export function parse(text: string) {
   // text: string
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const grammar = require("./clausewitz.js");
+  // const grammar = require("./src/parser/clausewitz.js");
   const parser = new Parser(Grammar.fromCompiled(grammar));
   // const text = readFileSync(
   //   "./src/parser/_ssw_Fate_of_Countries_Eastern_Europe.txt"
