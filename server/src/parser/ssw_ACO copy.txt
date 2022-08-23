@@ -21,8 +21,10 @@ country_event = {
 		ai_chance = {
 			factor = 98
 		}
+		a = yes
 	}
 }
+
 country_event = {
 	#
 	id = SSW_ACO.2
