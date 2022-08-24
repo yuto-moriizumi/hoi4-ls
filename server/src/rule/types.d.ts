@@ -5,14 +5,24 @@ export const enum Value {
   BOOL = "bool",
 }
 
+export const enum Scope {
+  COUNTRY = "country",
+}
+
+export const enum Context {
+  CONDITION = "condition",
+  EFFECT = "effect",
+}
+
 export type Rule =
   | (
       | {
           type: Value;
         }
       | {
-          syntax: Record<string, Rule>;
+          syntax?: Record<string, Rule | Rule[]>;
         }
     ) & {
-      optional?: true;
+      cardinality?: [number, number | "inf"]; // default is [1,1]
+      provide?: { context: Context; scope: Scope };
     };
