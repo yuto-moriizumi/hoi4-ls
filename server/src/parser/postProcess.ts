@@ -43,7 +43,7 @@ export function extractRoot(
   return output;
 }
 
-type PairOrCommentArr = (Pair | Comment)[];
+export type PairOrCommentArr = (Pair | Comment)[];
 
 export function extractPairs(d: [Pair, [CommentArrOrNull, Pair][] | null]) {
   const output: PairOrCommentArr = [];

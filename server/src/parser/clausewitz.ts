@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 // Generated automatically by nearley, version 2.20.1
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
@@ -14,6 +13,7 @@ declare let space: any;
 
 import { Comment } from "./syntax/Comment";
 import { Pair } from "./syntax/Pair";
+import { Token } from "./syntax/Token";
 import { compile } from "moo";
 import {
   extractArray,
@@ -28,8 +28,6 @@ const lexer = compile({
   quoted: /"(?:\\["bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
   "{": "{",
   "}": "}",
-  "[": "[",
-  "]": "]",
   "=": "=",
   yes: "yes",
   no: "no",
@@ -89,7 +87,7 @@ const grammar: Grammar = {
     {
       name: "unquoted",
       symbols: [lexer.has("unquoted") ? { type: "unquoted" } : unquoted],
-      postprocess: (d) => d[0].value,
+      postprocess: (d) => new Token(d[0]),
     },
     { name: "boolean", symbols: [{ literal: "yes" }], postprocess: () => true },
     { name: "boolean", symbols: [{ literal: "no" }], postprocess: () => false },

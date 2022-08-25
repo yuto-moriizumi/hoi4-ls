@@ -6,6 +6,6 @@ export function parse(text: string) {
   const parser = new Parser(Grammar.fromCompiled(grammar));
   parser.feed(text);
   const result = new Root(parser.results[0]);
-  console.dir(result, { depth: 2 });
+  console.dir(result, { depth: null });
   return result;
 }

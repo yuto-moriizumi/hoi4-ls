@@ -24,7 +24,6 @@ country_event = {
 		a = yes
 	}
 }
-
 country_event = {
 	#
 	id = SSW_ACO.2

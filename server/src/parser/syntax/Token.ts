@@ -1,8 +1,5 @@
-import { Pairs } from "./Pairs";
-
-type Value = string | boolean | number;
 export class Token {
-  public readonly value: Value;
+  public readonly value: string;
   public readonly line: number;
   public readonly col: number;
 

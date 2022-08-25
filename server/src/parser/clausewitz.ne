@@ -2,6 +2,7 @@
 @{%
 import { Comment } from "./syntax/Comment";
 import { Pair } from "./syntax/Pair";
+import { Token } from "./syntax/Token";
 import { compile } from "moo";
 import { extractArray, extractRoot, extractPairs, extractComments } from "./postProcess";
 
@@ -27,7 +28,7 @@ value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %
 
 number -> %number {% (d) => parseFloat(d[0].value) %}
 quoted -> %quoted {% (d) => d[0].value %}
-unquoted -> %unquoted {% (d) => d[0].value %}
+unquoted -> %unquoted {% (d) => new Token(d[0]) %}
 boolean -> "yes" {% () => true %} | "no" {% () => false %}
 
 object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}

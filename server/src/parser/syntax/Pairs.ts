@@ -1,9 +1,8 @@
-import { Comment } from "./Comment";
-import { Pair } from "./Pair";
+import { PairOrCommentArr } from "../postProcess";
 
 export class Pairs {
-  public readonly pairs: (Pair | Comment)[];
-  constructor(pairs: (Pair | Comment)[]) {
+  public readonly pairs: PairOrCommentArr;
+  constructor(pairs: PairOrCommentArr) {
     this.pairs = pairs;
   }
   public format(indent: number): string {

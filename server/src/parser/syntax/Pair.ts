@@ -1,40 +1,25 @@
-import { Token } from "moo";
-import { Comment } from "./Comment";
+import { PairOrCommentArr } from "../postProcess";
 import { Pairs } from "./Pairs";
+import { Token } from "./Token";
 
-type Value = Pairs | string | boolean | number;
+type Value = Pairs | string | boolean | number | Token;
 export class Pair {
-  public readonly key: string;
+  public readonly key: Token;
   public readonly value: Value;
 
-  constructor(key: Token | string, value: Value | Token) {
-    this.key = typeof key === "object" ? key.text : key;
-    if (
-      value instanceof Array &&
-      value.length > 0 &&
-      (value[0] instanceof Comment || value[0] instanceof Pair)
-    ) {
-      this.value = new Pairs(value);
-      return;
-    }
-    if (
-      typeof value === "string" ||
-      typeof value === "boolean" ||
-      typeof value === "number" ||
-      value instanceof Pairs
-    ) {
-      this.value = value;
-      return;
-    }
-    this.value = value.text;
+  constructor(key: Token, value: Value | PairOrCommentArr) {
+    this.key = key;
+    // generate pairs here to improve performance
+    this.value = value instanceof Array ? new Pairs(value) : value;
   }
 
   public format(indent: number) {
-    const res = "\t".repeat(indent) + this.key + " = ";
+    const res = "\t".repeat(indent) + this.key.value + " = ";
     if (typeof this.value === "string" || typeof this.value === "number")
       return res + this.value + "\n";
     if (typeof this.value === "boolean")
       return res + (this.value ? "yes" : "no") + "\n";
+    if (this.value instanceof Token) return res + this.value.value + "\n";
     if (this.value instanceof Pairs)
       return (
         res +
