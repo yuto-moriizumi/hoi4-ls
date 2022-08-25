@@ -8,4 +8,7 @@ export class Pairs {
   public format(indent: number): string {
     return this.pairs.map((pair) => pair.format(indent)).join("");
   }
+  public toString() {
+    return JSON.stringify(this.pairs);
+  }
 }

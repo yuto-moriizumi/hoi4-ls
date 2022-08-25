@@ -30,4 +30,8 @@ export class Pair {
       );
     throw new Error("unexpected value type: " + this.value);
   }
+
+  public toString() {
+    return JSON.stringify(this);
+  }
 }
