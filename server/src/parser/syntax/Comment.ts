@@ -1,7 +1,7 @@
 import { Token } from "moo";
 
 export class Comment {
-  private readonly value!: string;
+  public readonly value!: string;
 
   constructor(token: Token | string) {
     this.value = typeof token === "object" ? token.text : token;

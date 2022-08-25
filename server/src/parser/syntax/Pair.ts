@@ -4,8 +4,8 @@ import { Pairs } from "./Pairs";
 
 type Value = Pairs | string | boolean | number;
 export class Pair {
-  private readonly key: string;
-  private readonly value: Value;
+  public readonly key: string;
+  public readonly value: Value;
 
   constructor(key: Token | string, value: Value | Token) {
     this.key = typeof key === "object" ? key.text : key;
