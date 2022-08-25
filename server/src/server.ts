@@ -12,7 +12,7 @@ import {
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { format } from "./format";
 import { onCompletion, onCompletionResolve } from "./completion";
-import { validateTextDocument } from "./validate";
+import { validateTextDocument } from "./validator/validate";
 import {
   hasConfigurationCapability,
   onInitialize,
