@@ -13,8 +13,8 @@ export class Token {
 
   public getRange(): Range {
     return {
-      start: { line: this.line, character: this.col },
-      end: { line: this.line, character: this.col + this.value.length },
+      start: { line: this.line - 1, character: this.col - 1 },
+      end: { line: this.line - 1, character: this.col + this.value.length - 1 },
     };
   }
 

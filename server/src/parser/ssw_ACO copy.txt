@@ -10,6 +10,7 @@ country_event = {
 	immediate = {
 		log = "[GetDateText]: [Root.GetName]: event SSW_ACO.1"
 	}
+	hoge = yes
 	title = SSW_ACO.1.t
 	desc = SSW_ACO.1.desc
 	picture = GFX
@@ -24,6 +25,7 @@ country_event = {
 		a = yes
 	}
 }
+
 country_event = {
 	#
 	id = SSW_ACO.2

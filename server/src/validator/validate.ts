@@ -4,6 +4,7 @@ import { parse } from "../parser/parse";
 import { Pair } from "../parser/syntax/Pair";
 import { Context, Settings } from "../server";
 import { country_event } from "./rule/country_event";
+import { Rule } from "./rule/types";
 
 export async function validateTextDocument(
   context: Context,
@@ -14,24 +15,41 @@ export async function validateTextDocument(
   const text = textDocument.getText();
   const ast = parse(text);
 
-  const rules = { country_event } as const;
+  const rawRules: Record<string, Rule> = { country_event };
+  const rules = Object.keys(rawRules).map(key => {
+    new Rule(key,)
+  });
 
   const diagnostics: Diagnostic[] = [];
 
   (ast.pairs.filter((pair) => pair instanceof Pair) as Pair[]).forEach(
     (pair) => {
-      if (!(pair.key.value in rules)) {
-        context.connection.console.log(
-          "oh i found " +
-            pair.value +
-            " seems to be unexpected with " +
-            pair.value.toString()
-        );
+      const { key, value } = pair;
+      if (!(key.value in rules)) {
         const diagnostic: Diagnostic = {
-          range: pair.key.getRange(),
-          message: "hi!",
+          range: key.getRange(),
+          message: `Unknown syntax: ${key.value} ${key.getRange()}`,
         };
         diagnostics.push(diagnostic);
+        return;
+      }
+      // Type check
+      const actualType = pair.getValueType();
+      const rule = rules[key.value];
+      if ("type" in rule) {
+        const ruleType = rule.type;
+        if (typeof value === "string") {
+          if (value.startsWith('"')) {
+            if (ruleType === "unquoted") {
+              const diagnostic: Diagnostic = {
+                range: key.getRange(),
+                message: `Wrong type for ${key.value}, expected unquoted string but quoted string`,
+              };
+              diagnostics.push(diagnostic);
+              return;
+            }
+          }
+        }
       }
     }
   );
