@@ -15,15 +15,16 @@ export const enum Context {
   EFFECT = "effect",
 }
 
-export type Rule = PrimitiveRule | RawObjectRule;
+export type Rule = PrimitiveRule | RequireOne<RawObjectRule>;
 
 type PrimitiveRule = BaseRule & {
   type: Omit<Value, Value.OBJECT>;
 };
 
 type RawObjectRule = BaseRule & {
-  type?: Value.OBJECT;
-  syntax?: Record<string, Rule | Rule[]>;
+  type: Value.OBJECT;
+  syntax: Record<string, Rule | Rule[]>;
+  provide: { context: Context; scope: Scope };
 };
 
 type NormalizedObjectRule = BaseRule & {
@@ -33,7 +34,6 @@ type NormalizedObjectRule = BaseRule & {
 
 type BaseRule = {
   cardinality?: [number, number | "inf"]; // default is [1,1]
-  provide?: { context: Context; scope: Scope };
 };
 
 // type NormalizedRule = PrimitiveRule | NormalizedObjectRule;
@@ -52,3 +52,10 @@ type A = B & {
 type B = {
   [key: string]: A;
 };
+
+type RequireOne<T, K extends keyof T = keyof T> = K extends keyof T
+  ? PartialRequire<T, K>
+  : never;
+type PartialRequire<O, K extends keyof O> = {
+  [P in K]-?: O[P];
+} & O;
