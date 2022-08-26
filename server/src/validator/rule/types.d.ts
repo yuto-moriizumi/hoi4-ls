@@ -36,4 +36,19 @@ type BaseRule = {
   provide?: { context: Context; scope: Scope };
 };
 
-type NormalizedRule = PrimitiveRule | NormalizedObjectRule;
+// type NormalizedRule = PrimitiveRule | NormalizedObjectRule;
+
+interface NormalizedRule extends PrimitiveRule {
+  type: Value;
+  syntax?: Record<string, Rule | Rule[]>;
+}
+
+type A = B & {
+  _type: string;
+  _cardinality?: [number, number | "inf"]; // default is [1,1]
+  _provide?: { context: Context; scope: Scope };
+};
+
+type B = {
+  [key: string]: A;
+};
