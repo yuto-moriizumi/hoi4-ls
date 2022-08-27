@@ -4,6 +4,7 @@ import { parse } from "../parser/parse";
 import { Pair } from "../parser/syntax/Pair";
 import { Context, Settings } from "../server";
 import { country_event } from "./rule/country_event";
+import { RuleContainer } from "./rule/RuleContainer";
 import { Rule } from "./rule/types";
 
 export async function validateTextDocument(
@@ -15,10 +16,11 @@ export async function validateTextDocument(
   const text = textDocument.getText();
   const ast = parse(text);
 
+  // Convert raw rules to Rule Objects
   const rawRules: Record<string, Rule> = { country_event };
-  const rules = Object.keys(rawRules).map(key => {
-    new Rule(key,)
-  });
+  const rules = Object.fromEntries(
+    Object.entries(rawRules).map(([k, v]) => [k, new RuleContainer(v)])
+  );
 
   const diagnostics: Diagnostic[] = [];
 

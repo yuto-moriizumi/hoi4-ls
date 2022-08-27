@@ -1,19 +1,24 @@
-import { A, NormalizedRule, Rule, Value } from "./types";
+import { NormalizedRule, Rule, Value } from "./types";
 
-export class RuleContainer {
-  [key: string]: any;
-  public readonly rule: NormalizedRule;
+export class RuleContainer implements NormalizedRule {
+  readonly type;
+  readonly cardinality;
+  readonly provide;
+  readonly children?: Record<string, RuleContainer | RuleContainer[]>;
+
   constructor(rule: Rule) {
-    super();
-    rule.type = rule.type ?? Value.OBJECT;
-    this.rule = rule as NormalizedRule;
-
-    // this.set()
-    // this.type = rule.type;
-
-    const a = {} as A;
-    a.hoge;
-
-    this = rule;
+    this.type = (rule.type ?? Value.OBJECT) as Value;
+    this.cardinality = rule.cardinality ?? [1, 1];
+    if ("provide" in rule) this.provide = rule.provide;
+    if (!("children" in rule && rule.children !== undefined)) return;
+    const { children } = rule;
+    this.children = Object.fromEntries(
+      Object.entries(children).map(([k, v]) => [
+        k,
+        v instanceof Array
+          ? v.map((r) => new RuleContainer(r))
+          : new RuleContainer(v),
+      ])
+    );
   }
 }

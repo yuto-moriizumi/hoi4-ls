@@ -1,18 +1,18 @@
 import { Context, Rule, Scope, Value } from "./types";
 
 export const country_event: Rule = {
-  syntax: {
+  children: {
     id: { type: Value.UNQUOTED },
     immediate: {
       cardinality: [0, 1],
-      syntax: {
+      children: {
         log: { type: Value.QUOTED },
       },
     },
     title: [
       { type: Value.UNQUOTED },
       {
-        syntax: {
+        children: {
           trigger: {
             provide: { context: Context.CONDITION, scope: Scope.COUNTRY },
           },
@@ -27,11 +27,11 @@ export const country_event: Rule = {
     option: {
       cardinality: [0, "inf"],
       provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-      syntax: {
+      children: {
         name: { type: Value.UNQUOTED },
         ai_chance: {
           cardinality: [0, 1],
-          syntax: { factor: { type: Value.NUMBER } },
+          children: { factor: { type: Value.NUMBER } },
         },
       },
     },
