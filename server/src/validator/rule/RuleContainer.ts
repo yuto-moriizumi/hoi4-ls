@@ -1,10 +1,13 @@
-import { NormalizedRule, Rule, Value } from "./types";
+import { Diagnostic } from "vscode-languageserver";
+import { Pair } from "../../parser/syntax/Pair";
+import { Pairs } from "../../parser/syntax/Pairs";
+import { NormalizedRule, Rule, RuleContainerDict, Value } from "./types";
 
 export class RuleContainer implements NormalizedRule {
   readonly type;
   readonly cardinality;
   readonly provide;
-  readonly children?: Record<string, RuleContainer | RuleContainer[]>;
+  readonly children?: RuleContainerDict;
 
   constructor(rule: Rule) {
     this.type = (rule.type ?? Value.OBJECT) as Value;
@@ -20,5 +23,23 @@ export class RuleContainer implements NormalizedRule {
           : new RuleContainer(v),
       ])
     );
+  }
+
+  public validate(pair: Pair): Diagnostic[] {
+    const { key, value } = pair;
+    // Type check
+    const actualType = pair.getValueType();
+    const expectedType = this.type;
+    if (actualType !== expectedType) {
+      const diagnostic: Diagnostic = {
+        range: key.getRange(),
+        message: `Wrong type for ${key.value}, expected ${expectedType} but ${actualType}`,
+      };
+      return [diagnostic];
+    }
+    if (value instanceof Pairs)
+      return value.validate(this.children as RuleContainerDict);
+
+    return [];
   }
 }

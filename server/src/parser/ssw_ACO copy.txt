@@ -45,3 +45,5 @@ country_event = {
 		}
 	}
 }
+
+country_event = yes

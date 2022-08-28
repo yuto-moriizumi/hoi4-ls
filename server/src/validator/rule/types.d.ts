@@ -1,3 +1,5 @@
+import { RuleContainer } from './RuleContainer';
+
 export const enum Value {
   QUOTED = "quoted",
   UNQUOTED = "unquoted",
@@ -36,3 +38,5 @@ export interface NormalizedRule extends Required<BaseRule> {
   provide?: { context: Context; scope: Scope };
   children?: Record<string, Rule | Rule[]>;
 }
+
+export type RuleContainerDict = Record<string, RuleContainer | RuleContainer[]>;

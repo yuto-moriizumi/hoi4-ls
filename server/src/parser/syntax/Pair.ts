@@ -32,14 +32,12 @@ export class Pair {
   }
 
   public getValueType(): ValueType {
+    if (this.value instanceof Token) return ValueType.UNQUOTED;
     const type = typeof this.value;
     if (type === "boolean") return ValueType.BOOL;
     if (type === "number") return ValueType.NUMBER;
     if (type === "object") return ValueType.OBJECT;
-    if (type === "string")
-      return (this.value as string).startsWith('"')
-        ? ValueType.QUOTED
-        : ValueType.UNQUOTED;
+    if (type === "string") return ValueType.QUOTED;
     throw new Error("Unexpected type");
   }
 
