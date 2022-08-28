@@ -18,6 +18,16 @@ export class Pairs {
   public validate(ruleDict: RuleContainerDict): Diagnostic[] {
     let diagnostics: Diagnostic[] = [];
     const count = new Map<string, number>();
+
+    // Calc expected cardinality
+    const expectedCardinality = Object.fromEntries(
+      Object.entries(ruleDict).map(([k, v]) => {
+        if (v instanceof Array) {
+          return [k, v[0].cardinality];
+        }
+        return [k, v.cardinality];
+      })
+    );
     (this.pairs.filter((pair) => pair instanceof Pair) as Pair[]).forEach(
       (pair) => {
         const { key } = pair;
