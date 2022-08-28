@@ -3,12 +3,12 @@ import { PairOrCommentArr } from "../postProcess";
 import { Pairs } from "./Pairs";
 import { Token } from "./Token";
 
-type Value2 = Pairs | string | boolean | number | Token;
+type Value = Pairs | string | boolean | number | Token;
 export class Pair {
   public readonly key: Token;
-  public readonly value: Value2;
+  public readonly value: Value;
 
-  constructor(key: Token, value: Value2 | PairOrCommentArr) {
+  constructor(key: Token, value: Value | PairOrCommentArr) {
     this.key = key;
     // generate pairs here to improve performance
     this.value = value instanceof Array ? new Pairs(value) : value;

@@ -38,20 +38,14 @@ export async function validateTextDocument(
       // Type check
       const actualType = pair.getValueType();
       const rule = rules[key.value];
-      if ("type" in rule) {
-        const ruleType = rule.type;
-        if (typeof value === "string") {
-          if (value.startsWith('"')) {
-            if (ruleType === "unquoted") {
-              const diagnostic: Diagnostic = {
-                range: key.getRange(),
-                message: `Wrong type for ${key.value}, expected unquoted string but quoted string`,
-              };
-              diagnostics.push(diagnostic);
-              return;
-            }
-          }
-        }
+      const expectedType = rule.type;
+      if (actualType !== expectedType) {
+        const diagnostic: Diagnostic = {
+          range: key.getRange(),
+          message: `Wrong type for ${key.value}, expected ${expectedType} but ${actualType}`,
+        };
+        diagnostics.push(diagnostic);
+        return;
       }
     }
   );
