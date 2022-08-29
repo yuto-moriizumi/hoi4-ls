@@ -3,12 +3,6 @@ import { Context, Rule, Scope, Value } from "./types";
 export const country_event: Rule = {
   children: {
     id: { type: Value.UNQUOTED },
-    immediate: {
-      cardinality: [0, 1],
-      children: {
-        log: { type: Value.QUOTED },
-      },
-    },
     title: [
       { type: Value.UNQUOTED },
       {
@@ -24,6 +18,10 @@ export const country_event: Rule = {
     picture: { type: Value.UNQUOTED },
     is_triggered_only: { type: Value.BOOL, cardinality: [0, 1] },
     fire_only_once: { type: Value.BOOL, cardinality: [0, 1] },
+    immediate: {
+      cardinality: [0, 1],
+      provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
+    },
     option: {
       cardinality: [0, "inf"],
       provide: { context: Context.EFFECT, scope: Scope.COUNTRY },

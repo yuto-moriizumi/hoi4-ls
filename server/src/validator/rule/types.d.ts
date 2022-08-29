@@ -1,9 +1,11 @@
-import { RuleContainer } from './RuleContainer';
+import { RuleContainer } from "./RuleContainer";
 
 export const enum Value {
   QUOTED = "quoted",
   UNQUOTED = "unquoted",
-  NUMBER = "number",
+  LOCALISATION = "localisation",
+  NUMBER = "number", // number literal or variables
+  INT = "int",
   BOOL = "bool",
   OBJECT = "object",
 }
