@@ -24,6 +24,6 @@ export async function validateTextDocument(
   // Send the computed diagnostics to VSCode.
   context.connection.sendDiagnostics({
     uri: textDocument.uri,
-    diagnostics: ast.validate(rules),
+    diagnostics: ast.validate(rules, undefined),
   });
 }

@@ -38,7 +38,7 @@ export class RuleContainer implements NormalizedRule {
       return [diagnostic];
     }
     if (value instanceof Pairs)
-      return value.validate(this.children as RuleContainerDict);
+      return value.validate(this.children as RuleContainerDict, key);
 
     return [];
   }

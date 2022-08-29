@@ -39,7 +39,7 @@ export class Pairs {
         if (!(key.value in ruleDict)) {
           const diagnostic: Diagnostic = {
             range: key.getRange(),
-            message: `Unknown syntax: ${key.value} ${key.getRange()}`,
+            message: `Unknown syntax: ${key.value}`,
           };
           diagnostics.push(diagnostic);
           return;
