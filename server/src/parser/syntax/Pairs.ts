@@ -3,6 +3,7 @@ import { RuleContainer } from "../../validator/rule/RuleContainer";
 import { Rule, RuleContainerDict } from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pair } from "./Pair";
+import { Token } from "./Token";
 
 export class Pairs {
   public readonly pairs: PairOrCommentArr;
@@ -15,7 +16,10 @@ export class Pairs {
   public toString() {
     return JSON.stringify(this.pairs);
   }
-  public validate(ruleDict: RuleContainerDict): Diagnostic[] {
+  public validate(
+    ruleDict: RuleContainerDict,
+    superkey: Token | undefined
+  ): Diagnostic[] {
     let diagnostics: Diagnostic[] = [];
     const count = new Map<string, number>();
 
@@ -52,6 +56,35 @@ export class Pairs {
         diagnostics = [...diagnostics, ...res];
       }
     );
+    // Validate cardinality
+    // If superkey is undefined, that means current scope is root. So no cardinality check.
+    if (superkey === undefined) return diagnostics;
+    Object.entries(expectedCardinality).forEach(([k, v]) => {
+      const actual = count.get(k) ?? 0;
+      const [min, max] = v;
+      // Validate min cardinality
+      if (actual < min) {
+        const diagnostic: Diagnostic = {
+          range: superkey.getRange(),
+          message: `Insufficient ${k} syntax for ${
+            superkey.value
+          }, it's needed at least ${min} but there is ${actual}: ${superkey.getRange()}`,
+        };
+        diagnostics.push(diagnostic);
+        return;
+      }
+      if (max === "inf") return;
+      if (max < actual) {
+        const diagnostic: Diagnostic = {
+          range: superkey.getRange(),
+          message: `Too much ${k} syntax for ${
+            superkey.value
+          }, it's limited to ${max} but there are ${actual}: ${superkey.getRange()}`,
+        };
+        diagnostics.push(diagnostic);
+        return;
+      }
+    });
     return diagnostics;
   }
 }
