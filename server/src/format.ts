@@ -8,8 +8,8 @@ export const format = (context: Context, params: DocumentFormattingParams) => {
     const document = context.documents.get(params.textDocument.uri);
     if (document === undefined) return undefined;
     const ast = parse(document.getText());
+    if (ast === undefined) return [];
     const newText = ast.format();
-    // const newText = "hi";
     const textEdit: TextEdit = {
       range: {
         start: { line: 0, character: 0 },
