@@ -3,6 +3,8 @@ import { Pair } from "../../parser/syntax/Pair";
 import { Pairs } from "../../parser/syntax/Pairs";
 import { NormalizedRule, Rule, RuleContainerDict, Value } from "./types";
 
+/** The rule class for handling rule related logics in unified manner
+ * Every plain rules will be transformed into this class */
 export class RuleContainer implements NormalizedRule {
   readonly type;
   readonly cardinality;
@@ -37,8 +39,16 @@ export class RuleContainer implements NormalizedRule {
       };
       return [diagnostic];
     }
-    if (value instanceof Pairs)
-      return value.validate(this.children as RuleContainerDict, key);
+    if (value instanceof Pairs) {
+      if (this.children === undefined) {
+        const diagnostic: Diagnostic = {
+          range: key.getRange(),
+          message: `The rule ${key.value} is not supposed to have children`,
+        };
+        return [diagnostic];
+      }
+      return value.validate(this.children, key);
+    }
 
     return [];
   }

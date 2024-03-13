@@ -24,6 +24,7 @@ export class Pairs {
     const count = new Map<string, number>();
 
     // Calc expected cardinality
+    console.log({ ruleDict });
     const expectedCardinality = Object.fromEntries(
       Object.entries(ruleDict).map(([k, v]) => {
         if (v instanceof Array) {

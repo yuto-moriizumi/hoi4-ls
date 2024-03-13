@@ -10,7 +10,7 @@ export const enum Value {
   OBJECT = "object",
 }
 
-export const enum Scope {
+export const enum  Scope {
   COUNTRY = "country",
 }
 
