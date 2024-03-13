@@ -1,6 +1,7 @@
+import { normalize } from "./normalizer";
 import { Context, Rule, Scope, Value } from "./types";
 
-export const country_event: Rule = {
+const country_event: Rule = {
   children: {
     id: { type: Value.UNQUOTED },
     title: [
@@ -35,3 +36,5 @@ export const country_event: Rule = {
     },
   },
 };
+
+export default normalize(country_event);
