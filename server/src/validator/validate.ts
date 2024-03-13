@@ -1,11 +1,9 @@
-import { Diagnostic } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { parse } from "../parser/parse";
 import { Context, Settings } from "../server";
 import { country_event } from "./rule/country_event";
 import { RuleContainer } from "./rule/RuleContainer";
 import { Rule } from "./rule/types";
-import { effects } from "./rule/effects";
 
 export async function validateTextDocument(
   context: Context,

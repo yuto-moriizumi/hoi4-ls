@@ -1,13 +1,7 @@
-import {
-  CompletionItem,
-  CompletionItemKind,
-  TextDocumentPositionParams,
-} from "vscode-languageserver";
+import { CompletionItem, CompletionItemKind } from "vscode-languageserver";
 
 // This handler provides the initial list of the completion items.
-export const onCompletion = (
-  _textDocumentPosition: TextDocumentPositionParams
-): CompletionItem[] => {
+export const onCompletion = (): CompletionItem[] => {
   // The pass parameter contains the position of the text document in
   // which code complete got requested. For the example we ignore this
   // info and always provide the same completion items.

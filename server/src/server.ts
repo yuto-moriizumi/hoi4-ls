@@ -91,7 +91,7 @@ function main() {
     validateTextDocument(context, settings, change.document);
   });
 
-  connection.onDidChangeWatchedFiles((_change) => {
+  connection.onDidChangeWatchedFiles(() => {
     // Monitored files have change in VSCode
     connection.console.log("We received an file change event");
   });

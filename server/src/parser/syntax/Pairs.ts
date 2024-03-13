@@ -1,10 +1,8 @@
 import { Diagnostic } from "vscode-languageserver";
-import { RuleContainer } from "../../validator/rule/RuleContainer";
-import { Context, Rule, RuleContainerDict } from "../../validator/rule/types";
+import { RuleContainerDict } from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pair } from "./Pair";
 import { Token } from "./Token";
-import { effects } from "../../validator/rule/effects";
 
 export class Pairs {
   public readonly pairs: PairOrCommentArr;

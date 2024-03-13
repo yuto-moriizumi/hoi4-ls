@@ -15,13 +15,13 @@ export const extractArray = (
     string
   ]
 ) => {
-  const [_, preComments, value, items, postComments] = d;
+  const [, preComments, value, items, postComments] = d;
   const output: ValueOrCommentArr = [];
   if (preComments) output.push(...preComments);
   output.push(value);
   if (items)
     output.push(
-      ...items.reduce((acc, [preComments, _, postComments, value]) => {
+      ...items.reduce((acc, [preComments, , postComments, value]) => {
         if (preComments) acc.push(...preComments);
         if (postComments) acc.push(...postComments);
         acc.push(value);
