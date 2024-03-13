@@ -1,9 +1,10 @@
 import { Diagnostic } from "vscode-languageserver";
 import { RuleContainer } from "../../validator/rule/RuleContainer";
-import { Rule, RuleContainerDict } from "../../validator/rule/types";
+import { Context, Rule, RuleContainerDict } from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pair } from "./Pair";
 import { Token } from "./Token";
+import { effects } from "../../validator/rule/effects";
 
 export class Pairs {
   public readonly pairs: PairOrCommentArr;
@@ -16,6 +17,11 @@ export class Pairs {
   public toString() {
     return JSON.stringify(this.pairs);
   }
+
+  /**
+   * @param ruleDict Dict of expected keys and corresponding rules
+   * @param superkey The token that owns this pairs. If undefined, that means current scope is root.
+   */
   public validate(
     ruleDict: RuleContainerDict,
     superkey: Token | undefined
@@ -24,7 +30,6 @@ export class Pairs {
     const count = new Map<string, number>();
 
     // Calc expected cardinality
-    console.log({ ruleDict });
     const expectedCardinality = Object.fromEntries(
       Object.entries(ruleDict).map(([k, v]) => {
         if (v instanceof Array) {

@@ -1,7 +1,14 @@
 import { Diagnostic } from "vscode-languageserver";
 import { Pair } from "../../parser/syntax/Pair";
 import { Pairs } from "../../parser/syntax/Pairs";
-import { NormalizedRule, Rule, RuleContainerDict, Value } from "./types";
+import {
+  Context,
+  NormalizedRule,
+  Rule,
+  RuleContainerDict,
+  Value,
+} from "./types";
+import { effects } from "./effects";
 
 /** The rule class for handling rule related logics in unified manner
  * Every plain rules will be transformed into this class */
@@ -40,16 +47,30 @@ export class RuleContainer implements NormalizedRule {
       return [diagnostic];
     }
     if (value instanceof Pairs) {
-      if (this.children === undefined) {
+      if (this.children === undefined && this.provide === undefined) {
         const diagnostic: Diagnostic = {
           range: key.getRange(),
           message: `The rule ${key.value} is not supposed to have children`,
         };
         return [diagnostic];
       }
-      return value.validate(this.children, key);
+      let mergedRuleDict: RuleContainerDict = {};
+      if (this.children)
+        mergedRuleDict = { ...mergedRuleDict, ...this.children };
+      if (this.provide) {
+        if (this.provide.context === Context.EFFECT)
+          mergedRuleDict = { ...mergedRuleDict, ...effectRules };
+      }
+      return value.validate(mergedRuleDict, key);
     }
 
     return [];
   }
 }
+
+const effectRules = Object.fromEntries(
+  Object.entries(effects).map(([k, v]) => [
+    k,
+    new RuleContainer({ ...v, cardinality: [0, "inf"] }),
+  ])
+);

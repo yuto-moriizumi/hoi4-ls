@@ -19,7 +19,6 @@ export const country_event: Rule = {
     is_triggered_only: { type: Value.BOOL, cardinality: [0, 1] },
     fire_only_once: { type: Value.BOOL, cardinality: [0, 1] },
     immediate: {
-      // 現状childrenがないのでエラーになる
       cardinality: [0, 1],
       provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
     },
