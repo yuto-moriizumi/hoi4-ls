@@ -16,7 +16,7 @@ export let platformEol: string;
  */
 export async function activate(docUri: vscode.Uri) {
   // The extensionId is `publisher.name` from package.json
-  const ext = vscode.extensions.getExtension("vscode-samples.lsp-sample");
+  const ext = vscode.extensions.getExtension("vscode-samples.lsp-sample")!;
   await ext.activate();
   try {
     doc = await vscode.workspace.openTextDocument(docUri);
@@ -41,7 +41,7 @@ export const getDocUri = (p: string) => {
 export async function setTestContent(content: string): Promise<boolean> {
   const all = new vscode.Range(
     doc.positionAt(0),
-    doc.positionAt(doc.getText().length)
+    doc.positionAt(doc.getText().length),
   );
   return editor.edit((eb) => eb.replace(all, content));
 }
