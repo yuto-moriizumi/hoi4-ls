@@ -48,6 +48,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "npm run --workspaces compile",
+    "watch": "npm run --workspaces watch",
     "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
     "test": "sh ./scripts/e2e.sh",
     "typecheck": "npm run --workspaces typecheck"
