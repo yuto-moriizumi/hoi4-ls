@@ -2,7 +2,6 @@ import { TextDocument } from "vscode-languageserver-textdocument";
 import { parse } from "../parser/parse";
 import { Context, Settings } from "../server";
 import country_event from "./rule/country_event";
-import { RuleDict } from "./rule/types";
 import { normalizeRuleDict } from "./rule/normalizer";
 
 export async function validateTextDocument(
@@ -15,7 +14,7 @@ export async function validateTextDocument(
   const ast = parse(text);
 
   // Convert raw rules to Rule Objects
-  const rawRules: RuleDict = { country_event };
+  const rawRules = { country_event };
   const rules = normalizeRuleDict(rawRules);
 
   // Send the computed diagnostics to VSCode.

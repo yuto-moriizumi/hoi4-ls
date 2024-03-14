@@ -14,7 +14,7 @@ export const enum Scope {
 }
 
 export const enum Context {
-  CONDITION = "condition",
+  TRIGGER = "trigger",
   EFFECT = "effect",
 }
 
@@ -25,7 +25,12 @@ type BaseRule = {
 };
 
 type PrimitiveRule = {
-  type: Exclude<Value, typeof Value.OBJECT>;
+  type: Exclude<Value, typeof Value.OBJECT | typeof Value.BOOL>;
+};
+
+type BoolRule = {
+  type: typeof Value.BOOL;
+  defaultValue: boolean;
 };
 
 export type RuleDict = Record<string, Rule | Rule[]>;
@@ -37,7 +42,7 @@ type ObjectRule = {
   children?: RuleDict;
 };
 
-export type Rule = BaseRule & (ObjectRule | PrimitiveRule);
+export type Rule = BaseRule & (ObjectRule | BoolRule | PrimitiveRule);
 
 /** The normalized rule used by validaters.
  * All of raw rules, including effects, modifiers and other syntaxes will be transformed into this so that validators can work without deep knowledge of syntaxes. */
