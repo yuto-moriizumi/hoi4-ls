@@ -1,5 +1,5 @@
 import { Diagnostic } from "vscode-languageserver";
-import { RuleContainerDict } from "../../validator/rule/types";
+import { NormalizedRuleDict } from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pair } from "./Pair";
 import { Token } from "./Token";
@@ -21,8 +21,8 @@ export class Pairs {
    * @param superkey The token that owns this pairs. If undefined, that means current scope is root.
    */
   public validate(
-    ruleDict: RuleContainerDict,
-    superkey: Token | undefined
+    ruleDict: NormalizedRuleDict,
+    superkey: Token | undefined,
   ): Diagnostic[] {
     let diagnostics: Diagnostic[] = [];
     const count = new Map<string, number>();
@@ -30,11 +30,9 @@ export class Pairs {
     // Calc expected cardinality
     const expectedCardinality = Object.fromEntries(
       Object.entries(ruleDict).map(([k, v]) => {
-        if (v instanceof Array) {
-          return [k, v[0].cardinality];
-        }
-        return [k, v.cardinality];
-      })
+        // TODO: fix here, it only refers to the very first rule
+        return [k, v[0].cardinality];
+      }),
     );
     (this.pairs.filter((pair) => pair instanceof Pair) as Pair[]).forEach(
       (pair) => {
@@ -48,17 +46,11 @@ export class Pairs {
           diagnostics.push(diagnostic);
           return;
         }
-        const rule = ruleDict[key.value];
 
-        const res =
-          rule instanceof Array
-            ? rule.reduce(
-                (acc, r) => [...acc, ...r.validate(pair)],
-                [] as Diagnostic[]
-              )
-            : rule.validate(pair);
-        diagnostics = [...diagnostics, ...res];
-      }
+        const rule = ruleDict[key.value];
+        // TODO: Fix here, it only refers to the very first rule
+        diagnostics = [...diagnostics, ...pair.validate(rule[0])];
+      },
     );
     // Validate cardinality
     // If superkey is undefined, that means current scope is root. So no cardinality check.

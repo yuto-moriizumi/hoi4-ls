@@ -1,7 +1,14 @@
-import { Value as ValueType } from "../../validator/rule/types";
+import { Diagnostic } from "vscode-languageserver";
+import {
+  Context,
+  NormalizedRule,
+  NormalizedRuleDict,
+  Value as ValueType,
+} from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pairs } from "./Pairs";
 import { Token } from "./Token";
+import effectRules from "../../validator/rule/effects";
 
 type Value = Pairs | string | boolean | number | Token;
 export class Pair {
@@ -43,5 +50,38 @@ export class Pair {
 
   public toString() {
     return JSON.stringify(this);
+  }
+
+  public validate(rule: NormalizedRule): Diagnostic[] {
+    const { key, value } = this;
+    // Type check
+    const actualType = this.getValueType();
+    const expectedType = rule.type;
+    if (actualType !== expectedType) {
+      const diagnostic: Diagnostic = {
+        range: key.getRange(),
+        message: `Wrong type for ${key.value}, expected ${expectedType} but ${actualType}`,
+      };
+      return [diagnostic];
+    }
+    if (value instanceof Pairs) {
+      if (rule.children === undefined && rule.provide === undefined) {
+        const diagnostic: Diagnostic = {
+          range: key.getRange(),
+          message: `The rule ${key.value} is not supposed to have children`,
+        };
+        return [diagnostic];
+      }
+      let mergedRuleDict: NormalizedRuleDict = {};
+      if (rule.children)
+        mergedRuleDict = { ...mergedRuleDict, ...rule.children };
+      if (rule.provide) {
+        if (rule.provide.context === Context.EFFECT)
+          mergedRuleDict = { ...mergedRuleDict, ...effectRules };
+      }
+      return value.validate(mergedRuleDict, key);
+    }
+
+    return [];
   }
 }
