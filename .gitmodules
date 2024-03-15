@@ -1,0 +1,3 @@
+[submodule "converter/cwtools-hoi4-config"]
+	path = converter/cwtools-hoi4-config
+	url = https://github.com/BiscuitCookies/cwtools-hoi4-config.git
