@@ -9,7 +9,7 @@ const country_event: Rule = {
       {
         children: {
           trigger: {
-            provide: { context: Context.CONDITION, scope: Scope.COUNTRY },
+            provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
           },
           text: { type: Value.UNQUOTED },
         },
@@ -17,8 +17,16 @@ const country_event: Rule = {
     ],
     desc: { type: Value.UNQUOTED },
     picture: { type: Value.UNQUOTED },
-    is_triggered_only: { type: Value.BOOL, cardinality: [0, 1] },
-    fire_only_once: { type: Value.BOOL, cardinality: [0, 1] },
+    is_triggered_only: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+      defaultValue: false,
+    },
+    fire_only_once: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+      defaultValue: false,
+    },
     immediate: {
       cardinality: [0, 1],
       provide: { context: Context.EFFECT, scope: Scope.COUNTRY },

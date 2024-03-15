@@ -1,4 +1,11 @@
-import { Cardinality, NormalizedRule, Rule, RuleDict, Value } from "./types";
+import {
+  Cardinality,
+  NormalizedRule,
+  NormalizedRuleDict,
+  Rule,
+  RuleDict,
+  Value,
+} from "./types";
 
 /** Normalize rules with inserting default values and converting single item into arrays */
 export function normalize(
@@ -19,7 +26,10 @@ export function normalize(
 }
 
 export function normalizeRuleDict(
-  ruleDict: RuleDict,
+  ruleDict:
+    | RuleDict
+    | NormalizedRuleDict
+    | Record<string, NormalizedRule | NormalizedRule[]>,
   defaultCardinality: Cardinality = [1, 1],
 ) {
   return Object.fromEntries(
