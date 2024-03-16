@@ -1,10 +1,10 @@
-import { normalizeRuleDict } from "./normalizer";
-import { RuleDict, Value } from "./types";
+import { Entries, Value } from "./types";
+import { entryMap } from "./utils";
 
-const effects: RuleDict = {
+const rawEffects = {
   add_stability: { type: Value.NUMBER },
-  add_manpower: { type: Value.INT },
+  add_manpower: Value.INT,
   custom_effect_tooltip: { type: Value.LOCALISATION },
-};
+} satisfies Entries;
 
-export default normalizeRuleDict(effects, [0, "inf"]);
+export const effects = entryMap(rawEffects, [0, "inf"]);

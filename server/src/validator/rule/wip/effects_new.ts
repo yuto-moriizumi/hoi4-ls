@@ -14,7 +14,7 @@ const effects: RuleSet = {
         ratio: { type: Value.VARIABLE_FIELD, optional: true },
       },
     },
-    add_divisional_commander_xp: { type: Value.INT },
+    add_divisional_commander_xp: Value.INT,
     add_intel: {
       children: {
         target: { type: Value.REFERENCE, reference: "country" },
@@ -35,15 +35,27 @@ const effects: RuleSet = {
     },
     capture_operative: {
       children: {
-        operative: { type: Value.REFERENCE, reference: "operative", optional: true },
-        captured_by: { type: Value.REFERENCE, reference: "country", optional: true },
+        operative: {
+          type: Value.REFERENCE,
+          reference: "operative",
+          optional: true,
+        },
+        captured_by: {
+          type: Value.REFERENCE,
+          reference: "country",
+          optional: true,
+        },
         ignore_death_chance: { type: Value.BOOL, optional: true },
       },
     },
     create_dynamic_country: {
       children: {
         original_tag: { type: Value.REFERENCE, reference: "country" },
-        copy_tag: { type: Value.REFERENCE, reference: "country", optional: true },
+        copy_tag: {
+          type: Value.REFERENCE,
+          reference: "country",
+          optional: true,
+        },
       },
     },
     delete_units: {
@@ -54,7 +66,7 @@ const effects: RuleSet = {
     },
     execute_operation_coordinated_strike: {
       children: {
-        amount: { type: Value.INT },
+        amount: Value.INT,
       },
     },
     force_disable_resistance: {
@@ -64,7 +76,11 @@ const effects: RuleSet = {
     },
     force_enable_resistance: {
       children: {
-        occupier: { type: Value.REFERENCE, reference: "country", optional: true },
+        occupier: {
+          type: Value.REFERENCE,
+          reference: "country",
+          optional: true,
+        },
         clear: { type: Value.BOOL, optional: true },
       },
     },
@@ -74,7 +90,11 @@ const effects: RuleSet = {
     kill_operative: {
       children: {
         operative: { type: Value.REFERENCE, reference: "operative" },
-        killed_by: { type: Value.REFERENCE, reference: "country", optional: true },
+        killed_by: {
+          type: Value.REFERENCE,
+          reference: "country",
+          optional: true,
+        },
       },
     },
     mark_focus_tree_layout_dirty: { type: Value.BOOL },
@@ -129,7 +149,10 @@ const effects: RuleSet = {
       },
     },
     recall_volunteers_from: { type: Value.REFERENCE, reference: "country" },
-    remove_resistance_target: { type: Value.VALUE, valueType: "resistance_target" },
+    remove_resistance_target: {
+      type: Value.VALUE,
+      valueType: "resistance_target",
+    },
     remove_wargoal: {
       children: {
         target: { type: Value.REFERENCE, reference: "country" },
@@ -200,8 +223,16 @@ const effects: RuleSet = {
     },
     turn_operative: {
       children: {
-        operative: { type: Value.REFERENCE, reference: "operative", optional: true },
-        turned_by: { type: Value.REFERENCE, reference: "country", optional: true },
+        operative: {
+          type: Value.REFERENCE,
+          reference: "operative",
+          optional: true,
+        },
+        turned_by: {
+          type: Value.REFERENCE,
+          reference: "country",
+          optional: true,
+        },
       },
     },
   },

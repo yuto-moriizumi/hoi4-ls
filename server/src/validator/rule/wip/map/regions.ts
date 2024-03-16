@@ -13,9 +13,9 @@ const types: Rule = {
 
 const supply_area: Rule = {
   children: {
-    id: { type: Value.INT },
+    id: Value.INT,
     name: { type: Value.UNQUOTED },
-    value: { type: Value.INT },
+    value: Value.INT,
     states: {
       cardinality: [1, "inf"],
       children: {
@@ -27,7 +27,7 @@ const supply_area: Rule = {
 
 const strategic_region: Rule = {
   children: {
-    id: { type: Value.INT },
+    id: Value.INT,
     name: { type: Value.UNQUOTED },
     provinces: {
       cardinality: [0, "inf"],
@@ -42,7 +42,10 @@ const strategic_region: Rule = {
     static_modifiers: {
       cardinality: [1, "inf"],
       children: {
-        static_modifier: { type: Value.UNQUOTED, cardinality: ["always", "always"] },
+        static_modifier: {
+          type: Value.UNQUOTED,
+          cardinality: ["always", "always"],
+        },
       },
     },
     weather: {

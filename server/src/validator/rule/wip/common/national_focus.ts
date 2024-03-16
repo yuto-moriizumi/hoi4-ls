@@ -127,12 +127,35 @@ const focus_tree: Rule = {
         },
         relative_position_id: { type: Value.UNQUOTED, cardinality: [0, 1] },
         dynamic: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
-        available_if_capitulated: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
-        cancel_if_invalid: { type: Value.BOOL, cardinality: [0, 1], defaultValue: true },
-        continue_if_invalid: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
-        cancelable: { type: Value.BOOL, cardinality: [0, 1], defaultValue: true },
-        bypass_if_unavailable: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
-        will_lead_to_war_with: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        available_if_capitulated: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: false,
+        },
+        cancel_if_invalid: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: true,
+        },
+        continue_if_invalid: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: false,
+        },
+        cancelable: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: true,
+        },
+        bypass_if_unavailable: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: false,
+        },
+        will_lead_to_war_with: {
+          type: Value.UNQUOTED,
+          cardinality: [0, "inf"],
+        },
         prerequisite: {
           children: {
             focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
@@ -192,8 +215,8 @@ const shared_focus: Rule = {
     },
     text_icon: { type: Value.UNQUOTED, cardinality: [0, 1] },
     cost: { type: Value.FLOAT },
-    x: { type: Value.INT },
-    y: { type: Value.INT },
+    x: Value.INT,
+    y: Value.INT,
     offset: {
       cardinality: [0, "inf"],
       children: {
@@ -206,11 +229,27 @@ const shared_focus: Rule = {
     },
     relative_position_id: { type: Value.UNQUOTED, cardinality: [0, 1] },
     dynamic: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
-    available_if_capitulated: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
-    cancel_if_invalid: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
-    continue_if_invalid: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+    available_if_capitulated: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+      defaultValue: false,
+    },
+    cancel_if_invalid: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+      defaultValue: false,
+    },
+    continue_if_invalid: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+      defaultValue: false,
+    },
     cancelable: { type: Value.BOOL, cardinality: [0, 1], defaultValue: true },
-    bypass_if_unavailable: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+    bypass_if_unavailable: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+      defaultValue: false,
+    },
     will_lead_to_war_with: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
     prerequisite: {
       children: {
@@ -310,7 +349,11 @@ const continuous_focus_tree: Rule = {
           cardinality: [0, "inf"],
         },
         daily_cost: { type: Value.FLOAT },
-        available_if_capitulated: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+        available_if_capitulated: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: false,
+        },
         available: {
           provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
           cardinality: [0, 1],

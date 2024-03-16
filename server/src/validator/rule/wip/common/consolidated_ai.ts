@@ -17,7 +17,10 @@ const types: Rule = {
               ai_national_focuses: {
                 children: {
                   focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-                  shared_focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+                  shared_focus: {
+                    type: Value.UNQUOTED,
+                    cardinality: [0, "inf"],
+                  },
                 },
               },
             },
@@ -86,11 +89,11 @@ const ai_focus: Rule = {
 const ai_peace: Rule = {
   children: {
     enable: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
-    annex_randomness: { type: Value.INT },
-    liberate_randomness: { type: Value.INT },
-    puppet_randomness: { type: Value.INT },
-    take_states_randomness: { type: Value.INT },
-    force_government_randomness: { type: Value.INT },
+    annex_randomness: Value.INT,
+    liberate_randomness: Value.INT,
+    puppet_randomness: Value.INT,
+    take_states_randomness: Value.INT,
+    force_government_randomness: Value.INT,
     build_temp_vars: {
       cardinality: [0, 1],
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
@@ -99,28 +102,36 @@ const ai_peace: Rule = {
       cardinality: [0, 1],
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+        },
       },
     },
     liberate: {
       cardinality: [0, 1],
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+        },
       },
     },
     puppet: {
       cardinality: [0, 1],
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+        },
       },
     },
     puppet_all: {
       cardinality: [0, 1],
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+        },
       },
     },
     puppet_state: {
@@ -128,7 +139,9 @@ const ai_peace: Rule = {
       provide: { context: Context.TRIGGER, scope: Scope.STATE },
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.STATE } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.STATE },
+        },
       },
     },
     take_states: {
@@ -136,14 +149,18 @@ const ai_peace: Rule = {
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.STATE } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.STATE },
+        },
       },
     },
     force_government: {
       cardinality: [0, 1],
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+        },
       },
     },
   },
@@ -155,18 +172,22 @@ const ai_template: Rule = {
     available_for: { type: Value.UNQUOTED, cardinality: [0, 1] },
     blocked_for: { type: Value.UNQUOTED, cardinality: [0, 1] },
     match_to_count: { type: Value.FLOAT },
-    upgrade_prio: { 
+    upgrade_prio: {
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+        },
       },
     },
-    scalar: { 
+    scalar: {
       children: {
-        upgrade_prio: { 
+        upgrade_prio: {
           children: {
             base_factor: { type: Value.FLOAT },
-            modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+            modifier_rule: {
+              provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+            },
           },
         },
         // Further structure follows the pattern shown above
@@ -182,25 +203,32 @@ const ai_equipment_design_group: Rule = {
     blocked_for: { type: Value.UNQUOTED, cardinality: [0, 1] },
     available_for: { type: Value.UNQUOTED, cardinality: [0, 1] },
     roles: { type: Value.UNQUOTED },
-    priority: { 
+    priority: {
       children: {
         base_factor: { type: Value.FLOAT },
-        modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        modifier_rule: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+        },
       },
       cardinality: [0, 1],
     },
     ai_equipment_design: {
       design: {
-        priority: { 
+        priority: {
           children: {
-              base_factor: { type: Value.FLOAT },
-              modifier_rule: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+            base_factor: { type: Value.FLOAT },
+            modifier_rule: {
+              provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+            },
           },
           cardinality: [0, 1],
         },
         name: { type: Value.UNQUOTED, optional: true },
         role_icon_index: { type: Value.INT, optional: true },
-        enable: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY }, optional: true },
+        enable: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+          optional: true,
+        },
         visible: { type: Value.BOOL, optional: true },
         target_variant: { children: {}, cardinality: [0, 1] },
         requirements: { children: {}, optional: true },

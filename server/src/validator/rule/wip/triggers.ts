@@ -72,28 +72,28 @@ const triggers: Rule = {
       type: Value.OBJECT,
       children: {
         opponent: { type: Value.UNQUOTED },
-        thousands: { type: Value.INT },
+        thousands: Value.INT,
       },
     },
     has_mined: {
       type: Value.OBJECT,
       children: {
         target: { type: Value.UNQUOTED },
-        value: { type: Value.INT },
+        value: Value.INT,
       },
     },
     received_expeditionary_forces: {
       type: Value.OBJECT,
       children: {
         sender: { type: Value.UNQUOTED },
-        value: { type: Value.INT },
+        value: Value.INT,
       },
     },
     has_mines: {
       type: Value.OBJECT,
       children: {
         region: { type: Value.UNQUOTED },
-        amount: { type: Value.INT },
+        amount: Value.INT,
       },
     },
     naval_strength_comparison: {

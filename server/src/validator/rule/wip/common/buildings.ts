@@ -35,12 +35,12 @@ const types: Rule = {
 
 const building: Rule = {
   children: {
-    base_cost: { type: Value.INT },
+    base_cost: Value.INT,
     base_cost_conversion: { type: Value.INT, cardinality: [0, 1] },
     per_level_extra_cost: { type: Value.INT, cardinality: [0, 1] },
     max_level: { type: Value.INT, cardinality: [0, 1] },
     value: { type: Value.INT, cardinality: [0, 1] },
-    icon_frame: { type: Value.INT },
+    icon_frame: Value.INT,
     show_on_map: { type: Value.INT, cardinality: [0, 1] },
     show_on_map_meshes: { type: Value.INT, cardinality: [0, 1] },
     always_shown: { type: Value.BOOL, cardinality: [0, 1] },
@@ -49,7 +49,10 @@ const building: Rule = {
     centered: { type: Value.BOOL, cardinality: [0, 1] },
     supply_node: { type: Value.BOOL, cardinality: [0, 1] },
     shares_slots: { type: Value.BOOL, cardinality: [0, 1] },
-    infrastructure_construction_effect: { type: Value.BOOL, cardinality: [0, 1] },
+    infrastructure_construction_effect: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+    },
     provincial: { type: Value.BOOL, cardinality: [0, 1] },
     damage_factor: { type: Value.FLOAT, cardinality: [0, 1] },
     only_costal: { type: Value.BOOL, cardinality: [0, 1] },
@@ -72,7 +75,11 @@ const building: Rule = {
     subtype: {
       provide: { context: Context.MODIFIER, scope: Scope.COUNTRY },
     },
-    show_modifier: { type: Value.BOOL, defaultValue: true, cardinality: [0, 1] },
+    show_modifier: {
+      type: Value.BOOL,
+      defaultValue: true,
+      cardinality: [0, 1],
+    },
     max_fuel_building: { type: Value.FLOAT, cardinality: [0, 1] },
     fuel_silo: { type: Value.BOOL, defaultValue: true, cardinality: [0, 1] },
     fuel_gain_from_states: { type: Value.FLOAT, cardinality: [0, 1] },

@@ -21,15 +21,18 @@ const light: Rule = {
         b: { type: Value.FLOAT },
       },
     },
-    intensity: { provide: { context: Context.INTENSITY, scope: Scope.LIGHT }, cardinality: [0, 1] },
+    intensity: {
+      provide: { context: Context.INTENSITY, scope: Scope.LIGHT },
+      cardinality: [0, 1],
+    },
     radius: { type: Value.FLOAT },
     falloff: { type: Value.FLOAT },
     duration: { type: Value.FLOAT, cardinality: [0, 1] },
     position: {
       children: {
-        x: { type: Value.INT },
-        y: { type: Value.INT },
-        z: { type: Value.INT },
+        x: Value.INT,
+        y: Value.INT,
+        z: Value.INT,
       },
     },
     animation: {

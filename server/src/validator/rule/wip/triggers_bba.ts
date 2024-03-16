@@ -53,17 +53,25 @@ const rules: Rule = {
       provide: { context: Context.TRIGGER, scope: Scope.UNIT },
     },
     any_country_division: {
-      provide: { context: Context.TRIGGER, scope: Scope.COUNTRY, pushScope: Scope.UNIT },
+      provide: {
+        context: Context.TRIGGER,
+        scope: Scope.COUNTRY,
+        pushScope: Scope.UNIT,
+      },
     },
     any_state_division: {
-      provide: { context: Context.TRIGGER, scope: Scope.STATE, pushScope: Scope.UNIT },
+      provide: {
+        context: Context.TRIGGER,
+        scope: Scope.STATE,
+        pushScope: Scope.UNIT,
+      },
     },
     division_has_battalion_in_template: {
       provide: { context: Context.TRIGGER, scope: Scope.UNIT },
     },
     num_divisions_in_states: {
       children: {
-        count: { type: Value.INT },
+        count: Value.INT,
         states: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
         types: { type: Value.UNQUOTED, cardinality: [0, 1] },
         exclude: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -72,7 +80,7 @@ const rules: Rule = {
     },
     num_battalions_in_states: {
       children: {
-        count: { type: Value.INT },
+        count: Value.INT,
         states: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
         types: { type: Value.UNQUOTED, cardinality: [0, 1] },
         exclude: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -87,8 +95,16 @@ const rules: Rule = {
       children: {
         start_state: { type: Value.UNQUOTED },
         target_state: { type: Value.UNQUOTED },
-        start_province: { type: Value.ENUM, cardinality: [0, 1], enumScope: "provinces" },
-        target_province: { type: Value.ENUM, cardinality: [0, 1], enumScope: "provinces" },
+        start_province: {
+          type: Value.ENUM,
+          cardinality: [0, 1],
+          enumScope: "provinces",
+        },
+        target_province: {
+          type: Value.ENUM,
+          cardinality: [0, 1],
+          enumScope: "provinces",
+        },
       },
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
