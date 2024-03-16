@@ -1,0 +1,16 @@
+{
+  "name": "converter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "langchain": "^0.1.28"
+  },
+  "scripts": {
+    "start": "ts-node index.ts",
+    "typecheck": "tsc --noEmit"
+  }
+}

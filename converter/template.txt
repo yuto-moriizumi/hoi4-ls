@@ -1,0 +1,56 @@
+コードの変換タスクを実施してほしいです。以下のようなコードが与えられた場合に
+```
+event = {{
+	id = scalar
+	## cardinality = 0..inf
+	title = localisation
+}}
+```
+次のように変換して下さい。
+```ts
+const country: Rule = {{
+  children: {{
+    id: {{ type: Value.UNQUOTED }},
+    title: {{ type: Value.UNQUOTED, cardinality: [0, "inf"] }},
+  }},
+}};
+```
+##で始まる行は、それより下の行について説明しているものです。 `scalar`,`localisation`,`<spriteType>`は、`Value.UNQUOTED`に変換して下さい。 `severity`については無視してください。 `cardinality`の値で`~1`を見つけたら、0として出力し、"~1"とは出力しないでください。同じ名前のキーが複数回出現する場合は、キーに対応する値をオブジェクトの配列としてください。 alias_で始まるキーを見つけた場合は、それは削除して、代わりに`provide`という特殊なキーとオブジェクトを追加してください。例えば次のようなコードを与えられた場合は…
+```
+title = {{
+		## cardinality = ~1..1
+		trigger = {{
+			alias_name[trigger] = alias_match_left[trigger]
+		}}
+		text = localisation
+	}}
+```
+次のようにしてください。
+```ts
+title: {{
+        cardinality: [0, "inf"],
+        children: {{
+          trigger: {{
+            cardinality: ["~1", 1],
+            provide: {{ context: Context.TRIGGER, scope: Scope.COUNTRY }},
+          }},
+          text: {{ type: Value.UNQUOTED }},
+        }},
+      }},
+```
+元のコードに[trigger]と記載されてあるのが分かるでしょうか。これは、provideオブジェクト内のcontextの値に対応しています。childrenは変換後のコードにありませんが、これはaliasで始まるキーをすべて削除した結果、なにもなくなったためです。
+さらに、bool型を扱うための特殊ルールがあります。次のコードを見てください。
+```
+## cardinality = 0..1
+hidden = yes
+## error_if_only_match = This is the default value and can be omitted
+## severity = info
+## cardinality = 0..1
+hidden = no
+```
+これは、hiddenというキーの値はValue.BOOLであることを表しています。error_if_only_match = This is the default value and can be omittedは特殊な記述であり、この下に指定されているbool値がデフォルト値であることを表しています。noである場合はfalseを意味し、yesはtrueを意味しています。hiddenは複数回出現していますが、これは配列にしてはいけません。今回の場合は次のように変換します。
+```ts
+hidden: {{ type: Value.BOOL, cardinality: [0, 1], defaultValue: false }},
+```
+では、次のコードを変換してください。コードのみ返信してください。
+{code}
