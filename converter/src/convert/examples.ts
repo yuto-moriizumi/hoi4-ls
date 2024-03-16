@@ -15,4 +15,8 @@ export const EXAMPLES = [
     "cwtools-hoi4-config/Config/common/ai_strategy.cwt",
     "../server/src/validator/rule/common/ai_strategy.ts",
   ],
+  [
+    "cwtools-hoi4-config/Config/common/combat_tactics.cwt",
+    "../server/src/validator/rule/common/combat_tactics.ts",
+  ],
 ];
