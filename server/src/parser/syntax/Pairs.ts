@@ -69,7 +69,7 @@ export class Pairs {
         diagnostics.push(diagnostic);
         return;
       }
-      if (max === "inf") return;
+      if (max === Infinity) return;
       if (max < actual) {
         const diagnostic: Diagnostic = {
           range: superkey.getRange(),
