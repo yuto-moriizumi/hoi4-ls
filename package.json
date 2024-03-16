@@ -63,6 +63,7 @@
   },
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "converter"
   ]
 }
