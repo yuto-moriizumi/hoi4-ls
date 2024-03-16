@@ -1,0 +1,75 @@
+const types: Rule = {
+  children: {
+    decision_category: {
+      type: Value.UNQUOTED,
+      cardinality: [0, "inf"],
+      children: {
+        id: { type: Value.UNQUOTED },
+        icon: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        picture: { type: Value.UNQUOTED, cardinality: [0, 1] },
+        priority: { type: Value.INT, cardinality: [0, 1] },
+        visible_when_empty: { type: Value.BOOL, cardinality: [0, 1] },
+        available: { cardinality: [0, "inf"], provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        allowed: { cardinality: [0, "inf"], provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        visible: { cardinality: [0, "inf"], provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        cancel_trigger: { cardinality: [0, "inf"], provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        custom_icon: {
+          cardinality: [0, "inf"],
+          children: {
+            tag: { type: Value.UNQUOTED },
+            value: { type: Value.UNQUOTED },
+            desc: { type: Value.UNQUOTED },
+            visible: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+          },
+        },
+        highlight_states: { cardinality: [0, 1] },
+        visibility_type: { type: Value.UNQUOTED, cardinality: [0, 1] },
+        on_map_area: { cardinality: [0, "inf"] },
+        scripted_gui: { type: Value.UNQUOTED, cardinality: [0, 1] },
+      },
+    },
+    decision: {
+      type: Value.UNQUOTED,
+      cardinality: [0, "inf"],
+      children: {
+        icon: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        cosmetic_tag: { type: Value.UNQUOTED, cardinality: [0, 1] },
+        cosmetic_ideology: { type: Value.UNQUOTED, cardinality: [0, 1] },
+        priority: { type: Value.INT, cardinality: [0, 1] },
+        name: { type: Value.UNQUOTED, cardinality: [0, 1] },
+        desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
+        fire_only_once: { type: Value.BOOL, cardinality: [0, 1] },
+        ai_hint_pp_cost: { type: Value.INT, cardinality: [0, 1] },
+        state_target: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+        cancel_if_not_visible: { type: Value.BOOL, cardinality: [0, 1] },
+        allowed: { cardinality: [0, "inf"], provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
+        cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
+        custom_cost: { cardinality: [0, "inf"], children: { custom_cost_trigger: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } }, custom_cost_text: { type: Value.UNQUOTED } } },
+        highlight_states: { cardinality: [0, 1] },
+        highlight_color_before_active: { type: Value.INT, cardinality: [0, 1] },
+        highlight_color_while_active: { type: Value.INT, cardinality: [0, 1] },
+        timed: { cardinality: [0, "inf"] },
+        mission: { cardinality: [0, "inf"] },
+        state_mission: { cardinality: [0, "inf"] },
+        targeted: { cardinality: [0, "inf"] },
+        state_targeted: { cardinality: [0, "inf"] },
+      },
+    },
+    enums: {
+      children: {
+        enum_war_with_on: {
+          type: Value.UNQUOTED,
+          values: ["war_with_on_remove", "war_with_on_complete", "war_with_on_timeout"],
+        },
+        enum_war_with_target_on: {
+          type: Value.UNQUOTED,
+          values: ["war_with_target_on_remove", "war_with_target_on_complete", "war_with_target_on_timeout"],
+        },
+        enum_targeted_decisions_state_map_modes: {
+          type: Value.UNQUOTED,
+          values: ["map_only", "decision_view_only", "map_and_decisions_view"],
+        },
+      },
+    },
+  },
+};

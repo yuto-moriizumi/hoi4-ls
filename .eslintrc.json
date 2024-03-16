@@ -1,6 +1,9 @@
 {
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-  "ignorePatterns": ["server/src/parser/clausewitz.ts"],
+  "ignorePatterns": [
+    "server/src/parser/clausewitz.ts",
+    "server/src/validator/rule/wip"
+  ],
   "env": {
     "node": true
   }
