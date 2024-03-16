@@ -9,7 +9,7 @@ const country_event: Rule = {
       {
         children: {
           trigger: {
-            provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+            provide: { context: [Context.TRIGGER], scope: Scope.COUNTRY },
           },
           text: { type: Value.UNQUOTED },
         },
@@ -29,11 +29,11 @@ const country_event: Rule = {
     },
     immediate: {
       cardinality: [0, 1],
-      provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
+      provide: { context: [Context.EFFECT], scope: Scope.COUNTRY },
     },
     option: {
       cardinality: [0, "inf"],
-      provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
+      provide: { context: [Context.EFFECT], scope: Scope.COUNTRY },
       children: {
         name: { type: Value.UNQUOTED },
         ai_chance: {

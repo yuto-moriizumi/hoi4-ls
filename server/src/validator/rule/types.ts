@@ -11,11 +11,16 @@ export type Value = (typeof Value)[keyof typeof Value];
 
 export const enum Scope {
   COUNTRY = "country",
+  STATE = "state",
+  UNIT_LEADER = "unit_leader",
+  STRATEGIC_REGION = "strategic_region",
 }
 
 export const enum Context {
   TRIGGER = "trigger",
   EFFECT = "effect",
+  MODIFIER = "modifier",
+  UNIT_STAT = "unit_stat",
 }
 
 export type Cardinality = [number, number | "inf"];
@@ -37,7 +42,7 @@ export type RuleDict = Record<string, Rule | Rule[]>;
 
 type ObjectRule = {
   type?: typeof Value.OBJECT;
-  provide?: { context: Context; scope: Scope };
+  provide?: { context: Context[]; scope: Scope };
   /** properties for the object. rule can be specified multiple times for the same key since there might be several ways to express the same stuff */
   children?: RuleDict;
 };
@@ -49,7 +54,7 @@ export type Rule = BaseRule & (ObjectRule | BoolRule | PrimitiveRule);
 export interface NormalizedRule {
   type: Value;
   cardinality: Cardinality;
-  provide?: { context: Context; scope: Scope };
+  provide?: { context: Context[]; scope: Scope };
   children?: Record<string, NormalizedRule[]>;
 }
 
