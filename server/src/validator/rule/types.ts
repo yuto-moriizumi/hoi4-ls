@@ -27,6 +27,7 @@ export type Cardinality = [number, number | "inf"];
 
 type BaseRule = {
   cardinality?: Cardinality;
+  replaceScope?: { this: Scope; root: Scope; from: Scope };
 };
 
 type PrimitiveRule = {
@@ -38,11 +39,13 @@ type BoolRule = {
   defaultValue: boolean;
 };
 
-export type RuleDict = Record<string, Rule | Rule[]>;
+export type RuleDict = Record<
+  string,
+  Rule | Rule[] | NormalizedRule | NormalizedRule[]
+>;
 
 type ObjectRule = {
   type?: typeof Value.OBJECT;
-  provide?: { context: Context[]; scope: Scope };
   /** properties for the object. rule can be specified multiple times for the same key since there might be several ways to express the same stuff */
   children?: RuleDict;
 };
@@ -54,7 +57,6 @@ export type Rule = BaseRule & (ObjectRule | BoolRule | PrimitiveRule);
 export interface NormalizedRule {
   type: Value;
   cardinality: Cardinality;
-  provide?: { context: Context[]; scope: Scope };
   children?: Record<string, NormalizedRule[]>;
 }
 

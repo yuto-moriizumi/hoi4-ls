@@ -9,7 +9,7 @@ import {
 
 /** Normalize rules with inserting default values and converting single item into arrays */
 export function normalize(
-  rule: Rule,
+  rule: Rule | NormalizedRule,
   defaultCardinality: Cardinality = [1, 1],
 ): NormalizedRule {
   return {

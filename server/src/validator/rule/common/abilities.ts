@@ -1,7 +1,15 @@
+import { modifiers } from "../modifiers";
 import { normalize } from "../normalizer";
+import { triggers } from "../triggers";
 import { Context, Rule, Scope, Value } from "../types";
+import { unit_stats } from "../unit_stats";
 
 const ability: Rule = {
+  replaceScope: {
+    this: Scope.UNIT_LEADER,
+    root: Scope.UNIT_LEADER,
+    from: Scope.COUNTRY,
+  },
   children: {
     name: { type: Value.UNQUOTED },
     desc: { type: Value.UNQUOTED },
@@ -10,16 +18,16 @@ const ability: Rule = {
     type: { type: Value.UNQUOTED },
     allowed: {
       cardinality: [0, 1],
-      provide: { context: [Context.TRIGGER], scope: Scope.COUNTRY },
+      children: { ...triggers },
     },
     cost: { type: Value.NUMBER },
     duration: { type: Value.INT },
     cooldown: { type: Value.INT, cardinality: [0, 1] },
     unit_modifiers: {
       cardinality: [0, 1],
-      provide: {
-        context: [Context.MODIFIER, Context.UNIT_STAT],
-        scope: Scope.UNIT_LEADER,
+      children: {
+        ...modifiers,
+        ...unit_stats,
       },
     },
     one_time_effect: {
