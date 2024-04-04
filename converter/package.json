@@ -7,7 +7,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "langchain": "^0.1.30"
+    "langchain": "^0.1.31"
   },
   "scripts": {
     "start": "ts-node index.ts",
