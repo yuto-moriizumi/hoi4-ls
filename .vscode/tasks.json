@@ -47,7 +47,8 @@
       "label": "convert this rule",
       "runOptions": {
         "instanceLimit": 10
-      }
+      },
+      "problemMatcher": []
     }
   ]
 }
