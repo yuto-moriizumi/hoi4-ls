@@ -1,11 +1,11 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import dotenv from "dotenv";
 import { readFileSync } from "fs";
 import { dirname, join } from "path";
 import { GlobSync } from "glob";
 
+import dotenv from "dotenv";
 dotenv.config();
 
 const model = new ChatOpenAI({
@@ -13,12 +13,9 @@ const model = new ChatOpenAI({
   openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
-const template = readFileSync("template.txt", "utf-8");
-const promptTemplate = PromptTemplate.fromTemplate(template);
-
-async function convert(filepath: string) {
+async function convert(filepath: string, template: PromptTemplate) {
   const code = await readFile(filepath, "utf-8");
-  const prompt = await promptTemplate.format({ code });
+  const prompt = await template.format({ code });
   const result = (await model.invoke(prompt)).content.toString();
   const firstNewlineIndex = result.indexOf("\n");
   const lastNewlineIndex = result.lastIndexOf("\n");
@@ -32,16 +29,20 @@ async function convert(filepath: string) {
   );
 }
 
-async function processFiles() {
+async function processFiles(template: PromptTemplate) {
   const glob = new GlobSync(
     join(__dirname, "cwtools-hoi4-config", "**", "*.cwt"),
   );
   await Promise.all(
     glob.found.map(async (file) => {
-      await convert(file);
+      await convert(file, template);
       console.log("Converted " + file);
     }),
   );
 }
 
-processFiles();
+export function convertAll() {
+  const template = readFileSync("template.txt", "utf-8");
+  const promptTemplate = PromptTemplate.fromTemplate(template);
+  processFiles(promptTemplate);
+}
