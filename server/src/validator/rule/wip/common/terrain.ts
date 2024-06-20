@@ -1,16 +1,20 @@
 const types: Rule = {
   children: {
     type: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         path: { type: Value.UNQUOTED },
         skip_root_key: { type: Value.UNQUOTED },
-        path_file: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        path_file: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
         subtype: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             movement_cost: { type: Value.UNQUOTED, cardinality: [0, 0] },
-            is_water: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+            is_water: {
+              type: Value.BOOL,
+              cardinality: [0, 1],
+              defaultValue: false,
+            },
             naval_terrain: { type: Value.BOOL },
           },
         },
@@ -26,14 +30,14 @@ const terrain: Rule = {
       type: Value.UNQUOTED,
     },
     subtype: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         movement_cost: { type: Value.UNQUOTED },
         sound_type: { type: Value.UNQUOTED },
         naval_terrain: { type: Value.BOOL, cardinality: [0, 1] },
         is_water: { type: Value.BOOL, cardinality: [0, 1] },
         units: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             provide: [
               { context: Context.UNIT_STAT, scope: Scope.COUNTRY },
@@ -43,7 +47,7 @@ const terrain: Rule = {
         },
         enum: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         ai_terrain_importance_factor: { type: Value.UNQUOTED },
         match_value: { type: Value.UNQUOTED },
@@ -57,7 +61,7 @@ const graphical_terrain: Rule = {
     type: { type: Value.UNQUOTED },
     color: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     texture: { type: Value.UNQUOTED },
     spawn_city: { type: Value.BOOL, cardinality: [0, 1] },
@@ -68,7 +72,7 @@ const graphical_terrain: Rule = {
 const enums: Rule = {
   children: {
     enum: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         combat_width: { type: Value.UNQUOTED },
         combat_support_width: { type: Value.UNQUOTED },

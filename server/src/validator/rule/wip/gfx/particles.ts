@@ -1,7 +1,7 @@
 const types: Rule = {
   children: {
     type: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         name_field: { type: Value.UNQUOTED },
         path: [
@@ -33,7 +33,7 @@ const particle: Rule = {
   children: {
     name: { type: Value.UNQUOTED },
     subsystem: {
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
       children: {
         name: { type: Value.UNQUOTED, cardinality: [0, 1] },
         max_amount: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -152,7 +152,7 @@ const particle: Rule = {
       },
     },
     animation: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         name: { type: Value.UNQUOTED },
         start: { type: Value.UNQUOTED },
@@ -160,13 +160,13 @@ const particle: Rule = {
         repeat: { type: Value.BOOL, cardinality: [0, 1] },
         minValue: { type: Value.UNQUOTED },
         maxValue: { type: Value.UNQUOTED },
-        curve: { type: Value.UNQUOTED, cardinality: [4, "inf"] },
+        curve: { type: Value.UNQUOTED, cardinality: [4, Infinity] },
         op: { type: Value.UNQUOTED },
         time: { type: Value.UNQUOTED },
       },
     },
     force: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         name: { type: Value.UNQUOTED },
         type: { type: Value.UNQUOTED },

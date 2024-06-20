@@ -1,12 +1,12 @@
 const types: Rule = {
   children: {
     type: {
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         path: { type: Value.UNQUOTED },
         path_file: { type: Value.UNQUOTED },
         subtype: {
-          cardinality: ["0", "inf"],
+          cardinality: ["0", Infinity],
           children: {
             attacker: {
               children: {

@@ -5,7 +5,7 @@ const types: Rule = {
       children: {
         path: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         skip_root_key: {
           type: Value.UNQUOTED,
@@ -100,10 +100,10 @@ const spriteType: Rule = {
         },
         animationframes: {
           type: Value.INT,
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     loadType: {
       type: Value.UNQUOTED,
@@ -131,7 +131,10 @@ const spriteType: Rule = {
     },
     subtype: {
       children: {
-        provide: { context: Context.DLC_PATH_TEXTUREFILE, scope: Scope.SPRITETYPE },
+        provide: {
+          context: Context.DLC_PATH_TEXTUREFILE,
+          scope: Scope.SPRITETYPE,
+        },
       },
     },
   },

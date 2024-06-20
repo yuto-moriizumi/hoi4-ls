@@ -11,7 +11,7 @@ export const bookmark: RootObjectEntryDescriptor = {
     default_country: country_tags,
     default: { type: Value.BOOL, cardinality: [0, 1] },
     countries: {
-      cardinality: [7, "inf"],
+      cardinality: [7, Infinity],
       dynamicChildren: [
         {
           key: country_tags,
@@ -59,4 +59,4 @@ export const bookmark: RootObjectEntryDescriptor = {
     },
   },
 }; 
-```
+```;

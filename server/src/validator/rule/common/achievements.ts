@@ -8,11 +8,11 @@ export const achievement: RootObjectEntryDescriptor = {
   },
   children: {
     possible: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: triggers,
     },
     happened: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: triggers,
     },
   },

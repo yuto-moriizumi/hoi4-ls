@@ -20,16 +20,16 @@ const mio_policy: Rule = {
       cardinality: [0, 1],
       children: {
         enum: {
-          cardinality: [0, "inf"],
-          children: { type: Value.UNQUOTED }
+          cardinality: [0, Infinity],
+          children: { type: Value.UNQUOTED },
         },
         "<equipment_group>": {
-          cardinality: [0, "inf"],
-          children: { type: Value.UNQUOTED }
+          cardinality: [0, Infinity],
+          children: { type: Value.UNQUOTED },
         },
         same_as_mio: {
-          cardinality: [0, "inf"],
-          children: { type: Value.UNQUOTED }
+          cardinality: [0, Infinity],
+          children: { type: Value.UNQUOTED },
         },
       },
     },
@@ -37,16 +37,16 @@ const mio_policy: Rule = {
       cardinality: [0, 1],
       children: {
         enum: {
-          cardinality: [0, "inf"],
-          children: { type: Value.UNQUOTED }
+          cardinality: [0, Infinity],
+          children: { type: Value.UNQUOTED },
         },
         "<equipment_group>": {
-          cardinality: [0, "inf"],
-          children: { type: Value.UNQUOTED }
+          cardinality: [0, Infinity],
+          children: { type: Value.UNQUOTED },
         },
         same_as_mio: {
-          cardinality: [0, "inf"],
-          children: { type: Value.UNQUOTED }
+          cardinality: [0, Infinity],
+          children: { type: Value.UNQUOTED },
         },
       },
     },
@@ -67,12 +67,12 @@ const mio_policy: Rule = {
       children: {
         enum: {
           type: Value.FLOAT,
-          cardinality: [0, 1]
+          cardinality: [0, 1],
         },
         children: {
-          provide: { 
-            context: Context.MODIFIER_RULE, 
-            scope: Scope.COUNTRY 
+          provide: {
+            context: Context.MODIFIER_RULE,
+            scope: Scope.COUNTRY,
           },
         },
       },

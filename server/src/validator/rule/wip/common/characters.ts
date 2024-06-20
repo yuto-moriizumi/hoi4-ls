@@ -6,105 +6,118 @@ const types: Rule = {
         path_strict: { type: Value.BOOL },
         skip_root_key: { type: Value.UNQUOTED },
         subtype: {
-          children: [{
-            instanced: {
-              cardinality: ["~2", "inf"],
-              children: {
-                instance: {},
+          children: [
+            {
+              instanced: {
+                cardinality: ["~2", Infinity],
+                children: {
+                  instance: {},
+                },
               },
             },
-          }, {
-            uninstanced: {},
-          }, {
-            country_leader: {
-              cardinality: [1, "inf"],
-              children: {
-                country_leader: {},
+            {
+              uninstanced: {},
+            },
+            {
+              country_leader: {
+                cardinality: [1, Infinity],
+                children: {
+                  country_leader: {},
+                },
               },
             },
-          }, {
-            country_leader: {
-              cardinality: ["~2", "inf"],
-              children: {
-                instance: {
-                  cardinality: [1, "inf"],
-                  children: {
-                    country_leader: {},
+            {
+              country_leader: {
+                cardinality: ["~2", Infinity],
+                children: {
+                  instance: {
+                    cardinality: [1, Infinity],
+                    children: {
+                      country_leader: {},
+                    },
                   },
                 },
               },
             },
-          }, {
-            corps_commander: {
-              children: {
-                corps_commander: {},
+            {
+              corps_commander: {
+                children: {
+                  corps_commander: {},
+                },
               },
             },
-          }, {
-            corps_commander: {
-              cardinality: ["~2", "inf"],
-              children: {
-                instance: {
-                  children: {
-                    corps_commander: {},
+            {
+              corps_commander: {
+                cardinality: ["~2", Infinity],
+                children: {
+                  instance: {
+                    children: {
+                      corps_commander: {},
+                    },
                   },
                 },
               },
             },
-          }, {
-            field_marshal: {
-              children: {
-                field_marshal: {},
+            {
+              field_marshal: {
+                children: {
+                  field_marshal: {},
+                },
               },
             },
-          }, {
-            field_marshal: {
-              cardinality: ["~2", "inf"],
-              children: {
-                instance: {
-                  children: {
-                    field_marshal: {},
+            {
+              field_marshal: {
+                cardinality: ["~2", Infinity],
+                children: {
+                  instance: {
+                    children: {
+                      field_marshal: {},
+                    },
                   },
                 },
               },
             },
-          }, {
-            navy_leader: {
-              children: {
-                navy_leader: {},
+            {
+              navy_leader: {
+                children: {
+                  navy_leader: {},
+                },
               },
             },
-          }, {
-            navy_leader: {
-              cardinality: ["~2", "inf"],
-              children: {
-                instance: {
-                  children: {
-                    navy_leader: {},
+            {
+              navy_leader: {
+                cardinality: ["~2", Infinity],
+                children: {
+                  instance: {
+                    children: {
+                      navy_leader: {},
+                    },
                   },
                 },
               },
             },
-          }, {
-            advisor: {
-              cardinality: [1, "inf"],
-              children: {
-                advisor: {},
+            {
+              advisor: {
+                cardinality: [1, Infinity],
+                children: {
+                  advisor: {},
+                },
               },
             },
-          }, {
-            advisor: {
-              cardinality: ["~2", "inf"],
-              children: {
-                instance: {
-                  cardinality: [1, "inf"],
-                  children: {
-                    advisor: {},
+            {
+              advisor: {
+                cardinality: ["~2", Infinity],
+                children: {
+                  instance: {
+                    cardinality: [1, Infinity],
+                    children: {
+                      advisor: {},
+                    },
                   },
                 },
               },
             },
-          }],
+          ],
         },
       },
     },
@@ -122,7 +135,10 @@ const character: Rule = {
               children: {
                 enum: {
                   cardinality: ["~1", 2],
-                  provide: { context: Context.PORTRAITSET, scope: Scope.COUNTRY },
+                  provide: {
+                    context: Context.PORTRAITSET,
+                    scope: Scope.COUNTRY,
+                  },
                 },
               },
             },
@@ -134,7 +150,7 @@ const character: Rule = {
           },
         },
         country_leader: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             country_leader: {
               children: {
@@ -142,10 +158,10 @@ const character: Rule = {
                 desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
                 expire: { type: Value.UNQUOTED, cardinality: [0, 1] },
                 name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                traits: { cardinality: [0, "inf"] },
+                traits: { cardinality: [0, Infinity] },
                 research_bonus: {
                   children: {
-                    enum: { type: Value.UNQUOTED, cardinality: [1, "inf"] },
+                    enum: { type: Value.UNQUOTED, cardinality: [1, Infinity] },
                   },
                 },
                 enum: { type: Value.UNQUOTED },
@@ -166,7 +182,7 @@ const character: Rule = {
                 logistics_skill: { type: Value.UNQUOTED },
                 enum: { type: Value.UNQUOTED, cardinality: [0, 1] },
                 name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                traits: { cardinality: [0, "inf"] },
+                traits: { cardinality: [0, Infinity] },
                 visible: {
                   cardinality: [0, 1],
                   provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
@@ -187,7 +203,7 @@ const character: Rule = {
                 planning_skill: { type: Value.UNQUOTED },
                 logistics_skill: { type: Value.UNQUOTED },
                 enum: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                traits: { cardinality: [0, "inf"] },
+                traits: { cardinality: [0, Infinity] },
                 visible: {
                   cardinality: [0, 1],
                   provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
@@ -209,7 +225,7 @@ const character: Rule = {
                 coordination_skill: { type: Value.UNQUOTED },
                 enum: { type: Value.UNQUOTED, cardinality: [0, 1] },
                 name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                traits: { cardinality: [0, "inf"] },
+                traits: { cardinality: [0, Infinity] },
                 visible: {
                   cardinality: [0, 1],
                   provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
@@ -219,7 +235,7 @@ const character: Rule = {
           },
         },
         advisor: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             advisor: {
               children: {
@@ -239,26 +255,29 @@ const character: Rule = {
                   cardinality: [0, 1],
                   provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
                 },
-                traits: { cardinality: [0, "inf"] },
+                traits: { cardinality: [0, Infinity] },
                 research_bonus: {
                   children: {
-                    enum: { type: Value.UNQUOTED, cardinality: [1, "inf"] },
+                    enum: { type: Value.UNQUOTED, cardinality: [1, Infinity] },
                   },
                 },
                 ledger: { type: Value.UNQUOTED, cardinality: [0, 1] },
                 cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
                 removal_cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
                 ai_will_do: {
-                  provide: { context: Context.MODIFIER_RULE, scope: Scope.COUNTRY },
+                  provide: {
+                    context: Context.MODIFIER_RULE,
+                    scope: Scope.COUNTRY,
+                  },
                   cardinality: [0, 1],
                 },
                 on_add: {
                   provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                 },
                 on_remove: {
                   provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                 },
                 do_effect: {
                   cardinality: [0, 1],
@@ -274,7 +293,7 @@ const character: Rule = {
           },
         },
         instanced: {
-          cardinality: ["~2", "inf"],
+          cardinality: ["~2", Infinity],
           children: {
             instance: {
               children: {
@@ -287,7 +306,10 @@ const character: Rule = {
                   children: {
                     enum: {
                       cardinality: ["~1", 2],
-                      provide: { context: Context.PORTRAITSET, scope: Scope.COUNTRY },
+                      provide: {
+                        context: Context.PORTRAITSET,
+                        scope: Scope.COUNTRY,
+                      },
                     },
                   },
                 },
@@ -297,7 +319,7 @@ const character: Rule = {
                   provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
                 },
                 country_leader: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   children: {
                     country_leader: {
                       children: {
@@ -305,10 +327,13 @@ const character: Rule = {
                         desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
                         expire: { type: Value.UNQUOTED, cardinality: [0, 1] },
                         name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                        traits: { cardinality: [0, "inf"] },
+                        traits: { cardinality: [0, Infinity] },
                         research_bonus: {
                           children: {
-                            enum: { type: Value.UNQUOTED, cardinality: [1, "inf"] },
+                            enum: {
+                              type: Value.UNQUOTED,
+                              cardinality: [1, Infinity],
+                            },
                           },
                         },
                         enum: { type: Value.UNQUOTED },
@@ -330,10 +355,13 @@ const character: Rule = {
                         logistics_skill: { type: Value.UNQUOTED },
                         enum: { type: Value.UNQUOTED, cardinality: [0, 1] },
                         name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                        traits: { cardinality: [0, "inf"] },
+                        traits: { cardinality: [0, Infinity] },
                         visible: {
                           cardinality: [0, 1],
-                          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.TRIGGER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
                       },
                     },
@@ -352,10 +380,13 @@ const character: Rule = {
                         planning_skill: { type: Value.UNQUOTED },
                         logistics_skill: { type: Value.UNQUOTED },
                         enum: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                        traits: { cardinality: [0, "inf"] },
+                        traits: { cardinality: [0, Infinity] },
                         visible: {
                           cardinality: [0, 1],
-                          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.TRIGGER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
                       },
                     },
@@ -375,17 +406,20 @@ const character: Rule = {
                         coordination_skill: { type: Value.UNQUOTED },
                         enum: { type: Value.UNQUOTED, cardinality: [0, 1] },
                         name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                        traits: { cardinality: [0, "inf"] },
+                        traits: { cardinality: [0, Infinity] },
                         visible: {
                           cardinality: [0, 1],
-                          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.TRIGGER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
                       },
                     },
                   },
                 },
                 advisor: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   children: {
                     advisor: {
                       children: {
@@ -395,44 +429,74 @@ const character: Rule = {
                         desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
                         allowed: {
                           cardinality: [0, 1],
-                          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.TRIGGER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
                         visible: {
                           cardinality: [0, 1],
-                          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.TRIGGER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
                         available: {
                           cardinality: [0, 1],
-                          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.TRIGGER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
-                        traits: { cardinality: [0, "inf"] },
+                        traits: { cardinality: [0, Infinity] },
                         research_bonus: {
                           children: {
-                            enum: { type: Value.UNQUOTED, cardinality: [1, "inf"] },
+                            enum: {
+                              type: Value.UNQUOTED,
+                              cardinality: [1, Infinity],
+                            },
                           },
                         },
                         ledger: { type: Value.UNQUOTED, cardinality: [0, 1] },
                         cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
-                        removal_cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
+                        removal_cost: {
+                          type: Value.UNQUOTED,
+                          cardinality: [0, 1],
+                        },
                         ai_will_do: {
-                          provide: { context: Context.MODIFIER_RULE, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.MODIFIER_RULE,
+                            scope: Scope.COUNTRY,
+                          },
                           cardinality: [0, 1],
                         },
                         on_add: {
-                          provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-                          cardinality: [0, "inf"],
+                          provide: {
+                            context: Context.EFFECT,
+                            scope: Scope.COUNTRY,
+                          },
+                          cardinality: [0, Infinity],
                         },
                         on_remove: {
-                          provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-                          cardinality: [0, "inf"],
+                          provide: {
+                            context: Context.EFFECT,
+                            scope: Scope.COUNTRY,
+                          },
+                          cardinality: [0, Infinity],
                         },
                         do_effect: {
                           cardinality: [0, 1],
-                          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.TRIGGER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
                         modifier: {
                           cardinality: [0, 1],
-                          provide: { context: Context.MODIFIER, scope: Scope.COUNTRY },
+                          provide: {
+                            context: Context.MODIFIER,
+                            scope: Scope.COUNTRY,
+                          },
                         },
                         can_be_fired: { type: Value.BOOL, cardinality: [0, 1] },
                       },

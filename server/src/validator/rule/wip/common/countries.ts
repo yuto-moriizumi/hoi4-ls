@@ -7,13 +7,19 @@ const types: Rule = {
         subtype_country: {
           type: Value.ARRAY,
           children: {
-            color: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-            graphical_culture: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-            graphical_culture_2d: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            color: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
+            graphical_culture: {
+              type: Value.UNQUOTED,
+              cardinality: [0, Infinity],
+            },
+            graphical_culture_2d: {
+              type: Value.UNQUOTED,
+              cardinality: [0, Infinity],
+            },
           },
         },
         subtype_cosmetic: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             scalar: {
               children: {
@@ -50,14 +56,14 @@ const types: Rule = {
 const country_tag_file: Rule = {
   children: {
     dynamic_tags: { type: Value.BOOL, cardinality: [0, 1] },
-    scalar: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    scalar: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
   },
 };
 
 const country_file: Rule = {
   children: {
     subtype_country: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         graphical_culture: { type: Value.UNQUOTED },
         graphical_culture_2d: { type: Value.UNQUOTED },
@@ -71,7 +77,7 @@ const country_file: Rule = {
       },
     },
     subtype_cosmetic: {
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
       children: {
         scalar: {
           children: {

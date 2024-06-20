@@ -6,7 +6,10 @@ const effect: Rule = {
       children: {
         random_select_amount: { type: Value.UNQUOTED },
         display_individual_scopes: { type: Value.BOOL, cardinality: [0, 1] },
-        limit: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY }, cardinality: [0, 1] },
+        limit: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+          cardinality: [0, 1],
+        },
         tooltip: { type: Value.UNQUOTED, cardinality: [0, 1] },
       },
       provide: { context: Context.EFFECT, scope: Scope.STATE },
@@ -15,43 +18,46 @@ const effect: Rule = {
       type: Value.OBJECT,
       cardinality: [0, 1],
       children: {
-        limit: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY }, cardinality: [0, 1] },
-        prioritize: { type: Value.UNQUOTED, cardinality: [1, "inf"] },
+        limit: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+          cardinality: [0, 1],
+        },
+        prioritize: { type: Value.UNQUOTED, cardinality: [1, Infinity] },
         tooltip: { type: Value.UNQUOTED, cardinality: [0, 1] },
       },
       provide: { context: Context.EFFECT, scope: Scope.STATE },
     },
     transfer_state_to: {
       type: Value.OBJECT,
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         value: { type: Value.UNQUOTED },
       },
     },
     set_state_owner_to: {
       type: Value.OBJECT,
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         value: { type: Value.UNQUOTED },
       },
     },
     set_state_controller_to: {
       type: Value.OBJECT,
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         value: { type: Value.UNQUOTED },
       },
     },
     release_on_controlled: {
       type: Value.OBJECT,
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         value: { type: Value.UNQUOTED },
       },
     },
     release_puppet_on_controlled: {
       type: Value.OBJECT,
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         value: { type: Value.UNQUOTED },
       },
@@ -71,7 +77,10 @@ const effect: Rule = {
       children: {
         random_select_amount: { type: Value.UNQUOTED },
         display_individual_scopes: { type: Value.BOOL, cardinality: [0, 1] },
-        limit: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY }, cardinality: [0, 1] },
+        limit: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+          cardinality: [0, 1],
+        },
         tooltip: { type: Value.UNQUOTED, cardinality: [0, 1] },
       },
       provide: { context: Context.EFFECT, scope: Scope.CHARACTER },
@@ -80,18 +89,21 @@ const effect: Rule = {
       type: Value.OBJECT,
       cardinality: [0, 1],
       children: {
-        limit: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY }, cardinality: [0, 1] },
+        limit: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+          cardinality: [0, 1],
+        },
         tooltip: { type: Value.UNQUOTED, cardinality: [0, 1] },
       },
       provide: { context: Context.EFFECT, scope: Scope.CHARACTER },
     },
     add_corps_commander_role: {
       type: Value.OBJECT,
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         character: { type: Value.ARRAY, children: { type: Value.UNQUOTED } },
         desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
-        traits: { type: Value.UNQUOTED, cardinality: ["~1", "inf"] },
+        traits: { type: Value.UNQUOTED, cardinality: ["~1", Infinity] },
         skill: { type: Value.UNQUOTED, cardinality: [0, 1] },
         attack_skill: { type: Value.UNQUOTED, cardinality: [0, 1] },
         defense_skill: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -99,12 +111,15 @@ const effect: Rule = {
         logistics_skill: { type: Value.UNQUOTED, cardinality: [0, 1] },
         female: { type: Value.BOOL, cardinality: [0, 1] },
         legacy_id: { type: Value.UNQUOTED, cardinality: [0, 1] },
-        visible: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY }, cardinality: [0, 1] },
+        visible: {
+          provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
+          cardinality: [0, 1],
+        },
       },
     },
     remove_unit_leader_role: {
       type: Value.OBJECT,
-      cardinality: ["0", "inf"],
+      cardinality: ["0", Infinity],
       children: {
         character: { type: Value.UNQUOTED },
       },

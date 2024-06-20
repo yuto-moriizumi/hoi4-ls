@@ -41,7 +41,7 @@ export const ability: RootObjectEntryDescriptor = {
       children: {
         base_factor: { type: Value.NUMBER, cardinality: [0, 1] },
         modifier: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: modifier_rule,
         },
       },

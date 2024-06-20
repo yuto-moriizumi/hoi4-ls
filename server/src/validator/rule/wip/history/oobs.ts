@@ -1,7 +1,7 @@
 const types: Rule = {
   children: {
     type: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         path: { type: Value.UNQUOTED },
         type_per_file: { type: Value.BOOL },
@@ -17,11 +17,11 @@ const oob: Rule = {
       cardinality: [0, 1],
       children: {
         current: { type: Value.UNQUOTED },
-        progress: { type: Value.NUMBER, cardinality: [0, "inf"] },
+        progress: { type: Value.NUMBER, cardinality: [0, Infinity] },
       },
     },
     division_template: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         name: { type: Value.UNQUOTED },
         division_names_group: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -32,7 +32,7 @@ const oob: Rule = {
         obsolete: { type: Value.BOOL, cardinality: [0, 1] },
         division_cap: { type: Value.NUMBER, cardinality: [0, 1] },
         regiments: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             // Repetition for each unit type omitted for brevity
           },
@@ -48,14 +48,14 @@ const oob: Rule = {
       },
     },
     instant_effect: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
     },
     units: {
       cardinality: [0, 1],
       children: {
         division: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             name: { type: Value.UNQUOTED, cardinality: [0, 1] },
             division_name: {
@@ -71,7 +71,7 @@ const oob: Rule = {
           },
         },
         fleet: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             // Fleet details omitted for brevity
           },
@@ -85,7 +85,7 @@ const oob: Rule = {
       },
     },
     navy_leader: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         name: { type: Value.UNQUOTED },
         desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -98,7 +98,7 @@ const oob: Rule = {
           },
         },
         gfx: { type: Value.UNQUOTED, cardinality: [0, 1] },
-        traits: { cardinality: [0, "inf"] },
+        traits: { cardinality: [0, Infinity] },
         skill: { type: Value.NUMBER },
         attack_skill: { type: Value.NUMBER },
         defense_skill: { type: Value.NUMBER },

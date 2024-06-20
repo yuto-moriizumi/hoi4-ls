@@ -115,7 +115,7 @@ const effects: RuleSet = {
         prioritize: {
           type: Value.ARRAY,
           elementType: { type: Value.STATE },
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           optional: true,
         },
         limit: { optional: true }, // Implementation of limit would depend on the parsing context

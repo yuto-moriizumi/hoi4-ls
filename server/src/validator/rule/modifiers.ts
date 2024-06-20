@@ -3,4 +3,4 @@ import { entryMap } from "./utils";
 
 const raw_modifiers: Entries = {};
 
-export const modifiers = entryMap(raw_modifiers, [0, "inf"]);
+export const modifiers = entryMap(raw_modifiers, [0, Infinity]);

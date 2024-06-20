@@ -22,7 +22,7 @@ const graphic_db: Rule = {
   children: {
     enum: [
       {
-        cardinality: [1, "inf"],
+        cardinality: [1, Infinity],
         children: {
           pool: {
             children: {
@@ -33,12 +33,18 @@ const graphic_db: Rule = {
               weight: { type: Value.UNQUOTED, cardinality: [0, 1] },
               icons: {
                 children: {
-                  filepath: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+                  filepath: {
+                    type: Value.UNQUOTED,
+                    cardinality: [0, Infinity],
+                  },
                 },
               },
               models: {
                 children: {
-                  "<entity>": { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+                  "<entity>": {
+                    type: Value.UNQUOTED,
+                    cardinality: [0, Infinity],
+                  },
                 },
               },
             },

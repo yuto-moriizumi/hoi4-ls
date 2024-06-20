@@ -2,7 +2,7 @@ const types: Rule = {
   children: {
     type: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         path: { type: Value.UNQUOTED },
         subtype: {
@@ -28,49 +28,49 @@ const resistance_compliance_modifier: Rule = {
     alert_level: { type: Value.UNQUOTED, cardinality: [0, 1] },
     alert_margin: { type: Value.UNQUOTED, cardinality: [0, 1] },
     state_modifier: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       provide: { context: Context.MODIFIER, scope: Scope.STATE },
     },
     subtype: {
       children: {
         core: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             visible: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
             },
             enabled: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
             },
             on_enable: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
             },
             on_disable: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
             },
           },
         },
         state: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             visible: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.TRIGGER, scope: Scope.STATE },
             },
             enabled: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.TRIGGER, scope: Scope.STATE },
             },
             on_enable: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.EFFECT, scope: Scope.STATE },
             },
             on_disable: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.EFFECT, scope: Scope.STATE },
             },
           },
@@ -84,7 +84,7 @@ const enums: Rule = {
   children: {
     enum: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         resistance_compliance_modifier_types: { type: Value.UNQUOTED },
         compliance_modifier_types: { type: Value.UNQUOTED },

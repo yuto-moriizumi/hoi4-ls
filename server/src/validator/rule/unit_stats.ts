@@ -3,4 +3,4 @@ import { entryMap } from "./utils";
 
 const raw_unit_stats: Entries = {};
 
-export const unit_stats = entryMap(raw_unit_stats, [0, "inf"]);
+export const unit_stats = entryMap(raw_unit_stats, [0, Infinity]);

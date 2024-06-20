@@ -43,7 +43,7 @@ const intelligence_agency_upgrade: Rule = {
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
     level: {
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
       children: {
         modifier: {
           cardinality: [0, 1],

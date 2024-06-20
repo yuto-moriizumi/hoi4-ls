@@ -24,7 +24,7 @@ const types: Rule = {
               children: {
                 type: {
                   type: Value.ENUM,
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   enumName: "air_units",
                 },
                 group: { type: Value.UNQUOTED },
@@ -57,7 +57,7 @@ const unit: Rule = {
           group: { type: Value.UNQUOTED },
           need: {
             children: {
-              equipment: { type: Value.INT, cardinality: [0, "inf"] },
+              equipment: { type: Value.INT, cardinality: [0, Infinity] },
               value: {
                 type: Value.INT,
                 cardinality: [0, 1],
@@ -77,7 +77,7 @@ const unit: Rule = {
           transport: { type: Value.UNQUOTED, cardinality: [0, 1] },
           type: {
             type: Value.ENUM,
-            cardinality: [0, "inf"],
+            cardinality: [0, Infinity],
             enumName: "land_units",
           },
         },
@@ -87,7 +87,7 @@ const unit: Rule = {
           group: { type: Value.UNQUOTED },
           need: {
             children: {
-              equipment: { type: Value.INT, cardinality: [0, "inf"] },
+              equipment: { type: Value.INT, cardinality: [0, Infinity] },
               value: {
                 type: Value.INT,
                 cardinality: [0, 1],
@@ -107,7 +107,7 @@ const unit: Rule = {
           transport: { type: Value.UNQUOTED, cardinality: [0, 1] },
           type: {
             type: Value.ENUM,
-            cardinality: [0, "inf"],
+            cardinality: [0, Infinity],
             enumName: "land_units",
           },
         },
@@ -120,10 +120,10 @@ const unit: Rule = {
       type: Value.FLOAT,
       cardinality: [0, 1],
     },
-    essential: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    essential: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     categories: {
       type: Value.ENUM,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       enumName: "unit_category",
     },
   },
@@ -134,7 +134,7 @@ const ship_name: Rule = {
     name: { type: Value.UNQUOTED },
     for_countries: {
       type: Value.ENUM,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       enumName: "country_tags",
     },
     can_use: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
@@ -143,36 +143,36 @@ const ship_name: Rule = {
       children: {
         equipment: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           keyValue: "naval_equip",
         },
         unit: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           keyValue: "ship_unit",
         },
         enum: {
           type: Value.ENUM,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           enumName: "ship_units",
         },
       },
     },
     link_numbering_with: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       keyValue: "ship_name",
     },
     prefix: { type: Value.UNQUOTED, cardinality: [0, 1] },
     fallback_name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    unique: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    unique: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     unordered: {
       children: {
         int: {
           type: Value.UNQUOTED,
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     ordered: {
       children: {
@@ -181,7 +181,7 @@ const ship_name: Rule = {
           cardinality: [1, 2],
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
   },
 };
@@ -191,7 +191,7 @@ const division_name: Rule = {
     name: { type: Value.UNQUOTED },
     for_countries: {
       type: Value.ENUM,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       enumName: "country_tags",
     },
     can_use: { provide: { context: Context.TRIGGER, scope: Scope.COUNTRY } },
@@ -202,7 +202,7 @@ const division_name: Rule = {
     },
     link_numbering_with: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       keyValue: "division_name",
     },
     fallback_name: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -212,7 +212,7 @@ const division_name: Rule = {
           type: Value.UNQUOTED,
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     ordered: {
       children: {
@@ -221,7 +221,7 @@ const division_name: Rule = {
           cardinality: [1, 2],
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
   },
 };

@@ -72,7 +72,7 @@ const rules: Rule = {
     num_divisions_in_states: {
       children: {
         count: Value.INT,
-        states: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        states: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
         types: { type: Value.UNQUOTED, cardinality: [0, 1] },
         exclude: { type: Value.UNQUOTED, cardinality: [0, 1] },
       },
@@ -81,7 +81,7 @@ const rules: Rule = {
     num_battalions_in_states: {
       children: {
         count: Value.INT,
-        states: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        states: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
         types: { type: Value.UNQUOTED, cardinality: [0, 1] },
         exclude: { type: Value.UNQUOTED, cardinality: [0, 1] },
       },

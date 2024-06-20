@@ -2,7 +2,7 @@ const types: Rule = {
   children: [
     {
       type: {
-        cardinality: [0, "inf"],
+        cardinality: [0, Infinity],
         children: {
           path: { type: Value.UNQUOTED },
           name_field: { type: Value.UNQUOTED },
@@ -11,7 +11,7 @@ const types: Rule = {
     },
     {
       type: {
-        cardinality: [0, "inf"],
+        cardinality: [0, Infinity],
         children: {
           path: { type: Value.UNQUOTED },
           skip_root_key: { type: Value.UNQUOTED },
@@ -26,13 +26,13 @@ const state: Rule = {
     id: { type: Value.UNQUOTED },
     name: { type: Value.UNQUOTED },
     resources: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
-        resource: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        resource: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
       },
     },
     history: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         owner: { type: Value.UNQUOTED },
         controller: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -43,19 +43,19 @@ const state: Rule = {
           },
         },
         buildings: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
-            building: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            building: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
             provinces: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               children: {
-                building: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+                building: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
               },
             },
           },
         },
         date_field: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             owner: { type: Value.UNQUOTED, cardinality: [0, 1] },
             controller: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -66,13 +66,19 @@ const state: Rule = {
               },
             },
             buildings: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               children: {
-                building_state: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+                building_state: {
+                  type: Value.UNQUOTED,
+                  cardinality: [0, Infinity],
+                },
                 provinces: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   children: {
-                    building_provincial: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+                    building_provincial: {
+                      type: Value.UNQUOTED,
+                      cardinality: [0, Infinity],
+                    },
                   },
                 },
               },
@@ -84,9 +90,9 @@ const state: Rule = {
     },
     local_supplies: { type: Value.UNQUOTED, cardinality: [0, 1] },
     provinces: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
-        provinces: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        provinces: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
       },
     },
     manpower: { type: Value.UNQUOTED },

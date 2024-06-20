@@ -1,7 +1,7 @@
 const types: Rule = {
   children: {
     type: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       context: Context.COUNTRY_SCORER,
       scope: Scope.COUNTRY,
       path: "game/common/scorers/country",
@@ -17,16 +17,19 @@ const country_scorer: Rule = {
         targets_dynamic: { type: Value.BOOL, cardinality: [0, 1] },
         target_non_existing: { type: Value.BOOL, cardinality: [0, 1] },
         target_array: [
-          { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-          { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+          { type: Value.UNQUOTED, cardinality: [0, Infinity] },
+          { type: Value.UNQUOTED, cardinality: [0, Infinity] },
         ],
         targets: {
           cardinality: [0, 1],
           children: {
-            enum: [{ type: Value.UNQUOTED, cardinality: [0, "inf"] }],
-            value: [{ type: Value.UNQUOTED, cardinality: [0, "inf"] }],
-            variable_field: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-            scope: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            enum: [{ type: Value.UNQUOTED, cardinality: [0, Infinity] }],
+            value: [{ type: Value.UNQUOTED, cardinality: [0, Infinity] }],
+            variable_field: {
+              type: Value.UNQUOTED,
+              cardinality: [0, Infinity],
+            },
+            scope: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
           },
         },
         target_root_trigger: {
@@ -40,7 +43,7 @@ const country_scorer: Rule = {
         score: {
           cardinality: [0, 1],
           children: {
-            enum: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            enum: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
             provide: { context: Context.MODIFIER_RULE, scope: Scope.COUNTRY },
           },
         },

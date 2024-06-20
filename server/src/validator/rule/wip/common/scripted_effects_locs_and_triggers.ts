@@ -40,7 +40,7 @@ const scripted_effect: Rule = {
 
 const scripted_loc: Rule = {
   children: {
-    name: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    name: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     text: {
       children: {
         trigger: {
@@ -56,14 +56,17 @@ const scripted_loc: Rule = {
             int: {
               children: {
                 modifier_rule: {
-                  provide: { context: Context.MODIFIER_RULE, scope: Scope.RANDOM_LIST },
+                  provide: {
+                    context: Context.MODIFIER_RULE,
+                    scope: Scope.RANDOM_LIST,
+                  },
                 },
                 localization_key: [
                   { type: Value.UNQUOTED },
                   { type: Value.UNQUOTED },
                 ],
               },
-              cardinality: [1, "inf"],
+              cardinality: [1, Infinity],
             },
           },
           cardinality: [0, 1],

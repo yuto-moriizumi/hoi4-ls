@@ -1,9 +1,11 @@
 const example: Rule = {
   children: {
     trigger: [
-      { provide: { context: Context.LONGEST_WAR_LENGTH, scope: Scope.COUNTRY } },
       {
-        cardinality: [0, "inf"],
+        provide: { context: Context.LONGEST_WAR_LENGTH, scope: Scope.COUNTRY },
+      },
+      {
+        cardinality: [0, Infinity],
         children: {
           tag: { type: Value.UNQUOTED },
           months: { type: Value.UNQUOTED },

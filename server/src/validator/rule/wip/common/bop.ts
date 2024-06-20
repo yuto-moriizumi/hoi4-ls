@@ -14,24 +14,24 @@ const balance_of_power: Rule = {
     right_side: { type: Value.UNQUOTED },
     decision_category: { type: Value.UNQUOTED },
     range: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         id: { type: Value.UNQUOTED },
         min: { type: Value.NUMBER },
         max: { type: Value.NUMBER },
         modifier: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           provide: { context: Context.MODIFIER, scope: Scope.COUNTRY },
         },
         on_activate: {
           cardinality: [0, 1],
           children: {
             limit: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
             },
             effect: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
             },
           },
@@ -40,11 +40,11 @@ const balance_of_power: Rule = {
           cardinality: [0, 1],
           children: {
             limit: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
             },
             effect: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
             },
           },
@@ -52,29 +52,29 @@ const balance_of_power: Rule = {
       },
     },
     side: {
-      cardinality: [2, "inf"],
+      cardinality: [2, Infinity],
       children: {
         id: { type: Value.UNQUOTED },
         icon: { type: Value.UNQUOTED },
         range: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             id: { type: Value.UNQUOTED },
             min: { type: Value.NUMBER },
             max: { type: Value.NUMBER },
             modifier: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: { context: Context.MODIFIER, scope: Scope.COUNTRY },
             },
             on_activate: {
               cardinality: [0, 1],
               children: {
                 limit: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
                 },
                 effect: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
                 },
               },
@@ -83,11 +83,11 @@ const balance_of_power: Rule = {
               cardinality: [0, 1],
               children: {
                 limit: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
                 },
                 effect: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
                 },
               },

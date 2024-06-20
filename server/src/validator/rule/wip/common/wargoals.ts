@@ -17,23 +17,31 @@ const wargoal: Rule = {
   children: {
     war_name: { type: Value.UNQUOTED, cardinality: [0, 1] },
     allowed: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
     available: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
     take_states: {
-      cardinality: [0, "inf"],
-      provide: { context: Context.TRIGGER, scope: Scope.COUNTRY, replaceScope: { this: Scope.STATE, root: Scope.COUNTRY, prev: Scope.COUNTRY } },
+      cardinality: [0, Infinity],
+      provide: {
+        context: Context.TRIGGER,
+        scope: Scope.COUNTRY,
+        replaceScope: {
+          this: Scope.STATE,
+          root: Scope.COUNTRY,
+          prev: Scope.COUNTRY,
+        },
+      },
     },
     puppet: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
     liberate: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
     generate_base_cost: { type: Value.UNQUOTED, cardinality: [0, 1] },

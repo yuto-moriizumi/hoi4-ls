@@ -201,3 +201,14 @@ export const air_units = [
   "maritime_patrol_plane",
   "heavy_fighter",
 ];
+
+export const ledgers = [
+  "army",
+  "navy",
+  "air",
+  "military",
+  "invalid",
+  "civilian",
+  "hidden",
+  "all",
+];

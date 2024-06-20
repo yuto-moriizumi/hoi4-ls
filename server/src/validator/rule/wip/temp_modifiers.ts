@@ -2,7 +2,7 @@ const country: Rule = {
   children: {
     targeted_modifier_rule: {
       provide: { context: Context.TARGETED_MODIFIER, scope: Scope.COUNTRY },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         tag: { type: Value.UNQUOTED },
         alias_name: { type: Value.UNQUOTED },
@@ -10,7 +10,7 @@ const country: Rule = {
     },
     modifier_rule: {
       provide: { context: Context.MODIFIER, scope: Scope.COUNTRY },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         enum: { type: Value.UNQUOTED },
         alias_name: { type: Value.UNQUOTED },
@@ -34,7 +34,7 @@ const country: Rule = {
       { type: Value.UNQUOTED },
       { type: Value.UNQUOTED },
       { provide: { context: Context.MODIFIER, scope: Scope.COUNTRY } },
-      { type: Value.UNQUOTED }
+      { type: Value.UNQUOTED },
     ],
     unit_stat: [
       { type: Value.UNQUOTED },
@@ -70,7 +70,7 @@ const country: Rule = {
       { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
       { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
       { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
-      { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } }
+      { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
     ],
     naval_stat: { type: Value.UNQUOTED },
     air_stat: { type: Value.UNQUOTED },
@@ -91,7 +91,7 @@ const country: Rule = {
       { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
       { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
       { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
-      { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } }
+      { provide: { context: Context.UNIT_STAT, scope: Scope.COUNTRY } },
     ],
   },
 };

@@ -90,7 +90,7 @@ export const ai_strategy: RootObjectEntryDescriptor = {
     },
     target_array: { type: Value.UNQUOTED, cardinality: [0, 1] },
     targets: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       type: Value.ARRAY,
       values: ref("country"),
     },
@@ -123,22 +123,22 @@ export const ai_strategy_plan: RootObjectEntryDescriptor = {
       children: triggers,
     },
     ai_national_focuses: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       type: Value.ARRAY,
       values: { type: Value.REFERENCE_TO, tag: ["focus", "shared_focus"] },
     },
     focus_factors: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       dynamicChildren: [
         {
           key: ref("focus"),
           value: Value.NUMBER,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         {
           key: ref("shared_focus"),
           value: Value.NUMBER,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
       ],
     },
@@ -157,12 +157,12 @@ export const ai_strategy_plan: RootObjectEntryDescriptor = {
         {
           key: ref("idea_name"),
           value: Value.INT,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         {
           key: ref("advisor_token"),
           value: Value.INT,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
       ],
     },
@@ -172,7 +172,7 @@ export const ai_strategy_plan: RootObjectEntryDescriptor = {
         {
           key: ref("country_leader_trait"),
           value: Value.INT,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
       ],
     },
@@ -193,7 +193,7 @@ export const ai_strategy_plan: RootObjectEntryDescriptor = {
 export const alias: RootObjectEntryDescriptor = {
   children: {
     ai_strategy_rule: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
   },
 };
@@ -202,14 +202,14 @@ export const types: RootObjectEntryDescriptor = {
   children: {
     type: [
       {
-        cardinality: [0, "inf"],
+        cardinality: [0, Infinity],
         children: {
           path: { type: Value.UNQUOTED },
           path_strict: { type: Value.BOOL },
         },
       },
       {
-        cardinality: [0, "inf"],
+        cardinality: [0, Infinity],
         children: {
           path: { type: Value.UNQUOTED },
         },

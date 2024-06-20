@@ -33,7 +33,7 @@ export const autonomy: RootObjectEntryDescriptor = {
       },
     },
     modifier: {
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
       children: modifiers,
     },
     ai_subject_wants_higher: {
@@ -57,7 +57,7 @@ export const autonomy: RootObjectEntryDescriptor = {
     allowed_levels_filter: {
       type: Value.ARRAY,
       values: { type: Value.REFERENCE_TO, tag: "autonomy" },
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
     },
     use_for_peace_conference_weight: {
       replaceScope: {

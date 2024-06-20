@@ -7,11 +7,11 @@ const types: Rule = {
         subtype: {
           children: {
             slot: {
-              cardinality: [1, "inf"],
+              cardinality: [1, Infinity],
               type: Value.UNQUOTED,
             },
             character_slot: {
-              cardinality: [1, "inf"],
+              cardinality: [1, Infinity],
               type: Value.UNQUOTED,
             },
             miltary_spirit: {
@@ -45,11 +45,11 @@ const idea_category: Rule = {
           type: Value.UNQUOTED,
         },
         slot: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           type: Value.UNQUOTED,
         },
         character_slot: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           type: Value.UNQUOTED,
         },
       },

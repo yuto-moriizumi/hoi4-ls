@@ -5,7 +5,10 @@ const autonomy: Rule = {
     is_puppet: { type: Value.BOOL, cardinality: [0, 1] },
     use_overlord_color: { type: Value.BOOL, cardinality: [0, 1] },
     min_freedom_level: { type: Value.UNQUOTED },
-    peace_conference_initial_freedom: { type: Value.UNQUOTED, cardinality: [0, 1] },
+    peace_conference_initial_freedom: {
+      type: Value.UNQUOTED,
+      cardinality: [0, 1],
+    },
     manpower_influence: { type: Value.UNQUOTED },
     rule: {
       children: {
@@ -33,7 +36,7 @@ const autonomy: Rule = {
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
     allowed_levels_filter: {
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
     },
     use_for_peace_conference_weight: {
       children: {

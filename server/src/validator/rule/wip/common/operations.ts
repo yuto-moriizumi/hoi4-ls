@@ -30,7 +30,7 @@ operation: {
     phases: {
       children: {
         "<operation_phase>": {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             enum: { type: Value.UNQUOTED, cardinality: [0, 1] },
             provide: { context: Context.MODIFIER_RULE, scope: Scope.COUNTRY },
@@ -62,7 +62,7 @@ operation: {
     },
     awarded_tokens: {
       children: {
-        "<operation_token>": { cardinality: [1, "inf"] },
+        "<operation_token>": { cardinality: [1, Infinity] },
       },
     },
     cost_modifiers: {
@@ -71,7 +71,7 @@ operation: {
     operation_target: {
       children: {
         targets: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             scope: { type: Value.UNQUOTED },
           },
@@ -81,7 +81,7 @@ operation: {
     selection_target: {
       children: {
         targets: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             scope: { type: Value.UNQUOTED },
           },
@@ -96,7 +96,7 @@ operation: {
       children: {
         "<equipment>": { type: Value.UNQUOTED },
         civilian_factories: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             amount: { type: Value.UNQUOTED },
             days: { type: Value.UNQUOTED },
@@ -106,7 +106,7 @@ operation: {
     },
     required_tokens: {
       children: {
-        "<operation_token>": { cardinality: [0, "inf"] },
+        "<operation_token>": { cardinality: [0, Infinity] },
       },
     },
     target_weight: {

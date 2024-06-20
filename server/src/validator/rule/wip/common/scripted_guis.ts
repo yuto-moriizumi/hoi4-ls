@@ -26,15 +26,15 @@ const types: Rule = {
         { provide: { context: Context.STATE_CONTEXT, scope: Scope.SCRIPTED_GUI } },
         {
           context_type: { type: Value.UNQUOTED },
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         {
           context_type: { type: Value.UNQUOTED },
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         {
           context_type: { type: Value.UNQUOTED },
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         { provide: { context: Context.PLAYER_CONTEXT, scope: Scope.SCRIPTED_GUI } },
       ],
@@ -49,17 +49,17 @@ const scripted_gui: Rule = {
     parent_window_token: { type: Value.UNQUOTED, cardinality: [0, 1] },
     parent_window_name: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       values: [
         {value: Value.UNQUOTED},
         {value: "<containerWindowType>_instance"}
       ]
     },
-    dirty: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    dirty: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     properties: {
       children: {
       	scalar: {
-          cardinality: ["~1", "inf"],
+          cardinality: ["~1", Infinity],
         	children: {
           	image: { type: Value.UNQUOTED, cardinality: [0, 1] },
           	frame: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -72,7 +72,7 @@ const scripted_gui: Rule = {
     dynamic_lists: {
       children: {
       	scalar: {
-          cardinality: ["~1", "inf"],
+          cardinality: ["~1", Infinity],
         	children: {
           	array: { type: Value.UNQUOTED },
           	change_scope: { type: Value.BOOL, cardinality: [0, 1] },
@@ -83,7 +83,7 @@ const scripted_gui: Rule = {
           	ai_weights: {
             	children: {
               	scalar: {
-                	cardinality: ["~1", "inf"],
+                	cardinality: ["~1", Infinity],
               		children: {
                 		ai_will_do: {
                   		children: {
@@ -104,7 +104,7 @@ const scripted_gui: Rule = {
           cardinality: [0, 1],
           children: {
             scalar: {
-              cardinality: ["~1", "inf"],
+              cardinality: ["~1", Infinity],
               children: {
                 effect: { provide: { context: Context.EFFECT, scope: Scope.SCRIPTED_GUI } },
               },
@@ -121,14 +121,14 @@ const scripted_gui: Rule = {
           cardinality: [0, 1],
           children: {
             scalar: {
-              cardinality: ["~1", "inf"],
+              cardinality: ["~1", Infinity],
               children: {
                 trigger: { provide: { context: Context.TRIGGER, scope: Scope.SCRIPTED_GUI } },
               },
             },
           },
         },
-        ai_test_scopes: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        ai_test_scopes: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
         ai_check_scope: {
           cardinality: [0, 1],
           children: {
@@ -157,7 +157,7 @@ const scripted_gui: Rule = {
       children: {
         weight: { type: Value.UNQUOTED, cardinality: [0, 1] },
         scalar: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           children: {
             player_context: {
               children: {

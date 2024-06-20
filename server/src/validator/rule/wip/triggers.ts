@@ -37,7 +37,7 @@ const triggers: Rule = {
     },
     controls_province: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     hidden_trigger: {
       type: Value.OBJECT,
@@ -59,11 +59,11 @@ const triggers: Rule = {
     },
     ideology: {
       type: Value.INT,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     building: {
       type: Value.INT,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     is_fighting_in_weather: {
       type: Value.UNQUOTED,

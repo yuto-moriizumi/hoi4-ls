@@ -12,10 +12,10 @@ const equipment_group: Rule = {
   children: {
     description: { type: Value.UNQUOTED, cardinality: [0, 1] },
     equipment_type: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
-        enum: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-        equipment_group: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        enum: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
+        equipment_group: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
       },
     },
   },

@@ -1,4 +1,11 @@
-import { Cardinality, Entries, Value } from "./types";
+import {
+  Cardinality,
+  Entries,
+  EnumValueDescriptor,
+  ReferenceToDescriptor,
+  UnquotedValueDescriptor,
+  Value,
+} from "./types";
 
 export function ref(tag: string) {
   return { type: Value.REFERENCE_TO, tag };
@@ -21,4 +28,24 @@ export function entryMap(entries: Entries, cardinality: Cardinality): Entries {
 
 function isUnquotedLiteral(str: string) {
   return str in Value;
+}
+
+export function subtype(type: string) {
+  return type;
+}
+
+/** Enum can be statically resolved if it's defined within rules.
+ * However this dynamic resolution function is nice to have for the ease of conversion with AI */
+export function Enum(key: string): EnumValueDescriptor | ReferenceToDescriptor {
+  if (key in EnumDict) return { type: Value.ENUM, values: EnumDict[key] };
+  return ref(key);
+}
+
+/** To be updated with enums.ts */
+const EnumDict: Record<string, string[]> = {
+  something: ["a", "b", "c"],
+};
+
+export function valueSet(tag: string): UnquotedValueDescriptor {
+  return { type: Value.UNQUOTED, referencedBy: tag };
 }

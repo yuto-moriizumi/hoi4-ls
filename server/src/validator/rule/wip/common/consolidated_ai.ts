@@ -16,10 +16,10 @@ const types: Rule = {
             children: {
               ai_national_focuses: {
                 children: {
-                  focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+                  focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
                   shared_focus: {
                     type: Value.UNQUOTED,
-                    cardinality: [0, "inf"],
+                    cardinality: [0, Infinity],
                   },
                 },
               },
@@ -54,8 +54,8 @@ const types: Rule = {
 
 const ai_area: Rule = {
   children: {
-    continents: { type: Value.UNQUOTED, cardinality: [1, "inf"] },
-    strategic_regions: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    continents: { type: Value.UNQUOTED, cardinality: [1, Infinity] },
+    strategic_regions: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
   },
 };
 
@@ -66,8 +66,11 @@ const ai_focus: Rule = {
         research: {
           children: {
             enum: {
-              ai_research_areas: { type: Value.FLOAT, cardinality: [0, "inf"] },
-              tech_category: { type: Value.FLOAT, cardinality: [0, "inf"] },
+              ai_research_areas: {
+                type: Value.FLOAT,
+                cardinality: [0, Infinity],
+              },
+              tech_category: { type: Value.FLOAT, cardinality: [0, Infinity] },
             },
           },
         },
@@ -77,8 +80,8 @@ const ai_focus: Rule = {
       children: {
         ai_national_focuses: {
           children: {
-            focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-            shared_focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
+            shared_focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
           },
         },
       },
@@ -168,7 +171,7 @@ const ai_peace: Rule = {
 
 const ai_template: Rule = {
   children: {
-    roles: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    roles: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     available_for: { type: Value.UNQUOTED, cardinality: [0, 1] },
     blocked_for: { type: Value.UNQUOTED, cardinality: [0, 1] },
     match_to_count: { type: Value.FLOAT },
@@ -232,9 +235,9 @@ const ai_equipment_design_group: Rule = {
         visible: { type: Value.BOOL, optional: true },
         target_variant: { children: {}, cardinality: [0, 1] },
         requirements: { children: {}, optional: true },
-        allowed_modules: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        allowed_modules: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
       },
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
     },
   },
 };

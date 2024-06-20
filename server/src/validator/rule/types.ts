@@ -3,6 +3,7 @@ export const Value = {
   UNQUOTED: "unquoted",
   UNQUOTED_LITERAL: "unquoted_literal",
   LOCALISATION: "localisation",
+  DATETIME: "datetime",
   NUMBER: "number", // number literal or variables
   INT: "int",
   BOOL: "bool",
@@ -20,6 +21,7 @@ export const enum Scope {
   UNIT_LEADER = "unit_leader",
   STRATEGIC_REGION = "strategic_region",
   AIR = "AIR",
+  CHARACTER = "character",
 }
 
 export const enum Context {
@@ -29,7 +31,7 @@ export const enum Context {
   UNIT_STAT = "unit_stat",
 }
 
-export type Cardinality = [number, number | "inf"];
+export type Cardinality = [number, number];
 
 type BaseEntryDescriptor = {
   /** Defines how many times can this entry appear. Default value is [1,1] (required) */
@@ -40,6 +42,7 @@ type BaseEntryDescriptor = {
 type SimpleValue =
   | typeof Value.QUOTED
   | typeof Value.LOCALISATION
+  | typeof Value.DATETIME
   | typeof Value.INT;
 
 type NumberValueDescriptor =
@@ -68,7 +71,7 @@ type UnquotedLiteralValueDescriptor =
   // shorthand for { type: typeof Value.UNQUOTED_LITERAL}
   | string;
 
-type UnquotedValueDescriptor =
+export type UnquotedValueDescriptor =
   | {
       type: typeof Value.UNQUOTED;
       /** By setting key, this value will be referenced by the dynamic value */
@@ -79,7 +82,7 @@ type UnquotedValueDescriptor =
 
 /** Aseert the specified value is in the `values`.
  * The set of values are statically defined in the rules. */
-type EnumValueDescriptor =
+export type EnumValueDescriptor =
   | {
       type: typeof Value.ENUM;
       values: string[];
@@ -93,12 +96,12 @@ type ArrayValueDescriptor = {
   values: EnumValueDescriptor | ReferenceToDescriptor;
 };
 
-type ObjectValueDescriptor = {
+export type ObjectValueDescriptor = {
   type?: typeof Value.OBJECT;
   /** properties for the object. multiple descriptors can be specified as an array since there might be several ways to express the same stuff */
   children?: Entries | OneOf<Entries>;
   dynamicChildren?: {
-    key: EnumValueDescriptor | ReferenceToDescriptor;
+    key: EnumValueDescriptor | ReferenceToDescriptor | UnquotedValueDescriptor;
     value: ValueDescriptor;
     cardinality?: Cardinality;
   }[];
@@ -106,7 +109,7 @@ type ObjectValueDescriptor = {
 
 /** Assert the value exists in the sets of tag defined with ReferencedByRule
  * This can be used both for key and value */
-type ReferenceToDescriptor = {
+export type ReferenceToDescriptor = {
   type: typeof Value.REFERENCE_TO;
   tag: string | string[];
 };
@@ -136,4 +139,13 @@ export type Entries = {
   [key: string]: EntryDescriptor | OneOf<EntryDescriptor>;
 };
 export type RootObjectEntryDescriptor = BaseEntryDescriptor &
-  ObjectValueDescriptor;
+  ObjectValueDescriptor & {
+    /** The top level key of the rule
+     * By default, the variable name of the rule will be used
+     * ex. export const aces = { ... }; will have `aces` as the root key */
+    rootKey?: string;
+    /** Path of the files to apply this rule
+     * By default, it will be applied to all files which has the path of the rule in their paths
+     * ex. common/aces.ts will be applied to all files which has common/aces in their paths */
+    path?: string;
+  };

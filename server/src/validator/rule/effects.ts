@@ -7,4 +7,4 @@ const rawEffects = {
   custom_effect_tooltip: { type: Value.LOCALISATION },
 } satisfies Entries;
 
-export const effects = entryMap(rawEffects, [0, "inf"]);
+export const effects = entryMap(rawEffects, [0, Infinity]);

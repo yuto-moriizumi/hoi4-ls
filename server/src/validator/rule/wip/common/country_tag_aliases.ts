@@ -45,7 +45,7 @@ const country_tag_alias: Rule = {
         children: {
           original_tag: { type: Value.UNQUOTED },
           targets: {
-            cardinality: [0, "inf"],
+            cardinality: [0, Infinity],
             children: [
               { type: Value.UNQUOTED },
               { type: Value.UNQUOTED },
@@ -80,7 +80,11 @@ const enums: Rule = {
     complex_enum: {
       children: {
         path: { type: Value.UNQUOTED },
-        start_from_root: { type: Value.BOOL, cardinality: [0, 1], defaultValue: true },
+        start_from_root: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: true,
+        },
         name: {
           children: {
             enum_name: {},

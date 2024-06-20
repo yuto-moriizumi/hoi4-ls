@@ -7,7 +7,10 @@ const effect: Rule = {
         random_select_amount: { type: Value.UNQUOTED },
         display_individual_scopes: { type: Value.BOOL },
         limit: {
-          provide: { context: Context.TRIGGER, scope: Scope.MILITARY_INDUSTRIAL_ORGANIZATION },
+          provide: {
+            context: Context.TRIGGER,
+            scope: Scope.MILITARY_INDUSTRIAL_ORGANIZATION,
+          },
           cardinality: [0, 1],
         },
         tooltip: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -36,7 +39,11 @@ const effect: Rule = {
       {
         children: {
           policy: { type: Value.UNQUOTED },
-          show_modifiers: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+          show_modifiers: {
+            type: Value.BOOL,
+            cardinality: [0, 1],
+            defaultValue: false,
+          },
         },
       },
     ],
@@ -49,12 +56,12 @@ const effect: Rule = {
         seller_trigger: [
           {
             provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
-            cardinality: ["~1", "inf"],
+            cardinality: ["~1", Infinity],
           },
           { type: Value.UNQUOTED, cardinality: [0, 1] },
         ],
         seller_tags: {
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
           type: Value.UNQUOTED,
         },
       },
@@ -82,9 +89,6 @@ const effect: Rule = {
     set_mio_funds_gain_factor: { type: Value.UNQUOTED },
     set_mio_research_bonus: { type: Value.UNQUOTED },
     set_mio_design_team_assign_cost: { type: Value.UNQUOTED },
-    give_market_access: [
-      { type: Value.UNQUOTED },
-      { type: Value.UNQUOTED },
-    ],
+    give_market_access: [{ type: Value.UNQUOTED }, { type: Value.UNQUOTED }],
   },
 };

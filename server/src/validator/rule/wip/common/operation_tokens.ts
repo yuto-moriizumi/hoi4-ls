@@ -7,7 +7,7 @@ operation_token: {
     desc: { type: Value.UNQUOTED },
     icon: { type: Value.UNQUOTED },
     text_icon: { type: Value.UNQUOTED },
-    targeted_modifier: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    targeted_modifier: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     intel_source: { type: Value.ENUM, cardinality: [0, 1] },
     intel_gain: { type: Value.FLOAT, cardinality: [0, 1] },
   },

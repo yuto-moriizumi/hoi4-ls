@@ -6,7 +6,10 @@ const country: Rule = {
           children: {
             path: { type: Value.UNQUOTED },
           },
-          provide: { context: Context.INTELLIGENCE_AGENCY, scope: Scope.COUNTRY },
+          provide: {
+            context: Context.INTELLIGENCE_AGENCY,
+            scope: Scope.COUNTRY,
+          },
         },
       },
     },
@@ -15,16 +18,19 @@ const country: Rule = {
         picture: { type: Value.UNQUOTED },
         names: {
           children: {
-            localisation: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-            localisation_inline: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            localisation: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
+            localisation_inline: {
+              type: Value.UNQUOTED,
+              cardinality: [0, Infinity],
+            },
           },
         },
         default: {
-          cardinality: ["~1", "inf"],
+          cardinality: ["~1", Infinity],
           provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
         },
         available: {
-          cardinality: ["~1", "inf"],
+          cardinality: ["~1", Infinity],
           provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
         },
       },

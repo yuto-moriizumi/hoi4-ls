@@ -7,7 +7,7 @@ export const country_event: RootObjectEntryDescriptor = {
     title: [
       Value.UNQUOTED,
       {
-        cardinality: [0, "inf"],
+        cardinality: [0, Infinity],
         children: {
           trigger: triggers,
           text: Value.LOCALISATION,
@@ -30,7 +30,7 @@ export const country_event: RootObjectEntryDescriptor = {
       cardinality: [0, 1],
     },
     option: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         name: { type: Value.UNQUOTED },
         ai_chance: {

@@ -9,7 +9,7 @@ export const modifier_rule: Entries = {
       {
         key: { type: Value.ENUM, values: add_factor },
         value: Value.NUMBER,
-        cardinality: [0, "inf"],
+        cardinality: [0, Infinity],
       },
     ],
   },

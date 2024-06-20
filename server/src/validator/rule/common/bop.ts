@@ -10,7 +10,7 @@ export const balance_of_power: RootObjectEntryDescriptor = {
     right_side: Value.UNQUOTED,
     decision_category: { type: Value.UNQUOTED },
     range: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         id: Value.UNQUOTED,
         min: { type: Value.NUMBER, range: [-1, 1] },
@@ -31,7 +31,7 @@ export const balance_of_power: RootObjectEntryDescriptor = {
           cardinality: [0, 1],
           children: {
             limit: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               children: triggers,
             },
             ...effects,
@@ -45,7 +45,7 @@ export const balance_of_power: RootObjectEntryDescriptor = {
           cardinality: [0, 1],
           children: {
             limit: {
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               children: triggers,
             },
             ...effects,
@@ -54,12 +54,12 @@ export const balance_of_power: RootObjectEntryDescriptor = {
       },
     },
     side: {
-      cardinality: [2, "inf"],
+      cardinality: [2, Infinity],
       children: {
         id: Value.UNQUOTED,
         icon: { type: Value.UNQUOTED },
         range: {
-          cardinality: [1, "inf"],
+          cardinality: [1, Infinity],
           children: {
             id: Value.UNQUOTED,
             min: { type: Value.NUMBER, range: [-1, 1] },
@@ -80,7 +80,7 @@ export const balance_of_power: RootObjectEntryDescriptor = {
               cardinality: [0, 1],
               children: {
                 limit: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   children: triggers,
                 },
                 ...effects,
@@ -94,7 +94,7 @@ export const balance_of_power: RootObjectEntryDescriptor = {
               cardinality: [0, 1],
               children: {
                 limit: {
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   children: triggers,
                 },
                 ...effects,

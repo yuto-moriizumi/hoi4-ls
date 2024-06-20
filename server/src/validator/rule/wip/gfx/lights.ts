@@ -1,9 +1,9 @@
 const types: Rule = {
   children: {
     type: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
-        path: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        path: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
         name_field: { type: Value.UNQUOTED },
       },
       provide: { context: Context.LIGHT, scope: Scope.GLOBAL },
@@ -47,7 +47,7 @@ const light: Rule = {
         maxValue: { type: Value.FLOAT, cardinality: [0, 1] },
         curve: {
           type: Value.FLOAT,
-          cardinality: [4, "inf"],
+          cardinality: [4, Infinity],
         },
       },
     },
@@ -57,7 +57,7 @@ const light: Rule = {
 const enums: Rule = {
   children: {
     enum: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         animation_op: {
           values: ["MUL", "ADD", "ABS"],
@@ -65,11 +65,11 @@ const enums: Rule = {
       },
     },
     complex_enum: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         light_animations: {
           children: {
-            path: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            path: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
             name: {
               children: {
                 animation: {

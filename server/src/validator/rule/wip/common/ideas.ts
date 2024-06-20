@@ -1,9 +1,9 @@
 const types: Rule = {
   children: {
-    type: { 
+    type: {
       provide: { context: Context.IDEA, scope: Scope.COUNTRY },
-      path: { type: Value.UNQUOTED }
-    }
+      path: { type: Value.UNQUOTED },
+    },
   },
 };
 
@@ -12,7 +12,11 @@ const idea: Rule = {
     "<idea_category.no_slot>": {
       children: {
         name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-        cancel_if_invalid: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+        cancel_if_invalid: {
+          type: Value.BOOL,
+          cardinality: [0, 1],
+          defaultValue: false,
+        },
         visible: {
           cardinality: [0, 1],
           provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
@@ -43,7 +47,7 @@ const idea: Rule = {
         rule: {
           cardinality: [0, 1],
           children: {
-            enum: { type: Value.BOOL, cardinality: ["~1", "inf"] },
+            enum: { type: Value.BOOL, cardinality: ["~1", Infinity] },
             desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
           },
         },
@@ -60,30 +64,30 @@ const idea: Rule = {
               children: {
                 instant: { type: Value.BOOL, cardinality: [0, 1] },
               },
-              cardinality: [0, "inf"],
+              cardinality: [0, Infinity],
               provide: [
                 { context: Context.UNIT_STAT, scope: Scope.COUNTRY },
                 { context: Context.NAVAL_STAT, scope: Scope.COUNTRY },
-                { context: Context.AIR_STAT, scope: Scope.COUNTRY }
+                { context: Context.AIR_STAT, scope: Scope.COUNTRY },
               ],
             },
           },
         },
         traits: {
           type: Value.UNQUOTED,
-          cardinality: [0, 1]
+          cardinality: [0, 1],
         },
         on_add: {
           provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-          cardinality: [0, "inf"]
+          cardinality: [0, Infinity],
         },
         on_remove: {
           provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-          cardinality: [0, "inf"]
+          cardinality: [0, Infinity],
         },
         do_effect: {
           provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
-          cardinality: [0, 1]
+          cardinality: [0, 1],
         },
         ai_will_do: {
           cardinality: [0, 1],
@@ -93,7 +97,7 @@ const idea: Rule = {
           provide: { context: Context.MODIFIER_RULE, scope: Scope.COUNTRY },
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     "value[idea_slot]": {
       children: {
@@ -105,7 +109,11 @@ const idea: Rule = {
             name: { type: Value.UNQUOTED, cardinality: [0, 1] },
             level: { type: Value.INT, cardinality: [0, 1] },
             default: { type: Value.BOOL, cardinality: [0, 1] },
-            cancel_if_invalid: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+            cancel_if_invalid: {
+              type: Value.BOOL,
+              cardinality: [0, 1],
+              defaultValue: false,
+            },
             visible: {
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
               cardinality: [0, 1],
@@ -140,32 +148,32 @@ const idea: Rule = {
                   children: {
                     instant: { type: Value.BOOL, cardinality: [0, 1] },
                   },
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   provide: [
                     { context: Context.UNIT_STAT, scope: Scope.COUNTRY },
                     { context: Context.NAVAL_STAT, scope: Scope.COUNTRY },
-                    { context: Context.AIR_STAT, scope: Scope.COUNTRY }
+                    { context: Context.AIR_STAT, scope: Scope.COUNTRY },
                   ],
                 },
               },
             },
             traits: {
               type: Value.UNQUOTED,
-              cardinality: [0, 1]
+              cardinality: [0, 1],
             },
             on_add: {
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-              cardinality: [0, "inf"]
+              cardinality: [0, Infinity],
             },
             on_remove: {
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-              cardinality: [0, "inf"]
+              cardinality: [0, Infinity],
             },
           },
           cardinality: [0, 1],
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     "value[character_advisor_slot]": {
       children: {
@@ -177,7 +185,11 @@ const idea: Rule = {
             name: { type: Value.UNQUOTED, cardinality: [0, 1] },
             level: { type: Value.INT, cardinality: [0, 1] },
             default: { type: Value.BOOL, cardinality: [0, 1] },
-            cancel_if_invalid: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+            cancel_if_invalid: {
+              type: Value.BOOL,
+              cardinality: [0, 1],
+              defaultValue: false,
+            },
             visible: {
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
               cardinality: [0, 1],
@@ -208,7 +220,7 @@ const idea: Rule = {
             rule: {
               cardinality: [0, 1],
               children: {
-                enum: { type: Value.BOOL, cardinality: ["~1", "inf"] },
+                enum: { type: Value.BOOL, cardinality: ["~1", Infinity] },
                 desc: { type: Value.UNQUOTED, cardinality: [0, 1] },
               },
             },
@@ -219,32 +231,32 @@ const idea: Rule = {
                   children: {
                     instant: { type: Value.BOOL, cardinality: [0, 1] },
                   },
-                  cardinality: [0, "inf"],
+                  cardinality: [0, Infinity],
                   provide: [
                     { context: Context.UNIT_STAT, scope: Scope.COUNTRY },
                     { context: Context.NAVAL_STAT, scope: Scope.COUNTRY },
-                    { context: Context.AIR_STAT, scope: Scope.COUNTRY }
+                    { context: Context.AIR_STAT, scope: Scope.COUNTRY },
                   ],
                 },
               },
             },
             traits: {
               type: Value.UNQUOTED,
-              cardinality: [0, 1]
+              cardinality: [0, 1],
             },
             on_add: {
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-              cardinality: [0, "inf"]
+              cardinality: [0, Infinity],
             },
             on_remove: {
               provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
-              cardinality: [0, "inf"]
+              cardinality: [0, Infinity],
             },
           },
           cardinality: [0, 1],
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     "enum[allowed_advisor_role]": {
       type: Value.UNQUOTED,
@@ -258,8 +270,8 @@ const enums: Rule = {
       children: {
         ledgers: {
           type: Value.ENUM,
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };

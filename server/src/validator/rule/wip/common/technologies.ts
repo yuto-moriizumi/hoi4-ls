@@ -1,7 +1,10 @@
 const types: Rule = {
   children: [
     {
-      type: { type: Value.UNQUOTED, provide: { context: Context.TECHNOLOGY, scope: Scope.GLOBAL } },
+      type: {
+        type: Value.UNQUOTED,
+        provide: { context: Context.TECHNOLOGY, scope: Scope.GLOBAL },
+      },
       children: {
         skip_root_key: { type: Value.UNQUOTED },
         path: { type: Value.UNQUOTED },
@@ -12,7 +15,12 @@ const types: Rule = {
               folder: {
                 children: {
                   name: { type: Value.UNQUOTED },
-                  position: { children: { x: { type: Value.UNQUOTED }, y: { type: Value.UNQUOTED } } },
+                  position: {
+                    children: {
+                      x: { type: Value.UNQUOTED },
+                      y: { type: Value.UNQUOTED },
+                    },
+                  },
                 },
               },
             },
@@ -20,7 +28,12 @@ const types: Rule = {
               folder: {
                 children: {
                   name: { type: Value.UNQUOTED },
-                  position: { children: { x: { type: Value.UNQUOTED }, y: { type: Value.UNQUOTED } } },
+                  position: {
+                    children: {
+                      x: { type: Value.UNQUOTED },
+                      y: { type: Value.UNQUOTED },
+                    },
+                  },
                 },
               },
             },
@@ -50,84 +63,193 @@ const technology: Rule = {
     xp_research_cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
     xp_boost_cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
     xp_research_bonus: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    subtype: { children: { xp_unlock_cost: { type: Value.UNQUOTED } }, cardinality: [0, 1] },
-    allow: { provide: { context: Context.TRIGGER, scope: Scope.TECHNOLOGY }, cardinality: ["~1", "inf"] },
-    allow_branch: { provide: { context: Context.TRIGGER, scope: Scope.TECHNOLOGY }, cardinality: ["~1", "inf"] },
-    xor: { children: [{ '<technology>': { type: Value.UNQUOTED, cardinality: ["~1", "inf"] } }], cardinality: [0, 1] },
-    enable_subunits: { children: [{ '<unit>': { type: Value.UNQUOTED, cardinality: ["~1", "inf"] } }], cardinality: [0, "inf"] },
+    subtype: {
+      children: { xp_unlock_cost: { type: Value.UNQUOTED } },
+      cardinality: [0, 1],
+    },
+    allow: {
+      provide: { context: Context.TRIGGER, scope: Scope.TECHNOLOGY },
+      cardinality: ["~1", Infinity],
+    },
+    allow_branch: {
+      provide: { context: Context.TRIGGER, scope: Scope.TECHNOLOGY },
+      cardinality: ["~1", Infinity],
+    },
+    xor: {
+      children: [
+        {
+          "<technology>": {
+            type: Value.UNQUOTED,
+            cardinality: ["~1", Infinity],
+          },
+        },
+      ],
+      cardinality: [0, 1],
+    },
+    enable_subunits: {
+      children: [
+        { "<unit>": { type: Value.UNQUOTED, cardinality: ["~1", Infinity] } },
+      ],
+      cardinality: [0, Infinity],
+    },
     enable_equipments: {
       children: [
-        { limit: { provide: { context: Context.TRIGGER, scope: Scope.EQUIPMENT }, cardinality: [0, 1] } },
-        { '<equipment>': { type: Value.UNQUOTED, cardinality: [0, "inf"] } },
-        { '<duplicate_archetypes>': { type: Value.UNQUOTED, cardinality: [0, "inf"] } },
-        { subtype: { children: { value_set: { type: Value.UNQUOTED, cardinality: ["~1", "inf"] } }, cardinality: [0, "inf"] } },
-        { subtype: { children: { value_set: { type: Value.UNQUOTED, cardinality: ["~1", "inf"] } }, cardinality: [0, "inf"] } },
+        {
+          limit: {
+            provide: { context: Context.TRIGGER, scope: Scope.EQUIPMENT },
+            cardinality: [0, 1],
+          },
+        },
+        { "<equipment>": { type: Value.UNQUOTED, cardinality: [0, Infinity] } },
+        {
+          "<duplicate_archetypes>": {
+            type: Value.UNQUOTED,
+            cardinality: [0, Infinity],
+          },
+        },
+        {
+          subtype: {
+            children: {
+              value_set: {
+                type: Value.UNQUOTED,
+                cardinality: ["~1", Infinity],
+              },
+            },
+            cardinality: [0, Infinity],
+          },
+        },
+        {
+          subtype: {
+            children: {
+              value_set: {
+                type: Value.UNQUOTED,
+                cardinality: ["~1", Infinity],
+              },
+            },
+            cardinality: [0, Infinity],
+          },
+        },
       ],
-      cardinality: [0, "inf"]
+      cardinality: [0, Infinity],
     },
-    enable_equipment_modules: { children: [{ '<module>': { type: Value.UNQUOTED, cardinality: ["~1", "inf"] } }], cardinality: [0, "inf"] },
+    enable_equipment_modules: {
+      children: [
+        { "<module>": { type: Value.UNQUOTED, cardinality: ["~1", Infinity] } },
+      ],
+      cardinality: [0, Infinity],
+    },
     enable_building: {
       children: [
         { building: { type: Value.UNQUOTED } },
         { level: { type: Value.UNQUOTED } },
       ],
-      cardinality: [0, "inf"]
+      cardinality: [0, Infinity],
     },
-    enable_tactic: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
-    sub_technologies: { children: [{ '<technology>': { type: Value.UNQUOTED, cardinality: ["~1", 3] } }], cardinality: [0, 1] },
+    enable_tactic: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
+    sub_technologies: {
+      children: [
+        { "<technology>": { type: Value.UNQUOTED, cardinality: ["~1", 3] } },
+      ],
+      cardinality: [0, 1],
+    },
     path: {
       children: [
         { leads_to_tech: { type: Value.UNQUOTED } },
         { research_cost_coeff: { type: Value.UNQUOTED } },
       ],
-      cardinality: [0, "inf"]
+      cardinality: [0, Infinity],
     },
-    dependencies: { children: [{ '<technology>': { type: Value.UNQUOTED } }], cardinality: [0, 1] },
+    dependencies: {
+      children: [{ "<technology>": { type: Value.UNQUOTED } }],
+      cardinality: [0, 1],
+    },
     research_cost: { type: Value.UNQUOTED, cardinality: [0, 1] },
     start_year: { type: Value.UNQUOTED, cardinality: [0, 1] },
     sub_tech_index: { type: Value.UNQUOTED, cardinality: [0, 1] },
     folder: {
       children: {
         name: { type: Value.UNQUOTED },
-        position: { children: { x: { type: Value.UNQUOTED }, y: { type: Value.UNQUOTED } } },
+        position: {
+          children: {
+            x: { type: Value.UNQUOTED },
+            y: { type: Value.UNQUOTED },
+          },
+        },
       },
-      cardinality: [0, "inf"]
+      cardinality: [0, Infinity],
     },
     doctrine: { type: Value.BOOL, cardinality: [0, 1] },
     ai_will_do: {
-      children: [
-        { base_factor: { type: Value.UNQUOTED } },
-      ],
+      children: [{ base_factor: { type: Value.UNQUOTED } }],
       provide: { context: Context.MODIFIER_RULE, scope: Scope.TECHNOLOGY },
-      cardinality: [0, 1]
+      cardinality: [0, 1],
     },
     ai_research_weights: {
       children: [
-        { enum: { type: Value.UNQUOTED, cardinality: [0, "inf"] } },
-        { enum: { type: Value.UNQUOTED, cardinality: [0, "inf"] } },
-        { enum: { type: Value.UNQUOTED, cardinality: [0, "inf"] } },
-        { '<resource>': { type: Value.UNQUOTED, cardinality: [0, "inf"] } },
+        { enum: { type: Value.UNQUOTED, cardinality: [0, Infinity] } },
+        { enum: { type: Value.UNQUOTED, cardinality: [0, Infinity] } },
+        { enum: { type: Value.UNQUOTED, cardinality: [0, Infinity] } },
+        { "<resource>": { type: Value.UNQUOTED, cardinality: [0, Infinity] } },
       ],
-      cardinality: [0, 1]
+      cardinality: [0, 1],
     },
-    categories: { children: [{ enum: { type: Value.UNQUOTED, cardinality: ["~1", "inf"] } }], cardinality: [0, 1] },
+    categories: {
+      children: [
+        { enum: { type: Value.UNQUOTED, cardinality: ["~1", Infinity] } },
+      ],
+      cardinality: [0, 1],
+    },
     enum: {
       children: [
-        { unit_category: { children: { alias: { provide: { context: Context.STAT, scope: Scope.UNIT } } } } },
+        {
+          unit_category: {
+            children: {
+              alias: { provide: { context: Context.STAT, scope: Scope.UNIT } },
+            },
+          },
+        },
       ],
-      cardinality: [0, "inf"]
+      cardinality: [0, Infinity],
     },
-    '<unit>': {
+    "<unit>": {
       children: [
-        { need: { children: { '<equipment>': { type: Value.UNQUOTED } }, cardinality: [1, "inf"] } },
-        { battalion_mult: { children: { category: { type: Value.UNQUOTED }, add: { type: Value.BOOL } }, cardinality: [0, "inf"] } },
-        { enum: { children: { alias: { provide: { context: Context.STAT, scope: Scope.UNIT } } } } },
+        {
+          need: {
+            children: { "<equipment>": { type: Value.UNQUOTED } },
+            cardinality: [1, Infinity],
+          },
+        },
+        {
+          battalion_mult: {
+            children: {
+              category: { type: Value.UNQUOTED },
+              add: { type: Value.BOOL },
+            },
+            cardinality: [0, Infinity],
+          },
+        },
+        {
+          enum: {
+            children: {
+              alias: { provide: { context: Context.STAT, scope: Scope.UNIT } },
+            },
+          },
+        },
       ],
-      cardinality: [0, "inf"]
+      cardinality: [0, Infinity],
     },
-    modifier: { provide: { context: Context.MODIFIER, scope: Scope.TECHNOLOGY }, cardinality: [0, 1] },
-    on_research_complete_limit: { provide: { context: Context.TRIGGER, scope: Scope.TECHNOLOGY }, cardinality: [0, 1] },
-    on_research_complete: { provide: { context: Context.EFFECT, scope: Scope.TECHNOLOGY }, cardinality: [0, 1] },
+    modifier: {
+      provide: { context: Context.MODIFIER, scope: Scope.TECHNOLOGY },
+      cardinality: [0, 1],
+    },
+    on_research_complete_limit: {
+      provide: { context: Context.TRIGGER, scope: Scope.TECHNOLOGY },
+      cardinality: [0, 1],
+    },
+    on_research_complete: {
+      provide: { context: Context.EFFECT, scope: Scope.TECHNOLOGY },
+      cardinality: [0, 1],
+    },
     force_use_small_tech_layout: { type: Value.BOOL, cardinality: [0, 1] },
     show_effect_as_desc: { type: Value.BOOL, cardinality: [0, 1] },
     nuclear_production: { type: Value.UNQUOTED, cardinality: [0, 1] },
@@ -142,8 +264,16 @@ const tech_sharing_group: Rule = {
     picture: { type: Value.UNQUOTED },
     research_sharing_per_country_bonus: { type: Value.UNQUOTED },
     is_faction_sharing: { type: Value.BOOL, cardinality: [0, 1] },
-    categories: { children: { enum: { type: Value.UNQUOTED, cardinality: ["~1", "inf"] } }, cardinality: [0, 1] },
-    available: { provide: { context: Context.TRIGGER, scope: Scope.TECH_SHARING_GROUP }, cardinality: [0, 1] },
+    categories: {
+      children: {
+        enum: { type: Value.UNQUOTED, cardinality: ["~1", Infinity] },
+      },
+      cardinality: [0, 1],
+    },
+    available: {
+      provide: { context: Context.TRIGGER, scope: Scope.TECH_SHARING_GROUP },
+      cardinality: [0, 1],
+    },
   },
 };
 
@@ -158,7 +288,9 @@ const enums: Rule = {
           start_from_root: { type: Value.BOOL },
           name: {
             children: {
-              technology_categories: { children: { enum_name: { type: Value.UNQUOTED } } },
+              technology_categories: {
+                children: { enum_name: { type: Value.UNQUOTED } },
+              },
             },
           },
         },

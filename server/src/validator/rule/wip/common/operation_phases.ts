@@ -9,22 +9,26 @@ const operation_phase: Rule = {
     outcome_extra: { type: Value.UNQUOTED, cardinality: [0, 1] },
     risk_extra: { type: Value.UNQUOTED, cardinality: [0, 1] },
     requirements: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
     },
-    return_on_complete: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
+    return_on_complete: {
+      type: Value.BOOL,
+      cardinality: [0, 1],
+      defaultValue: false,
+    },
     equipment: {
       cardinality: [0, 1],
       children: {
-        equipment: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        equipment: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
         civilian_factories: [
-          { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+          { type: Value.UNQUOTED, cardinality: [0, Infinity] },
           {
             children: {
               amount: { type: Value.UNQUOTED },
               days: { type: Value.UNQUOTED },
             },
-            cardinality: [0, "inf"],
+            cardinality: [0, Infinity],
           },
         ],
       },
@@ -36,7 +40,7 @@ const types: Rule = {
   children: {
     type: {
       provide: { context: Context.OPERATION_PHASE, scope: Scope.GAME },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
   },
 };

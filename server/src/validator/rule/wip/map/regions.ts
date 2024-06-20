@@ -17,7 +17,7 @@ const supply_area: Rule = {
     name: { type: Value.UNQUOTED },
     value: Value.INT,
     states: {
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
       children: {
         state: { type: Value.UNQUOTED },
       },
@@ -30,7 +30,7 @@ const strategic_region: Rule = {
     id: Value.INT,
     name: { type: Value.UNQUOTED },
     provinces: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         provinces: { type: Value.ENUM },
       },
@@ -40,7 +40,7 @@ const strategic_region: Rule = {
       type: Value.UNQUOTED,
     },
     static_modifiers: {
-      cardinality: [1, "inf"],
+      cardinality: [1, Infinity],
       children: {
         static_modifier: {
           type: Value.UNQUOTED,
@@ -49,7 +49,7 @@ const strategic_region: Rule = {
       },
     },
     weather: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         period: {
           children: {

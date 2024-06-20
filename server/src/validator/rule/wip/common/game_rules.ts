@@ -26,7 +26,7 @@ const game_rule: Rule = {
         allow_achievements: { type: Value.BOOL, cardinality: [0, 1] },
         required_dlc: { type: Value.UNQUOTED, cardinality: [0, 1] },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     default: {
       children: {

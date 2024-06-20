@@ -5,7 +5,7 @@ const links: Rule = {
         output_scope: { type: Value.UNQUOTED },
         input_scopes: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
       },
     },
@@ -50,7 +50,7 @@ const links: Rule = {
     character: {
       children: {
         output_scope: { type: Value.UNQUOTED },
-        input_scopes:  { type: Value.UNQUOTED },
+        input_scopes: { type: Value.UNQUOTED },
         from_data: { type: Value.BOOL },
         data_source: { type: Value.UNQUOTED },
       },

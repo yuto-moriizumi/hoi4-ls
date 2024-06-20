@@ -91,13 +91,19 @@ const adjaceny_rule: Rule = {
 
 const airports: Rule = {
   children: {
-    "<state>": { cardinality: [1, "inf"], children: { enum: { type: Value.UNQUOTED } } },
+    "<state>": {
+      cardinality: [1, Infinity],
+      children: { enum: { type: Value.UNQUOTED } },
+    },
   },
 };
 
 const rocketsites: Rule = {
   children: {
-    "<state>": { cardinality: [1, "inf"], children: { enum: { type: Value.UNQUOTED } } },
+    "<state>": {
+      cardinality: [1, Infinity],
+      children: { enum: { type: Value.UNQUOTED } },
+    },
   },
 };
 

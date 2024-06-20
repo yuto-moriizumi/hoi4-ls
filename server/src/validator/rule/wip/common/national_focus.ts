@@ -78,7 +78,7 @@ const focus_tree: Rule = {
     },
     default: { type: Value.BOOL, cardinality: [0, 1] },
     reset_on_civilwar: { type: Value.BOOL, cardinality: [0, 1] },
-    shared_focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    shared_focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     continuous_focus_position: {
       children: {
         x: { type: Value.INT, cardinality: [0, 1] },
@@ -88,7 +88,7 @@ const focus_tree: Rule = {
     initial_show_position: {
       cardinality: [0, 1],
       children: {
-        focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] }, // Adjusted for multiple focus references
+        focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] }, // Adjusted for multiple focus references
         x: { type: Value.INT, cardinality: [0, 1] },
         y: { type: Value.INT, cardinality: [0, 1] },
         offset: {
@@ -99,7 +99,7 @@ const focus_tree: Rule = {
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
             },
           },
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
       },
     },
@@ -109,7 +109,7 @@ const focus_tree: Rule = {
         text: { type: Value.UNQUOTED, cardinality: [0, 1] },
         icon: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         text_icon: { type: Value.UNQUOTED, cardinality: [0, 1] },
         cost: { type: Value.FLOAT },
@@ -123,7 +123,7 @@ const focus_tree: Rule = {
               provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
             },
           },
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         relative_position_id: { type: Value.UNQUOTED, cardinality: [0, 1] },
         dynamic: { type: Value.BOOL, cardinality: [0, 1], defaultValue: false },
@@ -154,19 +154,19 @@ const focus_tree: Rule = {
         },
         will_lead_to_war_with: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         prerequisite: {
           children: {
-            focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
           },
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         mutually_exclusive: {
           children: {
-            focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+            focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
           },
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         bypass: {
           provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
@@ -196,11 +196,11 @@ const focus_tree: Rule = {
         search_filters: {
           cardinality: [0, 1],
           children: {
-            value_set: { type: Value.FOCUS_FILTER, cardinality: [0, "inf"] },
+            value_set: { type: Value.FOCUS_FILTER, cardinality: [0, Infinity] },
           },
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
   },
 };
@@ -211,14 +211,14 @@ const shared_focus: Rule = {
     text: { type: Value.UNQUOTED, cardinality: [0, 1] },
     icon: {
       type: Value.UNQUOTED,
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     text_icon: { type: Value.UNQUOTED, cardinality: [0, 1] },
     cost: { type: Value.FLOAT },
     x: Value.INT,
     y: Value.INT,
     offset: {
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
       children: {
         x: { type: Value.INT, cardinality: [0, 1] },
         y: { type: Value.INT, cardinality: [0, 1] },
@@ -250,18 +250,18 @@ const shared_focus: Rule = {
       cardinality: [0, 1],
       defaultValue: false,
     },
-    will_lead_to_war_with: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+    will_lead_to_war_with: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
     prerequisite: {
       children: {
-        focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     mutually_exclusive: {
       children: {
-        focus: { type: Value.UNQUOTED, cardinality: [0, "inf"] },
+        focus: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
     bypass: {
       provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
@@ -316,7 +316,7 @@ const shared_focus: Rule = {
     search_filters: {
       cardinality: [0, 1],
       children: {
-        value_set: { type: Value.FOCUS_FILTER, cardinality: [0, "inf"] },
+        value_set: { type: Value.FOCUS_FILTER, cardinality: [0, Infinity] },
       },
     },
   },
@@ -346,7 +346,7 @@ const continuous_focus_tree: Rule = {
         id: { type: Value.UNQUOTED },
         icon: {
           type: Value.UNQUOTED,
-          cardinality: [0, "inf"],
+          cardinality: [0, Infinity],
         },
         daily_cost: { type: Value.FLOAT },
         available_if_capitulated: {
@@ -385,7 +385,7 @@ const continuous_focus_tree: Rule = {
           },
         },
       },
-      cardinality: [0, "inf"],
+      cardinality: [0, Infinity],
     },
   },
 };

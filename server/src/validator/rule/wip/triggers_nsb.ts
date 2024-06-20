@@ -32,7 +32,7 @@ const trigger: Rule = {
       provide: {context: Context.TRIGGER, scope: Scope.ANY},
       children: {
         level: {type: Value.UNQUOTED},
-        state: {type: Value.UNQUOTED, cardinality: [0, "inf"]},
+        state: {type: Value.UNQUOTED, cardinality: [0, Infinity]},
       }
     },
     has_available_resources_in_country: {
@@ -46,15 +46,15 @@ const trigger: Rule = {
       {
         provide: {context: Context.TRIGGER, scope: Scope.COUNTRY},
         children: {
-          state: {type: Value.UNQUOTED, cardinality: [0, "inf"]},
-          resources: {type: Value.UNQUOTED, cardinality: [1, "inf"]},
+          state: {type: Value.UNQUOTED, cardinality: [0, Infinity]},
+          resources: {type: Value.UNQUOTED, cardinality: [1, Infinity]},
         }
       },
       {
         provide: {context: Context.TRIGGER, scope: Scope.STATE},
         children: {
           receiver: {type: Value.UNQUOTED},
-          resources: {type: Value.UNQUOTED, cardinality: [1, "inf"]},
+          resources: {type: Value.UNQUOTED, cardinality: [1, Infinity]},
         }
       }
     ],

@@ -26,7 +26,7 @@ const types: Rule = {
                     value_set: {
                       context: Context.EQUIPMENT_VARIANT,
                       type: Value.UNQUOTED,
-                      cardinality: [1, "inf"],
+                      cardinality: [1, Infinity],
                     },
                   },
                 },
@@ -198,7 +198,7 @@ const equipment: Rule = {
                 value_set: {
                   context: Context.EQUIPMENT_VARIANT,
                   type: Value.UNQUOTED,
-                  cardinality: [1, "inf"],
+                  cardinality: [1, Infinity],
                 },
               },
             },
@@ -209,7 +209,7 @@ const equipment: Rule = {
             forbid_mission_type: {
               type: Value.ENUM,
               context: Context.ALLOWED_AIR_UNIT_MISSIONS,
-              cardinality: [1, "inf"],
+              cardinality: [1, Infinity],
             },
           },
         },
@@ -273,7 +273,7 @@ const equipment: Rule = {
     offensive_weapons: { type: Value.BOOL, cardinality: [0, 1] },
     resources: {
       children: {
-        resource: { type: Value.INT, cardinality: [1, "inf"] },
+        resource: { type: Value.INT, cardinality: [1, Infinity] },
       },
     },
     upgrades: [{ provide: { context: Context.UPGRADE, scope: Scope.COUNTRY } }],
