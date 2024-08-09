@@ -31,8 +31,15 @@ async function getTemplate() {
         after: await loadExample(outputPath),
       })),
     ),
-    prefix: `Your task is to convert the given code to typescript with using following examples.
-The responce should include the converted code only without backticks.`,
+    prefix: `Your task is to convert the given code to typescript.
+Please note that some brackets might represent the Array. For example...
+color = {{
+  ## cardinality = 3..3
+  int
+}}
+This is the array, because the items inside (int) doesn't have \`=\`
+Refer to the following examples;
+`,
     suffix: "Convert this code to typescript:\n```{input}```",
     partialVariables: { input: "string" },
   });
