@@ -9,7 +9,7 @@
     "@commander-js/extra-typings": "^12.1.0",
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",
-    "langchain": "^0.2.13"
+    "langchain": "^0.2.14"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
