@@ -49,17 +49,17 @@
     "vscode:prepublish": "npm run compile",
     "compile": "npm run --workspaces compile",
     "watch": "npm run --workspaces watch",
-    "lint": "eslint ./client/src ./server/src ./converter/src --ext .ts,.tsx",
+    "lint": "eslint ./client/src ./server/src ./converter/src",
     "test": "sh ./scripts/e2e.sh",
     "typecheck": "npm run --workspaces typecheck"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.1.0",
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.1.0"
   },
   "workspaces": [
     "client",
