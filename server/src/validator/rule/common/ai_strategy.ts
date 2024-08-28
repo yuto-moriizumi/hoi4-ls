@@ -37,7 +37,7 @@ const ai_strategy_rule: Entries = {
       } satisfies Entries,
       {
         type: literal("area_priority"),
-        id: { type: Value.REFERENCE_TO, tag: "ai_area" },
+        id: ref("ai_area"),
         value: int(),
       } satisfies Entries,
       {
@@ -56,13 +56,11 @@ const ai_strategy_rule: Entries = {
         target_country: [
           {
             cardinality: [0, 1],
-            type: Value.REFERENCE_TO,
-            tag: "country_tags",
+            ...ref("country_tags"),
           },
           {
             cardinality: [0, 1],
-            type: Value.REFERENCE_TO,
-            tag: "country",
+            ...ref("country"),
           },
         ],
         value: int(),
@@ -114,7 +112,7 @@ export const ai_strategy_plan: RootObjectEntryDescriptor = {
     ai_national_focuses: {
       cardinality: [0, Infinity],
       type: Value.ARRAY,
-      values: { type: Value.REFERENCE_TO, tag: ["focus", "shared_focus"] },
+      values: ref(["focus", "shared_focus"]),
     },
     focus_factors: {
       cardinality: [0, Infinity],
