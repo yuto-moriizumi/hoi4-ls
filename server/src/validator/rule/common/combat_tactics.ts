@@ -2,7 +2,7 @@ import { modifier_rule } from "../modifier_rule";
 import { triggers } from "../triggers";
 import { unit_stats } from "../unit_stats";
 import { Value, RootObjectEntryDescriptor, Scope } from "../types";
-import { Enum, number } from "../utils";
+import { Enum, number, ref } from "../utils";
 
 export const combat_tactic: RootObjectEntryDescriptor = {
   replaceScope: {
@@ -12,9 +12,8 @@ export const combat_tactic: RootObjectEntryDescriptor = {
   },
   children: {
     only_show_for: {
-      type: Value.REFERENCE_TO,
-      tag: "country",
       cardinality: [0, 1],
+      ...ref("country"),
     },
     is_attacker: { type: Value.BOOL },
     trigger: {
@@ -34,9 +33,8 @@ export const combat_tactic: RootObjectEntryDescriptor = {
     },
     picture: { type: Value.UNQUOTED },
     countered_by: {
-      type: Value.REFERENCE_TO,
-      tag: "combat_tactic",
       cardinality: [0, 1],
+      ...ref("combat_tactic"),
     },
     phase: { type: Value.ARRAY, values: Enum("phases"), cardinality: [0, 1] },
     display_phase: {
