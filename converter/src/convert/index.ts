@@ -38,6 +38,38 @@ color = {{
   int
 }}
 This is the array, because the items inside (int) doesn't have \`=\`
+Also, if you see "subtype", that means the set of values are mutually execlusive relationship. For example,
+country_tag_alias = {{
+  subtype[variable] = {{
+    variable = variable_field
+  }}
+  subtype[global_event_target] = {{
+    global_event_target = value[global_event_target]
+  }}
+  fallback = enum[explicit_country_tags]
+}}
+This case, country_tag_alias is allowed to have "fallback = enum[explicit_country_tags]"
+but "variable = variable_field" and "global_event_target = value[global_event_target]" can be coexited.
+for this case it can be converted like this. Converted code will use typescript array to express the mutually exclusive relationship.
+country_tag_alias = {{
+  children: [
+    {{
+      // variable
+      children: {{
+        fallback: enum("explicit_country_tags"),
+        variable: variable_field,
+      }},
+    }},
+    {{
+      // global_event_target
+      children: {{
+        fallback: enum("explicit_country_tags"),
+        global_event_target: value("global_event_target"),
+      }},
+    }}
+  ]
+}}
+There's a constant named "variable_field" available so when you find it feel free to use.
 Refer to the following examples;
 `,
     suffix: "Convert this code to typescript:\n```{input}```",
