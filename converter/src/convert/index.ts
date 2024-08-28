@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const model = new ChatOpenAI({
-  modelName: "gpt-4o",
+  modelName: "chatgpt-4o-latest",
   openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
