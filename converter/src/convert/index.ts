@@ -32,11 +32,54 @@ async function getTemplate() {
       })),
     ),
     prefix: `Your task is to convert the given code to typescript.
+Given code represents the set of syntaxes and its rules to satisfy.
+# Basic structure
+Overall structure will look like this
+"pdxparticle = {
+		name = scalar
+		type = <particle>
+
+		## cardinality = 0..1
+		scale = float
+}"
+This defines the syntax rule of the pdxparticle.
+It has following entries;
+- "name" key, and which value should satisfy "scalar" rule.
+- "type" key, and which value should satisfy "<particle>" rule.
+- "scale" key, and which value should satisfy "float" rule.
+You have to convert this to typescript as follows;
+"const pdxparticle = {
+    type: Value.OBJECT,
+    children: {
+      name: scalar()
+      type: typeRef("particle")
+      ## cardinality = 0..1
+      scale = {
+        type: 
+      }
+    }
+
+}"
+
+# Attributes
+"##" is the attribute symbol. It describes the restriction of the following entry.
+For example,
+"## cardinality = 0..1
+scale = float"
+This means "scale" entry has the "cardinality" attribute with the value of 0..1.
+
+# Simple rules
+Theres simple rules like primitive values.
+- bool
+
+# Rule 1 - 
+# Rule 1 - Items without \`=\` and values in the brackets represents the Array
 Please note that some brackets might represent the Array. For example...
 color = {{
   ## cardinality = 3..3
   int
 }}
+color = { type: Value.ARRAY, values: [int]}
 This is the array, because the items inside (int) doesn't have \`=\`
 Also, if you see "subtype", that means the set of values are mutually execlusive relationship. For example,
 country_tag_alias = {{
