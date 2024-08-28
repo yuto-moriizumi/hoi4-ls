@@ -69,7 +69,7 @@ country_tag_alias = {{
     }}
   ]
 }}
-There's a constant named "variable_field" available so when you find it feel free to use.
+There's a constant named "variable_field" and "int_variable_field" available so when you find it feel free to use.
 Refer to the following examples;
 `,
     suffix: "Convert this code to typescript:\n```{input}```",
