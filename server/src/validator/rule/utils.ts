@@ -9,10 +9,35 @@ import {
   UnquotedLiteralValueDescriptor,
   UnquotedValueDescriptor,
   Value,
+  Scope,
+  BaseEntryDescriptor,
+  ObjectValueDescriptor,
+  BoolValueDescriptor,
 } from "./types";
 
 export function ref(tag: string | string[]): ReferenceToDescriptor {
   return { type: Value.REFERENCE_TO, tag };
+}
+// export function typeRef(type: string) {
+//   return ref(type);
+// }
+
+export function typeRef(type: string): ReferenceToDescriptor;
+export function typeRef(
+  entryDescriptor: BaseEntryDescriptor,
+  type: string,
+): ReferenceToDescriptor;
+
+export function typeRef(
+  typeOrEntryDescriptor: string | BaseEntryDescriptor,
+  type?: string,
+): ReferenceToDescriptor {
+  if (typeof typeOrEntryDescriptor === "string")
+    return ref(typeOrEntryDescriptor);
+  return {
+    type: Value.REFERENCE_TO,
+    tag: type as string,
+  };
 }
 
 export function entryMap(entries: Entries, cardinality: Cardinality): Entries {
@@ -50,6 +75,10 @@ export function Enum(keyOrValues: string | string[]) {
   return ref(keyOrValues);
 }
 
+export function enumRef(key: string) {
+  return ref(key);
+}
+
 /** To be updated with enums.ts */
 const EnumDict: Record<string, string[]> = {
   something: ["a", "b", "c"],
@@ -72,14 +101,41 @@ export function localisation(): SimpleValueDescriptor {
   return { type: Value.LOCALISATION };
 }
 
-export function int(): IntValueDescriptor {
-  return { type: Value.INT };
+export function int(entryDescriptor?: BaseEntryDescriptor): IntValueDescriptor {
+  return { type: Value.INT, ...entryDescriptor };
+}
+
+export function bool(
+  entryDescriptor?: BaseEntryDescriptor,
+): BoolValueDescriptor {
+  return { type: Value.BOOL, ...entryDescriptor };
 }
 
 export function datetime_field(): SimpleValueDescriptor {
   return { type: Value.DATETIME };
 }
 
-export function scalar(): UnquotedValueDescriptor {
-  return { type: Value.UNQUOTED };
+export function scalar(
+  entryDescriptor?: BaseEntryDescriptor,
+): UnquotedValueDescriptor {
+  return { type: Value.UNQUOTED, ...entryDescriptor };
+}
+
+export function unitLeader() {
+  return Scope.UNIT_LEADER;
+}
+
+export function country() {
+  return Scope.COUNTRY;
+}
+
+export function obj(
+  entryDescriptor: BaseEntryDescriptor,
+  children: Entries,
+): ObjectValueDescriptor {
+  return {
+    type: Value.OBJECT,
+    ...entryDescriptor,
+    children,
+  };
 }
