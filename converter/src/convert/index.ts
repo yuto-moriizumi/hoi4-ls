@@ -48,18 +48,11 @@ It has following entries;
 - "type" key, and which value should satisfy "<particle>" rule.
 - "scale" key, and which value should satisfy "float" rule.
 You have to convert this to typescript as follows;
-"const pdxparticle = {
-    type: Value.OBJECT,
-    children: {
-      name: scalar()
-      type: typeRef("particle")
-      ## cardinality = 0..1
-      scale = {
-        type: 
-      }
-    }
-
-}"
+"const pdxparticle = obj({
+    name: scalar()
+    type: typeRef("particle")
+    scale = float({cardinality:[0,1]})
+  })"
 
 # Attributes
 "##" is the attribute symbol. It describes the restriction of the following entry.
