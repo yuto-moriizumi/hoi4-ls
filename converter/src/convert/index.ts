@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate, FewShotPromptTemplate } from "@langchain/core/prompts";
-import { EXAMPLES } from "./examples";
+
 import path, { join } from "path";
 
 import dotenv from "dotenv";
@@ -25,17 +25,19 @@ async function getTemplate() {
     examplePrompt: PromptTemplate.fromTemplate(
       "Before:\n```{before}```\nAfter:\n```{after}```",
     ),
-    examples: await Promise.all(
-      EXAMPLES.map(async ([inputPath, outputPath]) => ({
-        before: await loadText(inputPath),
-        after: await loadText(outputPath),
-      })),
-    ),
-    prefix: await loadText(join(__dirname, "prefix.txt")),
+    examples: [],
+    prefix: await loadText(join(__dirname, "prompt.md")),
     suffix: "Convert this code to TS format:\n```{input}```",
     partialVariables: { input: "string" },
   });
 }
+
+// await Promise.all(
+//   EXAMPLES.map(async ([inputPath, outputPath]) => ({
+//     before: await loadText(inputPath),
+//     after: await loadText(outputPath),
+//   })),
+// )
 
 export async function convert(filePath: string) {
   const input = await readFile(filePath, "utf-8");

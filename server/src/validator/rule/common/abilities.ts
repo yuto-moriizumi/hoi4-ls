@@ -1,51 +1,72 @@
-import { effects } from "../effects";
-import { modifier_rule } from "../modifier_rule";
-import { modifiers } from "../modifiers";
-import { triggers } from "../triggers";
-import { RootObjectEntryDescriptor, Scope, Value } from "../types";
-import { unit_stats } from "../unit_stats";
-import { Enum, int, localisation } from "../utils";
+import { effect } from "../effects";
+import { modifier, modifierRule } from "../modifiers";
+import { trigger } from "../triggers";
+import { unitStat } from "../unit_stats";
+import {
+  localisation,
+  scalar,
+  float,
+  int,
+  literal,
+  unitLeader,
+  country,
+  obj,
+  typeRef,
+  enumRef,
+  bool,
+} from "../utils";
 
-export const ability: RootObjectEntryDescriptor = {
-  replaceScope: {
-    this: Scope.UNIT_LEADER,
-    root: Scope.UNIT_LEADER,
-    from: Scope.COUNTRY,
+const ability = obj(
+  {
+    replace_scope: { this: unitLeader(), root: unitLeader(), from: country() },
   },
-  children: {
+  {
     name: localisation(),
     desc: localisation(),
-    icon: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    sound_effect: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    type: Enum("ability_unit_leader_types"),
-    allowed: {
-      cardinality: [0, 1],
-      children: { ...triggers },
-    },
-    cost: { type: Value.FLOAT },
+    icon: typeRef({ cardinality: [0, 1], severity: "warning" }, "spriteType"),
+    sound_effect: scalar({ cardinality: [0, 1] }),
+    type: enumRef("ability_unit_leader_types"),
+    allowed: obj(
+      { cardinality: [0, 1] },
+      {
+        ...trigger,
+      },
+    ),
+    cost: float(),
     duration: int(),
-    cooldown: { type: Value.INT, cardinality: [0, 1] },
-    unit_modifiers: {
-      cardinality: [0, 1],
-      children: {
-        ...modifiers,
-        ...unit_stats,
+    cooldown: int({ cardinality: [0, 1] }),
+    unit_modifiers: obj(
+      { cardinality: [0, 1] },
+      {
+        ...modifier,
+        ...unitStat,
       },
-    },
-    one_time_effect: {
-      cardinality: [0, 1],
-      children: effects,
-    },
-    cancelable: { type: Value.BOOL, cardinality: [0, 1] },
-    ai_will_do: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT, cardinality: [0, 1] },
-        modifier: {
-          cardinality: [0, Infinity],
-          children: modifier_rule,
-        },
+    ),
+    one_time_effect: obj(
+      { cardinality: [0, 1] },
+      {
+        ...effect,
       },
-    },
+    ),
+    cancelable: bool({ cardinality: [0, 1] }),
+    ai_will_do: obj(
+      { cardinality: [0, 1] },
+      {
+        enum_base_factor: float(),
+        ...modifierRule,
+      },
+    ),
   },
+);
+
+const abilityEnums = {
+  ability_unit_leader_types: enumType(["army_leader"]),
 };
+
+const abilityType = obj(
+  {},
+  {
+    path: literal("game/common/abilities"),
+    skip_root_key: literal("ability"),
+  },
+);
