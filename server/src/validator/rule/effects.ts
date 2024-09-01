@@ -8,3 +8,4 @@ const rawEffects = {
 } satisfies Entries;
 
 export const effects = entryMap(rawEffects, [0, Infinity]);
+export const effect = effects;

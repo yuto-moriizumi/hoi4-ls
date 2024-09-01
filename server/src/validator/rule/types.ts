@@ -37,7 +37,10 @@ export type Cardinality = [number, number];
 export interface BaseEntryDescriptor {
   /** Defines how many times can this entry appear. Default value is [1,1] (required) */
   cardinality?: Cardinality;
+  replace_scope?: { this?: Scope; root: Scope; from?: Scope; fromFrom?: Scope };
   replaceScope?: { this?: Scope; root: Scope; from?: Scope; fromFrom?: Scope };
+  /** Currently not used */
+  severity?: string;
 }
 
 interface NumberValueDescriptor {
@@ -56,7 +59,7 @@ export interface SimpleValueDescriptor {
   type: typeof Value.QUOTED | typeof Value.LOCALISATION | typeof Value.DATETIME;
 }
 
-interface BoolValueDescriptor {
+export interface BoolValueDescriptor {
   type: typeof Value.BOOL;
   defaultValue?: boolean;
 }

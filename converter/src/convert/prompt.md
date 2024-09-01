@@ -514,20 +514,16 @@ pdxparticle = {
 Corresponding code is
 
 ```
-const pdxparticle = obj({
+const pdxparticle = obj({},{
     name: scalar()
-    type: typeRef("particle")
+    type: typeRef({},"particle")
     scale: float({cardinality:[0,1]})
 })
 ```
 
-```
-const pdxparticle = obj([
-    ["name", {}, scalar()],
-    ["type", {}, typeRef("particle")],
-    ["scale", {cardinality:[0,1]}, float()],
-])
-```
+obj(), typeRef() and float() are Type Functions.
+1st argument is the entry information, such as cardinality.
+2nd and later argument is the arguments for that type.(Explained later)
 
 ## Attributes
 
@@ -542,15 +538,16 @@ As you can see, Type Function can take object argument to contain the attributes
 
 Some Types can take arguments.
 For example,
-"int[-5..100]"
-This means the value should be converted to "int({min:0, max:100})"
+`int[-5..100]`
+This means the value should be converted to `int({}, -5, 100)`
+`filepath[some/path/]` is converted to `filepath({}, "some/path/")`
 
-## Simple rules
+## Simple rules and arguments
 
 Simple rules can be converted to the same named Type Functions. For example,
 
 - bool -> bool()
-- int -> int()
+- scalar -> scalar()
 
 ## Literal rule
 
@@ -566,8 +563,8 @@ hoge = {
 This is converted to
 
 ```
-const hoge = obj({
-    fuga: literal("aiueo",{cardinality:[0,1]})
+const hoge = obj({}, {
+    fuga: literal({cardinality:[0,1]}, "aiueo")
 })
 ```
 
@@ -577,9 +574,10 @@ This is example of object rule.
 
 ```
 ## cardinality = 0..2
-
-ship_size = { ## cardinality = 0..1 ### The base cost of this ship_size
-cost = int
+ship_size = {
+    ## cardinality = 0..1
+    ### The base cost of this ship_size
+    cost = int
 }
 ```
 
@@ -589,13 +587,37 @@ This is converted to
 const ship_size = obj(
     { cardinality:[0,2] },
     {
-    cost: int({cardinality:[0,1]})
+        cost: int({cardinality:[0,1]})
     })
 ```
 
 As you can see, object will take 2 arguments.
 The first one is for the attributes and arguments for the entire object.
 The second one is for the entries in the object.
+
+## Enums
+
+Enum definition will look like this
+
+```
+enums = {
+    enum[ability_unit_leader_types] = {
+        army_leader
+        navy_leader
+    }
+    enum[greetings] = {
+        hello
+        hola
+    }
+}
+```
+
+This is converted to
+
+```
+const ability_unit_leader_types = ["army_leader", "navy_leader"]
+const greetings = ["hello", "hola"]
+```
 
 ## Alias
 
@@ -614,9 +636,11 @@ This is converted to
 
 ```
 const effect = {
-    create_starbase: obj({cardinality:[0,Inf]},{
+    create_starbase: obj(
+        {cardinality:[0,Inf]},
+        {
         owner: scalar({cardinality:[1,1]})
-    })
+        })
 }
 ```
 
@@ -714,6 +738,6 @@ const decision_category = obj({},{
 })
 ```
 
-# Examples
+# Anser format
 
-Utilize following examples.
+The answer must be just a code.

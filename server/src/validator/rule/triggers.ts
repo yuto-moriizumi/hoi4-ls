@@ -6,3 +6,4 @@ const raw_triggers = {
 } satisfies Entries;
 
 export const triggers = entryMap(raw_triggers, [0, Infinity]);
+export const trigger = triggers;
