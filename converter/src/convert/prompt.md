@@ -597,6 +597,8 @@ The second one is for the entries in the object.
 
 ## Enums
 
+### Enum definition
+
 Enum definition will look like this
 
 ```
@@ -617,6 +619,44 @@ This is converted to
 ```
 const ability_unit_leader_types = ["army_leader", "navy_leader"]
 const greetings = ["hello", "hola"]
+```
+
+### Enum reference
+
+### Enum reference in values
+
+Enum reference in value looks like this
+
+```
+## cardinality = 1..2
+type = enum[ability_unit_leader_types]
+```
+
+This is converted to
+
+```
+const type = enumRef({cardinality:[1,2]}, "ability_unit_leader_types")
+```
+
+### Enum reference in keys
+
+Enum reference in keys looks like this
+
+```
+ai_will_do = {
+    ## cardinality = 0..1
+    enum[base_factor] = float
+}
+```
+
+This is converted to
+
+```
+const ai_will_do = obj(
+    {},
+    {
+        [enumRefKey("base_factor")]: float({ cardinality: [0,1] })
+    })
 ```
 
 ## Alias
