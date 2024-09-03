@@ -75,21 +75,40 @@ export function Enum(keyOrValues: string | string[]) {
   return ref(keyOrValues);
 }
 
-export function enumRef(key: string) {
-  return ref(key);
-}
+export function enumRef(key: string): ReferenceToDescriptor;
+export function enumRef(
+  entryDescriptor: BaseEntryDescriptor,
+  key: string,
+): ReferenceToDescriptor;
 
+export function enumRef(
+  keyOrEntryDescriptor: string | BaseEntryDescriptor,
+  key?: string,
+): ReferenceToDescriptor {
+  if (typeof keyOrEntryDescriptor === "string")
+    return ref(keyOrEntryDescriptor);
+  return {
+    type: Value.REFERENCE_TO,
+    tag: key as string,
+    ...keyOrEntryDescriptor,
+  };
+}
 /** To be updated with enums.ts */
 const EnumDict: Record<string, string[]> = {
   something: ["a", "b", "c"],
 };
+export function enumRefKey(key: string) {
+  return JSON.stringify(enumRef(key));
+}
 
 export function valueSet(tag: string): UnquotedValueDescriptor {
   return { type: Value.UNQUOTED, referencedBy: tag };
 }
 
-export function float(): FloatValueDescriptor {
-  return { type: Value.FLOAT };
+export function float(
+  entryDescriptor?: BaseEntryDescriptor,
+): FloatValueDescriptor {
+  return { type: Value.FLOAT, ...entryDescriptor };
 }
 export const number = float;
 
@@ -122,6 +141,10 @@ export function scalar(
 }
 
 export function unitLeader() {
+  return Scope.UNIT_LEADER;
+}
+
+export function unit_leader() {
   return Scope.UNIT_LEADER;
 }
 
