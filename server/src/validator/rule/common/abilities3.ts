@@ -16,7 +16,7 @@ import {
   bool,
 } from "../utils";
 
-const ability = obj(
+export const ability = obj(
   {
     replace_scope: { this: unitLeader(), root: unitLeader(), from: country() },
   },
@@ -59,11 +59,11 @@ const ability = obj(
   },
 );
 
-const abilityEnums = {
-  ability_unit_leader_types: enumType(["army_leader"]),
+export const abilityEnums = {
+  ability_unit_leader_types: ["army_leader"],
 };
 
-const abilityType = obj(
+export const abilityType = obj(
   {},
   {
     path: literal("game/common/abilities"),
