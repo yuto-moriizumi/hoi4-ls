@@ -13,6 +13,7 @@ import {
   BaseEntryDescriptor,
   ObjectValueDescriptor,
   BoolValueDescriptor,
+  RootObjectEntryDescriptor,
 } from "./types";
 
 export function ref(tag: string | string[]): ReferenceToDescriptor {
@@ -38,6 +39,14 @@ export function typeRef(
     type: Value.REFERENCE_TO,
     tag: type as string,
   };
+}
+
+/** Register this value to the speficied tag storage */
+export function typeDefKey(tag: string) {
+  return JSON.stringify({
+    type: Value.UNQUOTED,
+    referencedBy: tag,
+  } satisfies UnquotedValueDescriptor);
 }
 
 export function entryMap(entries: Entries, cardinality: Cardinality): Entries {
@@ -156,6 +165,17 @@ export function obj(
   entryDescriptor: BaseEntryDescriptor,
   children: Entries,
 ): ObjectValueDescriptor {
+  return {
+    type: Value.OBJECT,
+    ...entryDescriptor,
+    children,
+  };
+}
+
+export function root(
+  entryDescriptor: RootObjectEntryDescriptor,
+  children: Entries,
+): RootObjectEntryDescriptor & ObjectValueDescriptor {
   return {
     type: Value.OBJECT,
     ...entryDescriptor,

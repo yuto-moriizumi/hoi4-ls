@@ -15,11 +15,11 @@ import {
   int,
   bool,
   enumRefKey,
-  root,
   typeDefKey,
+  root,
 } from "../utils";
 
-const ability_unit_leader_types = ["army_leader"];
+export const ability_unit_leader_types = ["army_leader"];
 
 const ability = obj(
   {
@@ -32,25 +32,18 @@ const ability = obj(
   {
     name: localisation(),
     desc: localisation(),
-
     icon: typeRef({ cardinality: [0, 1], severity: "warning" }, "spriteType"),
-
     sound_effect: scalar({ cardinality: [0, 1] }),
-
     type: enumRef({}, "ability_unit_leader_types"),
-
     allowed: obj(
       { cardinality: [0, 1] },
       {
         ...trigger,
       },
     ),
-
     cost: float(),
     duration: int(),
-
     cooldown: int({ cardinality: [0, 1] }),
-
     unit_modifiers: obj(
       { cardinality: [0, 1] },
       {
@@ -58,21 +51,18 @@ const ability = obj(
         ...unit_stat,
       },
     ),
-
     one_time_effect: obj(
       { cardinality: [0, 1] },
       {
         ...effect,
       },
     ),
-
     cancelable: bool({ cardinality: [0, 1] }),
-
     ai_will_do: obj(
       { cardinality: [0, 1] },
       {
         [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
-        ...modifier_rule, // Using the spread operator for alias modifier_rule
+        ...modifier_rule,
       },
     ),
   },
