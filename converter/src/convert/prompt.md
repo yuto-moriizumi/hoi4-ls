@@ -617,8 +617,8 @@ enums = {
 This is converted to
 
 ```
-const ability_unit_leader_types = ["army_leader", "navy_leader"]
-const greetings = ["hello", "hola"]
+export const ability_unit_leader_types = ["army_leader", "navy_leader"]
+export const greetings = ["hello", "hola"]
 ```
 
 ### Enum reference
@@ -636,7 +636,11 @@ This is converted to
 
 ```
 const type = enumRef({cardinality:[1,2]}, "ability_unit_leader_types")
+// or this
+const type = enumRef({cardinality:[1,2]}, ability_unit_leader_types)
 ```
+
+The enum might be defined as array in the same file. In that case specify that variable directly instead of string.
 
 ### Enum reference in keys
 
@@ -737,6 +741,9 @@ Alias usage will often show up in the object entry like this
 on_complete = {
     alias_name[effect] = alias_match_left[effect]
 }
+ai_will_do = {
+    alias_name[modifier_rule] = alias_match_left[modifier_rule]
+}
 ```
 
 This will be converted to
@@ -745,9 +752,12 @@ This will be converted to
 const on_complete = obj({}, {
     ...effect
 })
+const ai_will_do = obj({}, {
+    ...modifier_rule
+})
 ```
 
-`effect` is the variable defined in the other place.
+The string in the bracket `alias_name[HERE]` is the constant variable name defined in the other place. In the example above, `effect` and `modifier_rule` are the names of the constants.
 
 ## Union conversion
 

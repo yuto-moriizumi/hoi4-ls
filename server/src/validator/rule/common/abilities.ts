@@ -4,7 +4,9 @@ import { modifier } from "../modifiers";
 import { trigger } from "../triggers";
 import { unit_stat } from "../unit_stats";
 import {
+  root,
   obj,
+  typeDefKey,
   unit_leader,
   country,
   localisation,
@@ -15,68 +17,9 @@ import {
   int,
   bool,
   enumRefKey,
-  root,
-  typeDefKey,
 } from "../utils";
 
-const ability_unit_leader_types = ["army_leader"];
-
-const ability = obj(
-  {
-    replace_scope: {
-      this: unit_leader(),
-      root: unit_leader(),
-      from: country(),
-    },
-  },
-  {
-    name: localisation(),
-    desc: localisation(),
-
-    icon: typeRef({ cardinality: [0, 1], severity: "warning" }, "spriteType"),
-
-    sound_effect: scalar({ cardinality: [0, 1] }),
-
-    type: enumRef({}, "ability_unit_leader_types"),
-
-    allowed: obj(
-      { cardinality: [0, 1] },
-      {
-        ...trigger,
-      },
-    ),
-
-    cost: float(),
-    duration: int(),
-
-    cooldown: int({ cardinality: [0, 1] }),
-
-    unit_modifiers: obj(
-      { cardinality: [0, 1] },
-      {
-        ...modifier,
-        ...unit_stat,
-      },
-    ),
-
-    one_time_effect: obj(
-      { cardinality: [0, 1] },
-      {
-        ...effect,
-      },
-    ),
-
-    cancelable: bool({ cardinality: [0, 1] }),
-
-    ai_will_do: obj(
-      { cardinality: [0, 1] },
-      {
-        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
-        ...modifier_rule, // Using the spread operator for alias modifier_rule
-      },
-    ),
-  },
-);
+export const ability_unit_leader_types = ["army_leader"];
 
 export const abilityType = root(
   { path: "game/common/abilities" },
@@ -84,7 +27,55 @@ export const abilityType = root(
     ability: obj(
       {},
       {
-        [typeDefKey("ability")]: ability,
+        [typeDefKey("ability")]: obj(
+          {
+            replace_scope: {
+              this: unit_leader(),
+              root: unit_leader(),
+              from: country(),
+            },
+          },
+          {
+            name: localisation(),
+            desc: localisation(),
+            icon: typeRef(
+              { cardinality: [0, 1], severity: "warning" },
+              "spriteType",
+            ),
+            sound_effect: scalar({ cardinality: [0, 1] }),
+            type: enumRef({}, ability_unit_leader_types),
+            allowed: obj(
+              { cardinality: [0, 1] },
+              {
+                ...trigger,
+              },
+            ),
+            cost: float(),
+            duration: int(),
+            cooldown: int({ cardinality: [0, 1] }),
+            unit_modifiers: obj(
+              { cardinality: [0, 1] },
+              {
+                ...modifier,
+                ...unit_stat,
+              },
+            ),
+            one_time_effect: obj(
+              { cardinality: [0, 1] },
+              {
+                ...effect,
+              },
+            ),
+            cancelable: bool({ cardinality: [0, 1] }),
+            ai_will_do: obj(
+              {},
+              {
+                [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+                ...modifier_rule,
+              },
+            ),
+          },
+        ),
       },
     ),
   },
