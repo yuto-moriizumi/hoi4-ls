@@ -85,21 +85,35 @@ export function Enum(keyOrValues: string | string[]) {
 }
 
 export function enumRef(key: string): ReferenceToDescriptor;
+export function enumRef(values: string[]): ReferenceToDescriptor;
 export function enumRef(
   entryDescriptor: BaseEntryDescriptor,
   key: string,
 ): ReferenceToDescriptor;
+export function enumRef(
+  entryDescriptor: BaseEntryDescriptor,
+  values: string[],
+): EnumValueDescriptor;
 
 export function enumRef(
-  keyOrEntryDescriptor: string | BaseEntryDescriptor,
-  key?: string,
-): ReferenceToDescriptor {
-  if (typeof keyOrEntryDescriptor === "string")
-    return ref(keyOrEntryDescriptor);
+  keyOrValuesOrEntryDescriptor: string | string[] | BaseEntryDescriptor,
+  keyOrValues?: string | string[],
+) {
+  if (keyOrValuesOrEntryDescriptor instanceof Array)
+    return ref(keyOrValuesOrEntryDescriptor);
+  if (typeof keyOrValuesOrEntryDescriptor === "string")
+    return ref(keyOrValuesOrEntryDescriptor);
+  if (keyOrValues instanceof Array) {
+    return {
+      type: Value.ENUM,
+      values: keyOrValues,
+      ...keyOrValuesOrEntryDescriptor,
+    } satisfies EnumValueDescriptor;
+  }
   return {
     type: Value.REFERENCE_TO,
-    tag: key as string,
-    ...keyOrEntryDescriptor,
+    tag: keyOrValues as string,
+    ...keyOrValuesOrEntryDescriptor,
   };
 }
 /** To be updated with enums.ts */
