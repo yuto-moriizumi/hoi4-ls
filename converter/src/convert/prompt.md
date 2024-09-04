@@ -659,6 +659,48 @@ const ai_will_do = obj(
     })
 ```
 
+## Types
+
+### Type definition
+
+Type definition will look like this
+
+```
+types = {
+	type[my_ability] = {
+		path = "game/common/abilities"
+		skip_root_key = ability
+	}
+}
+
+## replace_scope = { this = unit_leader root = unit_leader from = country }
+my_ability = {
+    // various properties
+}
+```
+
+`type[my_ability]` is the name of the type.
+This is converted to
+
+```
+const my_ability = obj() // omitted
+
+export const myAbilityType = root(
+  { path: "game/common/abilities" },
+  {
+    ability: obj(
+      {},
+      {
+        [typeDefKey("my_ability")]: my_ability,
+      },
+    ),
+  },
+);
+```
+
+The exported constant variable name is type name + "Type"
+The value specified in `skip_root_key` represents the root key in the file. This comes to the argument of `root` function.
+
 ## Alias
 
 Alias is the reusable set of Entries.

@@ -43,6 +43,10 @@ export async function convert(filePath: string) {
   const input = await readFile(filePath, "utf-8");
   const prompt = await (await getTemplate()).format({ input });
   const result = (await model.invoke(prompt)).content.toString();
+  const prettyResult = result.slice(
+    "```typescript\n".length,
+    result.length - "```".length,
+  );
   const outputPath = filePath
     .replace(
       path.join("cwtools-hoi4-config", "Config"),
@@ -50,6 +54,6 @@ export async function convert(filePath: string) {
     )
     .replace(".cwt", ".ts");
   await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, result);
+  await writeFile(outputPath, prettyResult);
   console.log("Saved to", outputPath);
 }

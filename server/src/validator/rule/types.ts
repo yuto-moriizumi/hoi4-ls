@@ -151,15 +151,11 @@ export type EntryDescriptor = BaseEntryDescriptor & ValueDescriptor;
 export type Entries = {
   [key: string]: EntryDescriptor | OneOf<EntryDescriptor>;
 };
-export interface RootObjectEntryDescriptor
-  extends BaseEntryDescriptor,
-    ObjectValueDescriptor {
-  /** The top level key of the rule
-   * By default, the variable name of the rule will be used
-   * ex. export const aces = { ... }; will have `aces` as the root key */
-  rootKey?: string;
+
+/** The topmost object representing entire file as an object */
+export interface RootObjectEntryDescriptor extends BaseEntryDescriptor {
   /** Path of the files to apply this rule
    * By default, it will be applied to all files which has the path of the rule in their paths
    * ex. common/aces.ts will be applied to all files which has common/aces in their paths */
-  path?: string;
+  path: string;
 }
