@@ -636,11 +636,13 @@ This is converted to
 
 ```
 const type = enumRef({cardinality:[1,2]}, "ability_unit_leader_types")
-// or this
-const type = enumRef({cardinality:[1,2]}, ability_unit_leader_types)
 ```
 
-The enum might be defined as array in the same file. In that case specify that variable directly instead of string.
+The enum might be defined as array in the same file. In that case, you mumst specify that variable directly instead of string as follows.
+
+```
+const type = enumRef({cardinality:[1,2]}, ability_unit_leader_types)
+```
 
 ### Enum reference in keys
 
