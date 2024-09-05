@@ -534,6 +534,31 @@ scale = float"
 Attributes must be converted to the arguments like this "float({cardinality:[0,1]})"
 As you can see, Type Function can take object argument to contain the attributes.
 
+### replace_scope attribute
+
+This takes some children like `ROOT`, `THIS`.
+Converted code should have them in uncapitalized characters.
+
+```
+## replace_scope = { ROOT = air THIS = country}
+effect = {
+    alias_name[modifier] = alias_match_left[modifier]
+}
+```
+
+This is converted to
+
+```
+
+const effect = {
+    modifier: obj(
+        { replace_scope: { root: air(), this: country() }},
+        { ...modifier }
+    )
+}
+
+```
+
 ## Arguments
 
 Some Types can take arguments.
