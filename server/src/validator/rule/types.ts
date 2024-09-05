@@ -89,12 +89,12 @@ export interface EnumValueDescriptor {
 // | string[];
 
 /** Assert the specified values are in the `values` */
-interface ArrayValueDescriptor {
+export interface ArrayValueDescriptor {
   type: typeof Value.ARRAY;
   values: ArrayItem | ArrayItem[];
 }
 
-type ArrayItem =
+export type ArrayItem =
   | EnumValueDescriptor
   | ReferenceToDescriptor
   | ArrayFloatItem
