@@ -158,4 +158,6 @@ export interface RootObjectEntryDescriptor extends BaseEntryDescriptor {
    * By default, it will be applied to all files which has the path of the rule in their paths
    * ex. common/aces.ts will be applied to all files which has common/aces in their paths */
   path: string;
+  // Currently not used
+  unique?: boolean;
 }
