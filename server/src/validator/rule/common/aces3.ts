@@ -1,13 +1,14 @@
 import { modifier } from "../modifiers";
 import {
   obj,
-  either,
   enumRef,
-  array,
+  enumRefKey,
   float,
-  air,
   root,
   typeDefKey,
+  either,
+  array,
+  air,
 } from "../utils";
 
 const ace = obj(
@@ -15,12 +16,14 @@ const ace = obj(
   {
     type: either(
       enumRef({}, "air_units"),
-      array({ cardinality: [0, Infinity] }, [enumRef({}, "air_units")]),
+      array({}, [enumRef({ cardinality: [~1, Infinity] }, "air_units")]),
     ),
     chance: float(),
     effect: obj(
-      { replace_scope: { root: air(), this: air() } },
-      { ...modifier },
+      { replace_scope: { ROOT: air(), THIS: air() } },
+      {
+        ...modifier,
+      },
     ),
   },
 );

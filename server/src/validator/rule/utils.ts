@@ -214,3 +214,7 @@ export function array(
 export function either(...items: EntryDescriptor[]) {
   return items;
 }
+
+export function air() {
+  return Scope.AIR;
+}
