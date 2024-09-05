@@ -568,6 +568,10 @@ const hoge = obj({}, {
 })
 ```
 
+## `inf` conversion
+
+When you find `inf` which is likely to be a number, that must be converted to `Infinity`
+
 ## Object rule
 
 This is example of object rule.
@@ -594,6 +598,27 @@ const ship_size = obj(
 As you can see, object will take 2 arguments.
 The first one is for the attributes and arguments for the entire object.
 The second one is for the entries in the object.
+
+## Array rule
+
+This is example of array rule.
+
+```
+# cardinality = 1..2
+fuga = {
+    ## cardinality = 0..1
+    enum[air_units]
+}
+```
+
+While it is simillar to object rule, array children doesn't have `=` symbol.
+This is converted to
+
+```
+const fuga = array(
+    { cardinality:[1,2] },
+    [enumRef({cardinality:[0,1]}, "air_units")])
+```
 
 ## Enums
 
@@ -711,7 +736,7 @@ The value specified in `skip_root_key` represents the root key in the file. This
 
 Alias is the reusable set of Entries.
 
-## Alias definition
+### Alias definition
 
 ```
 alias[effect:create_starbase] = {

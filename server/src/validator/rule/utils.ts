@@ -14,6 +14,9 @@ import {
   ObjectValueDescriptor,
   BoolValueDescriptor,
   RootObjectEntryDescriptor,
+  ArrayValueDescriptor,
+  ArrayItem,
+  EntryDescriptor,
 } from "./types";
 
 export function ref(tag: string | string[]): ReferenceToDescriptor {
@@ -195,4 +198,19 @@ export function root(
     ...entryDescriptor,
     children,
   };
+}
+
+export function array(
+  entryDescriptor: BaseEntryDescriptor,
+  items: ArrayItem[],
+): ArrayValueDescriptor {
+  return {
+    type: Value.ARRAY,
+    values: items,
+    ...entryDescriptor,
+  };
+}
+
+export function either(...items: EntryDescriptor[]) {
+  return items;
 }
