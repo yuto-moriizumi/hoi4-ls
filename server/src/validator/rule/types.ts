@@ -160,4 +160,6 @@ export interface RootObjectEntryDescriptor extends BaseEntryDescriptor {
   path: string;
   // Currently not used
   unique?: boolean;
+  // Currently not used
+  path_strict?: boolean;
 }

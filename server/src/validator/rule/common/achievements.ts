@@ -33,15 +33,4 @@ export const achievementType = root(
   },
 );
 
-export const mod_achievement_id = complexEnum(
-  {
-    path: "game/common/achievements",
-    unique: true,
-    start_from_root: true,
-  },
-  {
-    name: {
-      unique_id: scalar({ use_enum_name: true }),
-    },
-  },
-);
+// For `mod_achievement_id` use achievement type instead
