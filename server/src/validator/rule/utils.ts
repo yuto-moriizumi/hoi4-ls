@@ -119,6 +119,9 @@ export function enumRef(
     ...keyOrValuesOrEntryDescriptor,
   };
 }
+export const valueRef = enumRef;
+export const scopeRef = enumRef;
+
 /** To be updated with enums.ts */
 const EnumDict: Record<string, string[]> = {
   something: ["a", "b", "c"],
@@ -217,4 +220,12 @@ export function either(...items: EntryDescriptor[]) {
 
 export function air() {
   return Scope.AIR;
+}
+
+export function variable_field(entryDescriptor?: BaseEntryDescriptor) {
+  return either(float(entryDescriptor), {
+    type: Value.REFERENCE_TO,
+    tag: "variable",
+    ...entryDescriptor,
+  });
 }
