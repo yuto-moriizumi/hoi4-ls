@@ -633,6 +633,8 @@ This is example of array rule.
 fuga = {
     ## cardinality = 0..1
     enum[air_units]
+    ## cardinality = 0..inf
+    <shared_focus>
 }
 ```
 
@@ -642,7 +644,11 @@ This is converted to
 ```
 const fuga = array(
     { cardinality:[1,2] },
-    [enumRef({cardinality:[0,1]}, "air_units")])
+    [
+        enumRef({cardinality:[0,1]}, "air_units"),
+        typeRef({cardinality:[0,Infinity]}, "shared_focus")
+    ]
+)
 ```
 
 ## Enums
