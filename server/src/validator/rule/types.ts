@@ -37,13 +37,18 @@ export type Cardinality = [number, number];
 export interface BaseEntryDescriptor {
   /** Defines how many times can this entry appear. Default value is [1,1] (required) */
   cardinality?: Cardinality;
-  replace_scope?: { this?: Scope; root: Scope; from?: Scope; fromFrom?: Scope };
-  replaceScope?: { this?: Scope; root: Scope; from?: Scope; fromFrom?: Scope };
+  replace_scope?: {
+    this?: Scope;
+    root?: Scope;
+    from?: Scope;
+    fromfrom?: Scope;
+  };
+  replaceScope?: { this?: Scope; root: Scope; from?: Scope; fromfrom?: Scope };
   /** Currently not used */
   severity?: string;
 }
 
-interface NumberValueDescriptor {
+export interface NumberValueDescriptor {
   range?: [number, number];
 }
 
