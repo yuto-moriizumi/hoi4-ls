@@ -768,17 +768,34 @@ alias[effect:create_starbase] = {
     ## cardinality = 1..1
     owner = scalar
 }
+alias[effect:create_starbase] = {
+    ## cardinality = 1..1
+    size = int
+}
+alias[effect:create_facility] = {
+    ## cardinality = 1..1
+    count = int
+}
 ```
 
 This is converted to
 
 ```
 const effect = {
-    create_starbase: obj(
-        {cardinality:[0,Inf]},
-        {
-        owner: scalar({cardinality:[1,1]})
-        })
+    create_starbase: either(
+        obj(
+            { cardinality:[1,Inf] },
+            { owner: scalar({cardinality:[1,1]}) }
+        ),
+        obj(
+            {cardinality:[1,Inf]},
+            { size: int({cardinality:[1,1]}) }
+        )
+    ),
+    create_facility: obj(
+        { cardinality:[1,Inf] },
+        { count: int({cardinality:[1,1]}) }
+    )
 }
 ```
 
