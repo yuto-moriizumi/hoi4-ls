@@ -573,6 +573,8 @@ Simple rules can be converted to the same named Type Functions. For example,
 
 - bool -> bool()
 - scalar -> scalar()
+- localisation -> localisation()
+- variable_field -> variable_field()
 
 ## Literal rule
 
