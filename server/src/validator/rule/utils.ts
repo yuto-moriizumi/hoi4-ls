@@ -17,6 +17,7 @@ import {
   ArrayValueDescriptor,
   ArrayItem,
   EntryDescriptor,
+  NumberValueDescriptor,
 } from "./types";
 
 export function ref(tag: string | string[]): ReferenceToDescriptor {
@@ -50,6 +51,12 @@ export function typeDefKey(tag: string) {
     type: Value.UNQUOTED,
     referencedBy: tag,
   } satisfies UnquotedValueDescriptor);
+}
+export function typeRefKey(tag: string) {
+  return JSON.stringify({
+    type: Value.REFERENCE_TO,
+    tag,
+  } satisfies ReferenceToDescriptor);
 }
 
 export function entryMap(entries: Entries, cardinality: Cardinality): Entries {
@@ -120,6 +127,7 @@ export function enumRef(
   };
 }
 export const valueRef = enumRef;
+export const value = enumRef;
 export const scopeRef = enumRef;
 
 /** To be updated with enums.ts */
@@ -129,6 +137,9 @@ const EnumDict: Record<string, string[]> = {
 export function enumRefKey(key: string) {
   return JSON.stringify(enumRef(key));
 }
+export function valueRefKey(key: string) {
+  return JSON.stringify(enumRef(key));
+}
 
 export function valueSet(tag: string): UnquotedValueDescriptor {
   return { type: Value.UNQUOTED, referencedBy: tag };
@@ -136,21 +147,32 @@ export function valueSet(tag: string): UnquotedValueDescriptor {
 
 export function float(
   entryDescriptor?: BaseEntryDescriptor,
+  min?: number,
+  max?: number,
 ): FloatValueDescriptor {
-  return { type: Value.FLOAT, ...entryDescriptor };
+  if (min === undefined) return { type: Value.FLOAT, ...entryDescriptor };
+  return { type: Value.FLOAT, ...entryDescriptor, range: [min, max!] };
 }
+
 export const number = float;
 
 export function literal(literal: string): UnquotedLiteralValueDescriptor {
   return { type: Value.UNQUOTED_LITERAL, literal };
 }
 
-export function localisation(): SimpleValueDescriptor {
-  return { type: Value.LOCALISATION };
+export function localisation(
+  entryDescriptor?: BaseEntryDescriptor,
+): SimpleValueDescriptor {
+  return { type: Value.LOCALISATION, ...entryDescriptor };
 }
 
-export function int(entryDescriptor?: BaseEntryDescriptor): IntValueDescriptor {
-  return { type: Value.INT, ...entryDescriptor };
+export function int(
+  entryDescriptor?: BaseEntryDescriptor,
+  min?: number,
+  max?: number,
+): IntValueDescriptor {
+  if (min === undefined) return { type: Value.INT, ...entryDescriptor };
+  return { type: Value.INT, ...entryDescriptor, range: [min, max!] };
 }
 
 export function bool(
@@ -179,6 +201,10 @@ export function unit_leader() {
 
 export function country() {
   return Scope.COUNTRY;
+}
+
+export function state() {
+  return Scope.STATE;
 }
 
 export function obj(
