@@ -17,7 +17,6 @@ import {
   ArrayValueDescriptor,
   ArrayItem,
   EntryDescriptor,
-  NumberValueDescriptor,
 } from "./types";
 
 export function ref(tag: string | string[]): ReferenceToDescriptor {
@@ -156,8 +155,27 @@ export function float(
 
 export const number = float;
 
-export function literal(literal: string): UnquotedLiteralValueDescriptor {
-  return { type: Value.UNQUOTED_LITERAL, literal };
+export function literal(
+  literal: string | number,
+): UnquotedLiteralValueDescriptor;
+export function literal(
+  entryDescriptor: BaseEntryDescriptor,
+  literal: string | number,
+): UnquotedLiteralValueDescriptor;
+export function literal(
+  literalOrEntryDescriptor?: BaseEntryDescriptor | string | number,
+  literal?: string | number,
+): UnquotedLiteralValueDescriptor {
+  if (
+    typeof literalOrEntryDescriptor === "string" ||
+    typeof literalOrEntryDescriptor === "number"
+  )
+    return { type: Value.UNQUOTED_LITERAL, literal: literalOrEntryDescriptor };
+  return {
+    type: Value.UNQUOTED_LITERAL,
+    literal: literal!,
+    ...literalOrEntryDescriptor,
+  };
 }
 
 export function localisation(
@@ -177,8 +195,9 @@ export function int(
 
 export function bool(
   entryDescriptor?: BaseEntryDescriptor,
+  defaultValue?: boolean,
 ): BoolValueDescriptor {
-  return { type: Value.BOOL, ...entryDescriptor };
+  return { type: Value.BOOL, ...entryDescriptor, defaultValue };
 }
 
 export function datetime_field(): SimpleValueDescriptor {
