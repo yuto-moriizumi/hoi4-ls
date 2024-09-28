@@ -1,57 +1,74 @@
-import { triggers } from "../triggers";
-import { RootObjectEntryDescriptor, Value } from "../types";
-import { datetime_field, Enum, localisation, ref, scalar } from "../utils";
+import { trigger } from "../triggers";
+import {
+  obj,
+  localisation,
+  datetime_field,
+  scalar,
+  enumRef,
+  bool,
+  enumRefKey,
+  typeRef,
+  array,
+  either,
+  literal,
+  root,
+  typeDefKey,
+} from "../utils";
 
-export const bookmark: RootObjectEntryDescriptor = {
-  children: {
+const bookmark = obj(
+  {},
+  {
     name: localisation(),
     desc: localisation(),
     date: datetime_field(),
     picture: scalar(),
-    default_country: Enum("country_tags"),
-    default: { type: Value.BOOL, cardinality: [0, 1] },
-    countries: {
-      cardinality: [7, Infinity],
-      children: {
-        "---": {
-          children: {
-            minor: { type: Value.BOOL, cardinality: [0, 1] },
-            history: localisation(),
+    default_country: enumRef({}, "country_tags"),
+    default: bool({ cardinality: [0, 1] }),
+    [enumRefKey("country_tags")]: obj(
+      { cardinality: [7, Infinity] },
+      {
+        minor: bool({ cardinality: [0, 1] }, true),
+        history: localisation(),
+        ideology: typeRef({}, "ideology"),
+        available: obj(
+          { cardinality: [0, 1] },
+          {
+            ...trigger,
           },
-          cardinality: [0, 1],
-        },
+        ),
+        ideas: array({ cardinality: [0, 1] }, [
+          enumRef({ cardinality: [1, Infinity] }, "idea_name"),
+        ]),
+        focuses: array({ cardinality: [0, 1] }, [
+          typeRef({ cardinality: [0, 3] }, "focus"),
+          typeRef({ cardinality: [0, 3] }, "shared_focus"),
+        ]),
       },
-      dynamicChildren: [
-        {
-          key: Enum("country_tags"),
-          value: {
-            children: {
-              minor: { type: Value.BOOL, cardinality: [0, 1] },
-              history: localisation(),
-              ideology: { type: Value.REFERENCE_TO, tag: "ideology" },
-              available: {
-                cardinality: [0, 1],
-                children: triggers,
-              },
-              ideas: {
-                type: Value.ARRAY,
-                cardinality: [0, 1],
-                values: Enum("idea_name"),
-              },
-              focuses: {
-                type: Value.ARRAY,
-                cardinality: [0, 1],
-                values: ref(["focus", "shared_focus"]),
-              },
-            },
-          },
-        },
-      ],
-    },
-    effect: {
-      children: {
-        randomize_weather: Enum(["12345", "22345"]), // Adjust cardinality and values as per actual values/rules.
+    ),
+    "---": obj(
+      { cardinality: [0, 1] },
+      {
+        minor: bool({ cardinality: [0, 1] }, true),
+        history: localisation(),
       },
-    },
+    ),
+    effect: obj(
+      {},
+      {
+        randomize_weather: either(literal({}, 12345), literal({}, 22345)),
+      },
+    ),
   },
-};
+);
+
+export const bookmarkType = root(
+  { path: "game/common/bookmarks" },
+  {
+    bookmarks: obj(
+      {},
+      {
+        [typeDefKey("bookmark")]: bookmark,
+      },
+    ),
+  },
+);
