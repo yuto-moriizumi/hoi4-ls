@@ -105,11 +105,37 @@ const hoge = obj({}, {
 
 When you find `inf` which is likely to be a number, that must be converted to `Infinity`
 
-## Boolean literal
+## Boolean
 
-When you find `yes`, that must be converted to `true`
+`bool` is converted to `bool()`. When you find `yes` or `no`, that means it is boolean with default value `true` or `false`.
 
-## Object rule
+This is example of Boolean literal conversion.
+
+```
+hoge = {
+    ### cardinality = 0..1
+    fuga = yes
+    ### cardinality = 0..1
+    bar = no
+}
+```
+
+This is converted to
+
+```
+const hoge = obj({}, {
+    fuga: bool({ cardinality: [0,1] }, true),
+    bar: bool({ cardinality: [0,1] }, false)
+})
+```
+
+## Object and Array
+
+Object and Array look simillar and both uses `{}` block to describe itself.
+To identify the block whether it is object or array, check if the first item has `=` symbol in the block.
+If it has `=` symbol, the block is object. If it doesn't, the block is array.
+
+### Object rule
 
 This is example of object rule.
 
@@ -136,7 +162,7 @@ As you can see, object will take 2 arguments.
 The first one is for the attributes and arguments for the entire object.
 The second one is for the entries in the object.
 
-## Array rule
+### Array rule
 
 This is example of array rule.
 
@@ -150,7 +176,8 @@ fuga = {
 }
 ```
 
-While it is simillar to object rule, array children doesn't have `=` symbol.
+While it is simillar to Object rule, array children doesn't have `=` symbol.
+
 This is converted to
 
 ```

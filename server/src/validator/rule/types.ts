@@ -71,7 +71,7 @@ export interface BoolValueDescriptor {
 
 export interface UnquotedLiteralValueDescriptor {
   type: typeof Value.UNQUOTED_LITERAL;
-  literal: string;
+  literal: string | number;
 }
 // shorthand for { type: typeof Value.UNQUOTED_LITERAL}
 // | string;
