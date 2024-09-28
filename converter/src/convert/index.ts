@@ -10,6 +10,7 @@ dotenv.config();
 const model = new ChatOpenAI({
   modelName: "chatgpt-4o-latest",
   openAIApiKey: process.env.OPENAI_API_KEY,
+  temperature: 0,
 });
 
 async function loadText(filePath: string) {
