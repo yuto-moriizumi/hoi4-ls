@@ -41,7 +41,8 @@ async function getTemplate() {
 // )
 
 export async function convert(filePath: string) {
-  const input = await readFile(filePath, "utf-8");
+  const input = annotate(await readFile(filePath, "utf-8"));
+  console.log(input);
   const prompt = await (await getTemplate()).format({ input });
   const result = (await model.invoke(prompt)).content.toString();
   const prettyResult = result.slice(
@@ -57,4 +58,39 @@ export async function convert(filePath: string) {
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, prettyResult);
   console.log("Saved to", outputPath);
+}
+
+/** Add a comment to every head of blocks, whther it is object or array */
+function annotate(text: string) {
+  const BLOCK_HEAD_REGEX = /[^\s]+\s=\s\{/;
+  const ARRAY_ITEM_REGEX = /^[^\s]+$/;
+  const ENTRY_REGEX = /[^\s]+\s=\s[^\s]+/;
+  const lines = text.split("\n");
+  const result = [];
+  for (let tail = 0; tail < lines.length; tail++) {
+    const line = lines[tail].trimStart();
+    if (line.startsWith("##") || !BLOCK_HEAD_REGEX.test(line)) {
+      result.push(lines[tail]);
+      continue;
+    }
+    const trimedLength = lines[tail].length - line.length;
+    for (let head = tail + 1; head < lines.length; head++) {
+      const line = lines[head].trimStart();
+      if (line.startsWith("##")) continue;
+      if (ARRAY_ITEM_REGEX.test(line)) {
+        result.push("\t".repeat(trimedLength) + "### This is an array block");
+        result.push(lines[tail]);
+        break;
+      }
+      if (ENTRY_REGEX.test(line)) {
+        result.push("\t".repeat(trimedLength) + "### This is an object block");
+        result.push(lines[tail]);
+        break;
+      }
+      throw new Error(
+        `Unexpected line: ${line},\nCheck the breaking line code is LF.`,
+      );
+    }
+  }
+  return result.join("\n");
 }
