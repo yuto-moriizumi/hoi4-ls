@@ -132,8 +132,6 @@ const hoge = obj({}, {
 ## Object and Array
 
 Object and Array look simillar and both uses `{}` block to describe itself.
-To identify the block whether it is object or array, check if the first item has `=` symbol in the block.
-If it has `=` symbol, the block is object. If it doesn't, the block is array.
 
 ### Object rule
 
@@ -141,8 +139,9 @@ This is example of object rule.
 
 ```
 ## cardinality = 0..2
+### Following block is an object block
 ship_size = {
-    ## cardinality = 0..1
+    ## cardinality = 0..inf
     ### The base cost of this ship_size
     cost = int
 }
@@ -154,7 +153,7 @@ This is converted to
 const ship_size = obj(
     { cardinality:[0,2] },
     {
-        cost: int({cardinality:[0,1]})
+        cost: int({cardinality:[0,Infinity]})
     })
 ```
 
@@ -168,6 +167,7 @@ This is example of array rule.
 
 ```
 # cardinality = 1..2
+### Following block is an array block
 fuga = {
     ## cardinality = 0..1
     enum[air_units]
@@ -175,8 +175,6 @@ fuga = {
     <shared_focus>
 }
 ```
-
-While it is simillar to Object rule, array children doesn't have `=` symbol.
 
 This is converted to
 
@@ -188,6 +186,28 @@ const fuga = array(
         typeRef({cardinality:[0,Infinity]}, "shared_focus")
     ]
 )
+```
+
+### Identify the block type is array or object
+
+It is really imporant to identify the block type.
+Following examples are object blocks.
+
+```
+### Following block is an object block
+foo = {
+    bar = baz
+}
+```
+
+Following examples are array blocks.
+
+```
+### Following block is an array block
+foo = {
+    bar
+    baz
+}
 ```
 
 ## Enums

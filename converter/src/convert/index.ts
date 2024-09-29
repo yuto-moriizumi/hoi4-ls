@@ -78,12 +78,16 @@ function annotate(text: string) {
       const line = lines[head].trimStart();
       if (line.startsWith("##")) continue;
       if (ARRAY_ITEM_REGEX.test(line)) {
-        result.push("\t".repeat(trimedLength) + "### This is an array block");
+        result.push(
+          "\t".repeat(trimedLength) + "### Following block is an array block",
+        );
         result.push(lines[tail]);
         break;
       }
       if (ENTRY_REGEX.test(line)) {
-        result.push("\t".repeat(trimedLength) + "### This is an object block");
+        result.push(
+          "\t".repeat(trimedLength) + "### Following block is an object block",
+        );
         result.push(lines[tail]);
         break;
       }
