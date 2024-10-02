@@ -29,7 +29,7 @@ const pdxparticle = obj({},{
 
 obj(), typeRef() and float() are Type Functions.
 1st argument is the entry information, such as cardinality.
-2nd and later argument is the arguments for that type.(Explained later)
+2nd and later argument is the arguments for that type.
 
 ## Attributes
 
@@ -131,7 +131,7 @@ const hoge = obj({}, {
 
 ## Object and Array
 
-Object and Array look simillar and both uses `{}` block to describe itself.
+Object and Array have its own block, starting from `{` and ending with `}`.
 
 ### Object rule
 
@@ -157,12 +157,14 @@ const ship_size = obj(
     })
 ```
 
-As you can see, object will take 2 arguments.
+As you can see, `obj()` type function will take 2 arguments.
 The first one is for the attributes and arguments for the entire object.
 The second one is for the entries in the object.
 
 ### Array rule
 
+Array rule is simillar to object rule, but it express an array.
+It must have `### Following block is an array block` line in the beginning. Otherwise it is an object rule.
 This is example of array rule.
 
 ```
@@ -188,27 +190,46 @@ const fuga = array(
 )
 ```
 
+Array is converted to `array()` type function.
+
 ### Identify the block type is array or object
 
 It is really imporant to identify the block type.
-Following examples are object blocks.
+Following example is an object block.
 
 ```
 ### Following block is an object block
 foo = {
-    bar = baz
+    bar = "baz"
 }
 ```
 
-Following examples are array blocks.
+And this is converted to
+
+```
+const foo = obj({}, {
+    bar: literal({}, "baz")
+})
+```
+
+Following example is an array block.
 
 ```
 ### Following block is an array block
 foo = {
-    bar
-    baz
+    "bar"
+    "baz"
 }
 ```
+
+And this is converted to
+
+```
+const foo = array({}, [literal({}, "bar"), literal({}, "baz")])
+```
+
+It is very important to know which block type is array or object.
+They have different corresponding type functions, which is `array()` or `obj()`.
 
 ## Enums
 

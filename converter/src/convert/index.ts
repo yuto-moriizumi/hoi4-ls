@@ -44,7 +44,6 @@ export async function convert(filePath: string) {
   const input = annotate(await readFile(filePath, "utf-8"));
   console.log(input);
   const prompt = await (await getTemplate()).format({ input });
-  throw new Error("hi");
   const result = (await model.invoke(prompt)).content.toString();
   const prettyResult = result.slice(
     "```typescript\n".length,
