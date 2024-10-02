@@ -1,56 +1,64 @@
-import { modifiers } from "../modifiers";
-import { Value, RootObjectEntryDescriptor } from "../types";
-import { int } from "../utils";
+import { modifier } from "../modifiers";
+import { root, obj, typeDefKey, bool, int, float } from "../utils";
 
-export const building: RootObjectEntryDescriptor = {
-  children: {
+const building = obj(
+  {},
+  {
     base_cost: int(),
-    base_cost_conversion: { type: Value.INT, cardinality: [0, 1] },
-    per_level_extra_cost: { type: Value.INT, cardinality: [0, 1] },
-    max_level: { type: Value.INT, cardinality: [0, 1] },
-    value: { type: Value.INT, cardinality: [0, 1] },
+    base_cost_conversion: int({ cardinality: [0, 1] }),
+    per_level_extra_cost: int({ cardinality: [0, 1] }),
+    max_level: int({ cardinality: [0, 1] }),
+    value: int({ cardinality: [0, 1] }),
     icon_frame: int(),
-    show_on_map: { type: Value.INT, cardinality: [0, 1] },
-    show_on_map_meshes: { type: Value.INT, cardinality: [0, 1] },
-    always_shown: { type: Value.BOOL, cardinality: [0, 1] },
-    has_destroyed_mesh: { type: Value.BOOL, cardinality: [0, 1] },
-    allied_build: { type: Value.BOOL, cardinality: [0, 1] },
-    centered: { type: Value.BOOL, cardinality: [0, 1] },
-    supply_node: { type: Value.BOOL, cardinality: [0, 1] },
-    shares_slots: { type: Value.BOOL, cardinality: [0, 1] },
-    infrastructure_construction_effect: {
-      type: Value.BOOL,
-      cardinality: [0, 1],
-    },
-    provincial: { type: Value.BOOL, cardinality: [0, 1] },
-    damage_factor: { type: Value.FLOAT, cardinality: [0, 1] },
-    only_costal: { type: Value.BOOL, cardinality: [0, 1] },
-    disabled_in_dmz: { type: Value.BOOL, cardinality: [0, 1] },
-    infrastructure: { type: Value.BOOL, cardinality: [0, 1] },
-    air_base: { type: Value.BOOL, cardinality: [0, 1] },
-    is_port: { type: Value.BOOL, cardinality: [0, 1] },
-    anti_air: { type: Value.BOOL, cardinality: [0, 1] },
-    refinery: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    radar: { type: Value.BOOL, cardinality: [0, 1] },
-    nuclear_reactor: { type: Value.BOOL, cardinality: [0, 1] },
-    military_production: { type: Value.FLOAT, cardinality: [0, 1] },
-    general_production: { type: Value.FLOAT, cardinality: [0, 1] },
-    naval_production: { type: Value.FLOAT, cardinality: [0, 1] },
-    land_fort: { type: Value.INT, cardinality: [0, 1] },
-    naval_fort: { type: Value.INT, cardinality: [0, 1] },
-    rocket_production: { type: Value.INT, cardinality: [0, 1] },
-    rocket_launch_capacity: { type: Value.INT, cardinality: [0, 1] },
-    air_defence: { type: Value.INT, cardinality: [0, 1] },
-    subtype_state: {
-      children: {
-        alias_name: {
-          children: modifiers,
-        },
+    show_on_map: int({ cardinality: [0, 1] }),
+    show_on_map_meshes: int({ cardinality: [0, 1] }),
+    always_shown: bool({ cardinality: [0, 1] }),
+    has_destroyed_mesh: bool({ cardinality: [0, 1] }),
+    allied_build: bool({ cardinality: [0, 1] }),
+    centered: bool({ cardinality: [0, 1] }),
+    supply_node: bool({ cardinality: [0, 1] }),
+    shares_slots: bool({ cardinality: [0, 1] }),
+    infrastructure_construction_effect: bool({ cardinality: [0, 1] }),
+    provincial: bool({ cardinality: [0, 1] }),
+    damage_factor: float({ cardinality: [0, 1] }),
+    only_costal: bool({ cardinality: [0, 1] }),
+    disabled_in_dmz: bool({ cardinality: [0, 1] }),
+    infrastructure: bool({ cardinality: [0, 1] }),
+    air_base: bool({ cardinality: [0, 1] }),
+    is_port: bool({ cardinality: [0, 1] }),
+    anti_air: bool({ cardinality: [0, 1] }),
+    refinery: bool({ cardinality: [0, 1] }, true),
+    radar: bool({ cardinality: [0, 1] }),
+    nuclear_reactor: bool({ cardinality: [0, 1] }),
+    military_production: float({ cardinality: [0, 1] }),
+    general_production: float({ cardinality: [0, 1] }),
+    naval_production: float({ cardinality: [0, 1] }),
+    land_fort: int({ cardinality: [0, 1] }),
+    naval_fort: int({ cardinality: [0, 1] }),
+    rocket_production: int({ cardinality: [0, 1] }),
+    rocket_launch_capacity: int({ cardinality: [0, 1] }),
+    air_defence: int({ cardinality: [0, 1] }),
+    subtype: obj(
+      {},
+      {
+        ...modifier,
       },
-    },
-    show_modifier: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    max_fuel_building: { type: Value.FLOAT, cardinality: [0, 1] },
-    fuel_silo: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    fuel_gain_from_states: { type: Value.FLOAT, cardinality: [0, 1] },
+    ),
+    show_modifier: bool({ cardinality: [0, 1] }, true),
+    max_fuel_building: float({ cardinality: [0, 1] }),
+    fuel_silo: bool({ cardinality: [0, 1] }, true),
+    fuel_gain_from_states: float({ cardinality: [0, 1] }),
   },
-};
+);
+
+export const buildingType = root(
+  { path: "game/common/buildings" },
+  {
+    buildings: obj(
+      {},
+      {
+        [typeDefKey("building")]: building,
+      },
+    ),
+  },
+);
