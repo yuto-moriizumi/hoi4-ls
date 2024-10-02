@@ -129,11 +129,7 @@ const hoge = obj({}, {
 })
 ```
 
-## Object and Array
-
-Object and Array have its own block, starting from `{` and ending with `}`.
-
-### Object rule
+## Object rule
 
 This is example of object rule.
 
@@ -161,10 +157,9 @@ As you can see, `obj()` type function will take 2 arguments.
 The first one is for the attributes and arguments for the entire object.
 The second one is for the entries in the object.
 
-### Array rule
+## Array rule
 
-Array rule is simillar to object rule, but it express an array.
-It must have `### Following block is an array block` line in the beginning. Otherwise it is an object rule.
+Array rule must have `### Following block is an array block` line before it. Otherwise it is an object rule. Array is converted to `array()` type function.
 This is example of array rule.
 
 ```
@@ -189,47 +184,6 @@ const fuga = array(
     ]
 )
 ```
-
-Array is converted to `array()` type function.
-
-### Identify the block type is array or object
-
-It is really imporant to identify the block type.
-Following example is an object block.
-
-```
-### Following block is an object block
-foo = {
-    bar = "baz"
-}
-```
-
-And this is converted to
-
-```
-const foo = obj({}, {
-    bar: literal({}, "baz")
-})
-```
-
-Following example is an array block.
-
-```
-### Following block is an array block
-foo = {
-    "bar"
-    "baz"
-}
-```
-
-And this is converted to
-
-```
-const foo = array({}, [literal({}, "bar"), literal({}, "baz")])
-```
-
-It is very important to know which block type is array or object.
-They have different corresponding type functions, which is `array()` or `obj()`.
 
 ## Enums
 
@@ -511,6 +465,32 @@ const decision_category = obj({},{
             key: scalar(),
             trigger: obj({...trigger})
         })
+    )
+})
+```
+
+Another example,
+
+```
+ace = {
+    type = enum[air_units]
+    ### Following block is an array block
+    type = {
+        ## cardinality = ~1..inf
+        enum[air_units]
+    }
+}
+```
+
+This is converted to
+
+```
+const ace = obj({},{
+    type: either(
+        enumRef({cardinality:[1,Infinity]}, "air_units"),
+        array({cardinality:[1,Infinity]},[
+            type: enumRef({cardinality:[1,Infinity]}, "air_units")
+        ])
     )
 })
 ```
