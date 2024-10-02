@@ -1,3 +1,17 @@
+import { effect } from "../effects";
+import { modifier } from "../modifiers";
+import { trigger } from "../triggers";
+import {
+  root,
+  obj,
+  float,
+  value,
+  typeRef,
+  country,
+  valueSet,
+  value_set,
+} from "../utils";
+
 export const balanceOfPowerType = root(
   { path: "game/common/bop" },
   {
@@ -11,7 +25,7 @@ export const balanceOfPowerType = root(
         range: obj(
           { cardinality: [0, Infinity] },
           {
-            id: value_set({}, "bop_range_id"),
+            id: valueSet("bop_range_id"),
             min: float({}, -1, 1),
             max: float({}, -1, 1),
             modifier: obj(
@@ -21,7 +35,7 @@ export const balanceOfPowerType = root(
               },
               {
                 ...modifier,
-              }
+              },
             ),
             on_activate: obj(
               {
@@ -33,10 +47,10 @@ export const balanceOfPowerType = root(
                   { cardinality: [0, Infinity] },
                   {
                     ...trigger,
-                  }
+                  },
                 ),
                 ...effect,
-              }
+              },
             ),
             on_deactivate: obj(
               {
@@ -48,12 +62,12 @@ export const balanceOfPowerType = root(
                   { cardinality: [0, Infinity] },
                   {
                     ...trigger,
-                  }
+                  },
                 ),
                 ...effect,
-              }
+              },
             ),
-          }
+          },
         ),
         side: obj(
           { cardinality: [2, Infinity] },
@@ -73,7 +87,7 @@ export const balanceOfPowerType = root(
                   },
                   {
                     ...modifier,
-                  }
+                  },
                 ),
                 on_activate: obj(
                   {
@@ -85,10 +99,10 @@ export const balanceOfPowerType = root(
                       { cardinality: [0, Infinity] },
                       {
                         ...trigger,
-                      }
+                      },
                     ),
                     ...effect,
-                  }
+                  },
                 ),
                 on_deactivate: obj(
                   {
@@ -100,16 +114,16 @@ export const balanceOfPowerType = root(
                       { cardinality: [0, Infinity] },
                       {
                         ...trigger,
-                      }
+                      },
                     ),
                     ...effect,
-                  }
+                  },
                 ),
-              }
+              },
             ),
-          }
+          },
         ),
-      }
+      },
     ),
-  }
+  },
 );
