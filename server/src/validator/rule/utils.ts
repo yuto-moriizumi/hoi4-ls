@@ -144,6 +144,10 @@ export function valueSet(tag: string): UnquotedValueDescriptor {
   return { type: Value.UNQUOTED, referencedBy: tag };
 }
 
+export function value_set(entryDescriptor: BaseEntryDescriptor, tag: string) {
+  return { type: Value.UNQUOTED, referencedBy: tag, ...entryDescriptor };
+}
+
 export function float(
   entryDescriptor?: BaseEntryDescriptor,
   min?: number,
