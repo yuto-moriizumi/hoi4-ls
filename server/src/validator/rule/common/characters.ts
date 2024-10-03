@@ -1,442 +1,295 @@
-import { triggers } from "../triggers";
-import { effects } from "../effects";
+import { effect } from "../effects";
 import { modifier_rule } from "../modifier_rule";
-import { modifiers } from "../modifiers";
-import { portraitset } from "../portraitset";
+import { modifier } from "../modifiers";
+import { trigger } from "../triggers";
+import { Scope } from "../types";
 import {
-  BaseEntryDescriptor,
-  Entries,
-  EntryDescriptor,
-  ObjectValueDescriptor,
-  RootObjectEntryDescriptor,
-  Scope,
-  Value,
-  ValueDescriptor,
-} from "../types";
-import { variable_field } from "../variable_field";
-import { Enum, int, localisation, number, ref, valueSet } from "../utils";
-import { ledgers } from "../enums";
+  either,
+  typeRef,
+  obj,
+  root,
+  array,
+  country,
+  localisation,
+  enumRefKey,
+  literal,
+  enumRef,
+  datetime_field,
+  float,
+  value_set,
+  int,
+  value,
+  variable_field,
+  bool,
+  filepath,
+} from "../utils";
 
-const unitLeaderTraitsEntry: EntryDescriptor = {
-  cardinality: [0, Infinity],
-  type: Value.ARRAY,
-  values: ref("unit_leader_trait"),
+export const character_ids = ["id", "legacy_id"];
+export const character_portrait_types = [
+  "civilian",
+  "army",
+  "navy",
+  "operative",
+];
+export const character_portrait_sizes = ["large", "small"];
+
+const portraitset = {
+  large: either(typeRef({}, "spriteType"), filepath({})),
+  small: either(typeRef({}, "spriteType"), filepath({})),
 };
 
-const countryLeaderTraitsEntry: EntryDescriptor = {
-  cardinality: [0, Infinity],
-  type: Value.ARRAY,
-  values: ref("country_leader_trait"),
-};
-
-export const character: RootObjectEntryDescriptor = {
-  children: {
-    uninstanced: {
-      children: {
-        name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-        portraits: {
-          dynamicChildren: [
-            {
-              cardinality: [0, 2],
-              key: Enum("character_portrait_types"),
-              value: { children: portraitset },
-            },
-          ],
-          children: {},
-        } satisfies EntryDescriptor,
-        allowed_civil_war: {
-          cardinality: [0, 1],
-          replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-          children: triggers,
-        },
-        gender: {
-          type: Value.ENUM,
-          values: ["female", "male", "undefined"],
-          cardinality: [0, 1],
-        },
-      },
-    },
-    country_leader: {
-      children: {
-        country_leader: {
-          children: {
-            ideology: ref("sub_ideology"),
-            desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            expire: { type: Value.DATETIME, cardinality: [0, 1] },
-            name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            traits: countryLeaderTraitsEntry,
-            research_bonus: {
-              cardinality: [0, 1],
-              children: {},
-              dynamicChildren: [
-                {
-                  key: ref("tech_category"),
-                  value: number(),
-                },
-              ],
-            },
-          },
-          dynamicChildren: [
-            {
-              key: Enum("character_ids"),
-              value: {
-                type: Value.UNQUOTED,
-                referencedBy: "country_leader_ids",
+const character = obj(
+  {},
+  {
+    uninstanced: obj(
+      {},
+      {
+        name: localisation(),
+        portraits: obj(
+          {},
+          {
+            [enumRefKey("character_portrait_types")]: obj(
+              { cardinality: [1, 3] },
+              {
+                [enumRefKey("portraitset")]: obj(
+                  { cardinality: [1, 2] },
+                  { ...portraitset },
+                ),
               },
-            },
-          ],
-        } satisfies EntryDescriptor,
-      },
-    },
-    corps_commander: {
-      children: {
-        corps_commander: {
-          children: {
-            desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            expire: { type: Value.DATETIME, cardinality: [0, 1] },
-            skill: int(),
-            attack_skill: int(),
-            defense_skill: int(),
-            planning_skill: int(),
-            logistics_skill: int(),
-            character_ids: {
-              type: Value.UNQUOTED,
-              referencedBy: "unit_leader_ids",
-              cardinality: [0, 1],
-            },
-            name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            traits: unitLeaderTraitsEntry,
-            visible: {
-              cardinality: [0, 1],
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              children: triggers,
-            },
+            ),
           },
-        },
-      },
-    },
-    field_marshal: {
-      children: {
-        field_marshal: {
-          children: {
-            desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            expire: { type: Value.DATETIME, cardinality: [0, 1] },
-            skill: int(),
-            attack_skill: int(),
-            defense_skill: int(),
-            planning_skill: int(),
-            logistics_skill: int(),
-            character_ids: {
-              type: Value.UNQUOTED,
-              referencedBy: "unit_leader_ids",
-              cardinality: [0, 1],
-            },
-            name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            traits: unitLeaderTraitsEntry,
-            visible: {
-              cardinality: [0, 1],
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              children: triggers,
-            },
+        ),
+        allowed_civil_war: obj(
+          {
+            replace_scope: { this: Scope.CHARACTER, root: country() },
+            cardinality: [0, 1],
           },
-        },
+          { ...trigger },
+        ),
+        gender: either(
+          literal({ cardinality: [0, 1] }, "female"),
+          literal({ cardinality: [0, 1] }, "male"),
+          literal({ cardinality: [0, 1] }, "undefined"),
+        ),
       },
-    },
-    navy_leader: {
-      children: {
-        navy_leader: {
-          children: {
-            desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            expire: { type: Value.DATETIME, cardinality: [0, 1] },
-            skill: int(),
-            attack_skill: int(),
-            defense_skill: int(),
-            maneuvering_skill: int(),
-            coordination_skill: int(),
-            character_ids: {
-              type: Value.UNQUOTED,
-              referencedBy: "unit_leader_ids",
-              cardinality: [0, 1],
-            },
-            name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            traits: unitLeaderTraitsEntry,
-            visible: {
-              cardinality: [0, 1],
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              children: triggers,
-            },
+    ),
+    country_leader: obj(
+      {},
+      {
+        country_leader: obj(
+          {},
+          {
+            ideology: enumRef({}, "sub_ideology"),
+            desc: localisation({ cardinality: [0, 1] }),
+            expire: datetime_field({ cardinality: [0, 1] }),
+            name: localisation({ cardinality: [0, 1] }),
+            traits: array({ cardinality: [0, Infinity] }, [
+              typeRef({}, "country_leader_trait"),
+            ]),
+            research_bonus: obj(
+              { cardinality: [0, 1] },
+              {
+                [enumRefKey("tech_category")]: float({
+                  cardinality: [1, Infinity],
+                }),
+              },
+            ),
+            [enumRefKey("character_ids")]: value_set(
+              { cardinality: [0, 1] },
+              "country_leader_ids",
+            ),
           },
-        },
+        ),
       },
-    },
-    advisor: {
-      children: {
-        advisor: {
-          cardinality: [1, Infinity],
-          children: {
-            slot: ref("character_advisor_slot"),
-            name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-            idea_token: { type: Value.UNQUOTED, referencedBy: "advisor_token" },
-            allowed: {
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              cardinality: [0, 1],
-              children: triggers,
-            },
-            visible: {
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              cardinality: [0, 1],
-              children: triggers,
-            },
-            available: {
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              cardinality: [0, 1],
-              children: triggers,
-            },
-            traits: unitLeaderTraitsEntry,
-            research_bonus: {
-              cardinality: [0, 1],
-              children: {},
-              dynamicChildren: [
-                {
-                  key: ref("tech_category"),
-                  value: number(),
-                },
-              ],
-            },
-            ledger: {
-              type: Value.ENUM,
-              values: ledgers,
-              cardinality: [0, 1],
-            },
-            cost: { type: Value.INT, cardinality: [0, 1] },
-            removal_cost: { type: Value.INT, cardinality: [0, 1] },
-            ai_will_do: {
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              cardinality: [0, 1],
-              children: {
-                base_factor: variable_field,
+    ),
+    corps_commander: obj(
+      {},
+      {
+        corps_commander: obj(
+          {},
+          {
+            desc: localisation({ cardinality: [0, 1] }),
+            expire: datetime_field({ cardinality: [0, 1] }),
+            skill: int({ cardinality: [1, 1] }),
+            attack_skill: int({ cardinality: [1, 1] }),
+            defense_skill: int({ cardinality: [1, 1] }),
+            planning_skill: int({ cardinality: [1, 1] }),
+            logistics_skill: int({ cardinality: [1, 1] }),
+            [enumRefKey("character_ids")]: value_set(
+              { cardinality: [0, 1] },
+              "unit_leader_ids",
+            ),
+            name: localisation({ cardinality: [0, 1] }),
+            traits: array({ cardinality: [0, Infinity] }, [
+              typeRef({}, "unit_leader_trait"),
+            ]),
+            visible: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...trigger },
+            ),
+          },
+        ),
+      },
+    ),
+    field_marshal: obj(
+      {},
+      {
+        field_marshal: obj(
+          {},
+          {
+            desc: localisation({ cardinality: [0, 1] }),
+            expire: datetime_field({ cardinality: [0, 1] }),
+            skill: int({ cardinality: [1, 1] }),
+            attack_skill: int({ cardinality: [1, 1] }),
+            defense_skill: int({ cardinality: [1, 1] }),
+            planning_skill: int({ cardinality: [1, 1] }),
+            logistics_skill: int({ cardinality: [1, 1] }),
+            [enumRefKey("character_ids")]: value_set(
+              { cardinality: [0, 1] },
+              "unit_leader_ids",
+            ),
+            name: localisation({ cardinality: [0, 1] }),
+            traits: array({ cardinality: [0, Infinity] }, [
+              typeRef({}, "unit_leader_trait"),
+            ]),
+            visible: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...trigger },
+            ),
+          },
+        ),
+      },
+    ),
+    navy_leader: obj(
+      {},
+      {
+        navy_leader: obj(
+          {},
+          {
+            desc: localisation({ cardinality: [0, 1] }),
+            expire: datetime_field({ cardinality: [0, 1] }),
+            skill: int({ cardinality: [1, 1] }),
+            attack_skill: int({ cardinality: [1, 1] }),
+            defense_skill: int({ cardinality: [1, 1] }),
+            maneuvering_skill: int({ cardinality: [1, 1] }),
+            coordination_skill: int({ cardinality: [1, 1] }),
+            [enumRefKey("character_ids")]: value_set(
+              { cardinality: [0, 1] },
+              "unit_leader_ids",
+            ),
+            name: localisation({ cardinality: [0, 1] }),
+            traits: array({ cardinality: [0, Infinity] }, [
+              typeRef({}, "unit_leader_trait"),
+            ]),
+            visible: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...trigger },
+            ),
+          },
+        ),
+      },
+    ),
+    advisor: obj(
+      {},
+      {
+        advisor: obj(
+          { cardinality: [1, Infinity] },
+          {
+            slot: value({}, "character_advisor_slot"),
+            name: localisation({ cardinality: [0, 1] }),
+            desc: localisation({ cardinality: [0, 1] }),
+            idea_token: value_set({}, "advisor_token"),
+            allowed: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...trigger },
+            ),
+            visible: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...trigger },
+            ),
+            available: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...trigger },
+            ),
+            traits: array({ cardinality: [0, Infinity] }, [
+              typeRef({}, "country_leader_trait"),
+            ]),
+            research_bonus: obj(
+              { cardinality: [0, 1] },
+              {
+                [enumRefKey("tech_category")]: float({
+                  cardinality: [1, Infinity],
+                }),
+              },
+            ),
+            ledger: enumRef({ cardinality: [0, 1] }, "ledgers"),
+            cost: int({ cardinality: [0, 1] }),
+            removal_cost: int({ cardinality: [0, 1] }),
+            ai_will_do: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              {
+                [enumRefKey("base_factor")]: variable_field(),
                 ...modifier_rule,
               },
-            },
-            on_add: {
-              cardinality: [0, Infinity],
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              children: effects,
-            },
-            on_remove: {
-              cardinality: [0, Infinity],
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              children: effects,
-            },
-            do_effect: {
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              cardinality: [0, 1],
-              children: triggers,
-            },
-            modifier: {
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              cardinality: [0, 1],
-              children: modifiers,
-            },
-            can_be_fired: { type: Value.BOOL, cardinality: [0, 1] },
+            ),
+            on_add: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, Infinity],
+              },
+              { ...effect },
+            ),
+            on_remove: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, Infinity],
+              },
+              { ...effect },
+            ),
+            do_effect: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...trigger },
+            ),
+            modifier: obj(
+              {
+                replace_scope: { this: Scope.CHARACTER, root: country() },
+                cardinality: [0, 1],
+              },
+              { ...modifier },
+            ),
+            can_be_fired: bool({ cardinality: [0, 1] }),
           },
-        },
+        ),
       },
-    },
-    instanced: {
-      children: {
-        instance: {
-          replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-          cardinality: [2, Infinity],
-          children: {
-            allowed: {
-              children: triggers,
-            },
-            name: localisation(),
-            portraits: {
-              cardinality: [1, 2],
-              children: {},
-              dynamicChildren: [
-                {
-                  key: Enum("character_portrait_types"),
-                  value: { children: portraitset },
-                },
-              ],
-            },
-            gender: {
-              type: Value.ENUM,
-              values: ["female", "male", "undefined"],
-              cardinality: [0, 1],
-            },
-            allowed_civil_war: {
-              replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-              children: triggers,
-            },
-            corps_commander: {
-              children: {
-                desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                expire: { type: Value.DATETIME, cardinality: [0, 1] },
-                skill: int(),
-                attack_skill: int(),
-                defense_skill: int(),
-                planning_skill: int(),
-                logistics_skill: int(),
-                character_ids: {
-                  cardinality: [0, 1],
-                  children: {},
-                  dynamicChildren: [
-                    {
-                      key: Enum("character_ids"),
-                      value: valueSet("unit_leader_ids"),
-                    },
-                  ],
-                },
-                name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                traits: unitLeaderTraitsEntry,
-                visible: {
-                  cardinality: [0, 1],
-                  replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-                  children: triggers,
-                },
-              },
-              dynamicChildren: [
-                {
-                  key: Enum("character_ids"),
-                  value: valueSet("unit_leader_ids"),
-                },
-              ],
-            },
-            field_marshal: {
-              children: {
-                desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                expire: { type: Value.DATETIME, cardinality: [0, 1] },
-                skill: int(),
-                attack_skill: int(),
-                defense_skill: int(),
-                planning_skill: int(),
-                logistics_skill: int(),
-                character_ids: {
-                  cardinality: [0, 1],
-                  children: {},
-                  dynamicChildren: [
-                    {
-                      key: Enum("character_ids"),
-                      value: valueSet("unit_leader_ids"),
-                    },
-                  ],
-                },
-                name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                traits: unitLeaderTraitsEntry,
-                visible: {
-                  cardinality: [0, 1],
-                  replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-                  children: triggers,
-                },
-              },
-            },
-            navy_leader: {
-              children: {
-                desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                expire: { type: Value.DATETIME, cardinality: [0, 1] },
-                skill: int(),
-                attack_skill: int(),
-                defense_skill: int(),
-                maneuvering_skill: int(),
-                coordination_skill: int(),
-                character_ids: {
-                  cardinality: [0, 1],
-                  children: {},
-                  dynamicChildren: [
-                    {
-                      key: Enum("character_ids"),
-                      value: valueSet("unit_leader_ids"),
-                    },
-                  ],
-                },
-                name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                traits: unitLeaderTraitsEntry,
-                visible: {
-                  cardinality: [0, 1],
-                  replaceScope: { this: Scope.CHARACTER, root: Scope.COUNTRY },
-                  children: triggers,
-                },
-              },
-            },
-            advisor: {
-              children: {},
-              dynamicChildren: [
-                {
-                  key: {
-                    type: Value.REFERENCE_TO,
-                    tag: "character_advisor_slot",
-                  },
-                  value: {
-                    type: Value.OBJECT,
-                    children: {
-                      slot: {
-                        type: Value.REFERENCE_TO,
-                        tag: "character_advisor_slot",
-                      },
-                      idea_token: {
-                        type: Value.UNQUOTED,
-                        referencedBy: "advisor_token",
-                      },
-                      name: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                      desc: { type: Value.LOCALISATION, cardinality: [0, 1] },
-                      allowed: { cardinality: [0, 1], children: triggers },
-                      visible: { cardinality: [0, 1], children: triggers },
-                      available: { cardinality: [0, 1], children: triggers },
-                      traits: countryLeaderTraitsEntry,
-                      research_bonus: {
-                        cardinality: [0, 1],
-                        children: {},
-                        dynamicChildren: [
-                          {
-                            key: Enum("tech_category"),
-                            value: number(),
-                          },
-                        ],
-                      },
-                      ledger: {
-                        type: Value.ENUM,
-                        values: ledgers,
-                        cardinality: [0, 1],
-                      },
-                      cost: { type: Value.INT, cardinality: [0, 1] },
-                      removal_cost: { type: Value.INT, cardinality: [0, 1] },
-                      ai_will_do: {
-                        cardinality: [0, 1],
-                        children: {
-                          base_factor: variable_field,
-                          ...modifier_rule,
-                        },
-                      },
-                      on_add: {
-                        cardinality: [0, Infinity],
-                        children: effects,
-                      },
-                      on_remove: {
-                        cardinality: [0, Infinity],
-                        children: effects,
-                      },
-                      do_effect: {
-                        cardinality: [0, 1],
-                        children: triggers,
-                      },
-                      modifier: {
-                        cardinality: [0, 1],
-                        children: modifiers,
-                      },
-                      can_be_fired: { type: Value.BOOL, cardinality: [0, 1] },
-                    } satisfies Entries,
-                  } satisfies ValueDescriptor,
-                },
-              ],
-            } satisfies ObjectValueDescriptor & BaseEntryDescriptor,
-          } satisfies Entries,
-        },
-      },
-    },
+    ),
   },
-};
+);
+
+export const characterType = root(
+  { path: "game/common/characters", path_strict: true },
+  { character },
+);
