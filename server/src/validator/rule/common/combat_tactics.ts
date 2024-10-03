@@ -1,55 +1,71 @@
 import { modifier_rule } from "../modifier_rule";
-import { triggers } from "../triggers";
-import { unit_stats } from "../unit_stats";
-import { Value, RootObjectEntryDescriptor, Scope } from "../types";
-import { Enum, number, ref } from "../utils";
+import { trigger } from "../triggers";
+import { unit_stat } from "../unit_stats";
+import {
+  obj,
+  scopeRef,
+  bool,
+  enumRef,
+  enumRefKey,
+  float,
+  scalar,
+  typeRef,
+  root,
+  typeDefKey,
+  combat,
+} from "../utils";
 
-export const combat_tactic: RootObjectEntryDescriptor = {
-  replaceScope: {
-    this: Scope.COMBAT,
-    root: Scope.COMBAT,
-    from: Scope.COMBAT,
-  },
-  children: {
-    only_show_for: {
-      cardinality: [0, 1],
-      ...ref("country"),
-    },
-    is_attacker: { type: Value.BOOL },
-    trigger: {
-      children: {
-        is_attacker: { type: Value.BOOL },
-        phase: Enum("phases"),
-        ...triggers,
+export const phases = [
+  "no",
+  "close_combat",
+  "tactical_withdrawal",
+  "seize_bridge",
+  "hold_bridge",
+  "main",
+  "city_combat",
+];
+
+export const attack_defend = ["attacker", "defender"];
+
+const combat_tactic = obj(
+  { replace_scope: { this: combat(), root: combat(), from: combat() } },
+  {
+    only_show_for: scopeRef({ cardinality: [0, 1] }, "country"),
+    is_attacker: bool(),
+    trigger: obj(
+      {},
+      {
+        is_attacker: bool(),
+        phase: enumRef({}, phases),
+        ...trigger,
       },
-    },
-    active: { type: Value.BOOL, cardinality: [0, 1] },
-    base: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT },
+    ),
+    active: bool({ cardinality: [0, 1] }),
+    base: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
         ...modifier_rule,
       },
-    },
-    picture: { type: Value.UNQUOTED },
-    countered_by: {
-      cardinality: [0, 1],
-      ...ref("combat_tactic"),
-    },
-    phase: { type: Value.ARRAY, values: Enum("phases"), cardinality: [0, 1] },
-    display_phase: {
-      type: Value.ARRAY,
-      values: Enum("phases"),
-      cardinality: [0, 1],
-    },
-    attacker_movement_speed: { type: Value.FLOAT, cardinality: [0, 1] },
-    ...unit_stats,
+    ),
+    picture: scalar(),
+    countered_by: typeRef({ cardinality: [0, 1] }, "combat_tactic"),
+    phase: enumRef({ cardinality: [0, 1] }, phases),
+    display_phase: enumRef({ cardinality: [0, 1] }, phases),
+    [enumRefKey("attack_defend")]: float({ cardinality: [1, 2] }),
+    attacker_movement_speed: float({ cardinality: [0, 1] }),
+    ...unit_stat,
   },
-  dynamicChildren: [
-    {
-      key: Enum("attack_defend"),
-      value: number(),
-      cardinality: [1, 2],
-    },
-  ],
-};
+);
+
+export const combatTacticType = root(
+  { path: "game/common" },
+  {
+    combat_tactic: obj(
+      {},
+      {
+        [typeDefKey("combat_tactic")]: combat_tactic,
+      },
+    ),
+  },
+);
