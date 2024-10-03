@@ -204,8 +204,10 @@ export function bool(
   return { type: Value.BOOL, ...entryDescriptor, defaultValue };
 }
 
-export function datetime_field(): SimpleValueDescriptor {
-  return { type: Value.DATETIME };
+export function datetime_field(
+  entryDescriptor?: BaseEntryDescriptor,
+): SimpleValueDescriptor {
+  return { type: Value.DATETIME, ...entryDescriptor };
 }
 
 export function scalar(
@@ -277,4 +279,11 @@ export function variable_field(entryDescriptor?: BaseEntryDescriptor) {
     tag: "variable",
     ...entryDescriptor,
   });
+}
+
+export function filepath(entryDescriptor: BaseEntryDescriptor) {
+  return {
+    type: Value.QUOTED,
+    ...entryDescriptor,
+  };
 }
