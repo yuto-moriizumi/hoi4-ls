@@ -69,6 +69,7 @@ function annotate(text: string) {
   const result = [];
   for (let tail = 0; tail < lines.length; tail++) {
     const line = lines[tail].trimStart();
+    if (line.startsWith("# ")) continue; // Skip comment outed lines
     if (line.startsWith("##") || !BLOCK_HEAD_REGEX.test(line)) {
       result.push(lines[tail]);
       continue;
@@ -76,7 +77,8 @@ function annotate(text: string) {
     const trimedLength = lines[tail].length - line.length;
     for (let head = tail + 1; head < lines.length; head++) {
       const line = lines[head].trimStart();
-      if (line.startsWith("##")) continue;
+      // Skip comments
+      if (line.startsWith("##") || line.startsWith("# ")) continue;
       if (ARRAY_ITEM_REGEX.test(line)) {
         result.push(
           "\t".repeat(trimedLength) + "### Following block is an array block",
