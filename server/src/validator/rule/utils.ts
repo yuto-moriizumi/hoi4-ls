@@ -287,3 +287,7 @@ export function filepath(entryDescriptor: BaseEntryDescriptor) {
     ...entryDescriptor,
   };
 }
+
+export function combat() {
+  return Scope.COMBAT;
+}
