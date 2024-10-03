@@ -1,335 +1,406 @@
-import { Value, RootObjectEntryDescriptor, Scope } from "../types";
-import { Enum, float, literal, ref, valueSet } from "../utils";
-import { triggers } from "../triggers";
 import { modifier_rule } from "../modifier_rule";
+import { trigger } from "../triggers";
+import {
+  obj,
+  array,
+  enumRef,
+  typeRef,
+  either,
+  enumRefKey,
+  float,
+  country,
+  int,
+  state,
+  valueSet,
+  typeRefKey,
+  scalar,
+  bool,
+  value,
+  literal,
+  root,
+  typeDefKey,
+} from "../utils";
 
-export const ai_area: RootObjectEntryDescriptor = {
-  children: {
-    continents: {
-      type: Value.ARRAY,
-      cardinality: [0, 1],
-      values: Enum("continents"),
-    },
-    strategic_regions: {
-      type: Value.ARRAY,
-      cardinality: [0, 1],
-      values: {
-        type: Value.REFERENCE_TO,
-        tag: "strategic_region",
-      },
-    },
+const ai_area = obj(
+  {},
+  {
+    continents: array({ cardinality: [0, 1] }, [
+      enumRef({ cardinality: [1, Infinity] }, "continents"),
+    ]),
+    strategic_regions: array({ cardinality: [0, 1] }, [
+      typeRef({ cardinality: [1, Infinity] }, "strategic_region"),
+    ]),
   },
-};
+);
 
-export const ai_focus: RootObjectEntryDescriptor = {
-  children: {
-    research: {
-      children: {},
-      dynamicChildren: [
-        {
-          cardinality: [0, Infinity],
-          key: Enum("ai_research_areas"),
-          value: float(),
-        },
-        {
-          cardinality: [0, Infinity],
-          key: Enum("tech_category"),
-          value: float(),
-        },
-      ],
-    },
-    ai_national_focuses: {
-      type: Value.ARRAY,
-      values: ref(["focus", "shared_focus"]),
-    },
-  },
-};
-
-export const ai_peace: RootObjectEntryDescriptor = {
-  replaceScope: {
-    this: Scope.COUNTRY,
-    root: Scope.COUNTRY,
-    from: Scope.COUNTRY,
-  },
-  children: {
-    enable: {
-      children: triggers,
-    },
-    build_temp_vars: {
-      children: triggers,
-      cardinality: [0, 1],
-    },
-    annex: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-    liberate: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-    puppet: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-    puppet_all: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-    puppet_state: {
-      replaceScope: {
-        this: Scope.STATE,
-        root: Scope.STATE,
-        from: Scope.COUNTRY,
-        fromFrom: Scope.COUNTRY,
-      },
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-    take_states: {
-      replaceScope: {
-        this: Scope.COUNTRY,
-        root: Scope.COUNTRY,
-        from: Scope.STATE,
-      },
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-    force_government: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-  },
-};
-
-export const ai_template: RootObjectEntryDescriptor = {
-  children: {
-    roles: {
-      type: Value.ARRAY,
-      cardinality: [1, Infinity],
-      values: ref("ai_roles"),
-    },
-    available_for: {
-      type: Value.ARRAY,
-      cardinality: [0, 1],
-      values: {
-        type: Value.REFERENCE_TO,
-        tag: "country_tags",
-      },
-    },
-    blocked_for: {
-      type: Value.ARRAY,
-      cardinality: [0, 1],
-      values: {
-        type: Value.REFERENCE_TO,
-        tag: "country_tags",
-      },
-    },
-    upgrade_prio: {
-      children: { base_factor: { type: Value.FLOAT }, ...modifier_rule },
-    },
-    scalar: {
-      cardinality: [1, 10],
-      children: {
-        upgrade_prio: {
-          children: { base_factor: { type: Value.FLOAT }, ...modifier_rule },
-        },
-        production_prio: {
-          cardinality: [0, 1],
-          children: { base_factor: { type: Value.FLOAT }, ...modifier_rule },
-        },
-        can_upgrade_in_field: {
-          cardinality: [0, 1],
-          children: triggers,
-        },
-        custom_icon: { type: Value.INT, cardinality: [0, 1] },
-        reinforce_prio: { type: Value.INT, cardinality: [0, 1] },
-        target_width: { type: Value.FLOAT },
-        width_weight: { type: Value.FLOAT },
-        column_swap_factor: { type: Value.FLOAT },
-        enable: {
-          cardinality: [0, 1],
-          children: triggers,
-        },
-        stat_weights: {
-          type: Value.ARRAY,
-          values: { type: Value.FLOAT, cardinality: [33, 33] },
-        },
-        target_template: {
-          children: {
-            weight: { type: Value.FLOAT },
-            match_value: { type: Value.FLOAT },
-            regiments: {
-              cardinality: [1, 25],
-              children: {},
-              dynamicChildren: [
-                {
-                  key: ref("unit"),
-                  value: { type: Value.INT, range: [0, 24] },
-                },
-              ],
-            },
-            support: {
-              cardinality: [0, 1],
-              children: {},
-              dynamicChildren: [
-                {
-                  key: ref("unit"),
-                  value: { type: Value.INT, range: [0, 4] },
-                  cardinality: [0, 5],
-                },
-              ],
-            },
-          },
-        },
-        allowed_types: {
-          type: Value.ARRAY,
-          values: ref("unit"),
-        },
-        replace_at_match: { type: Value.FLOAT, cardinality: [0, 1] },
-        replace_with: {
-          type: Value.REFERENCE_TO,
-          tag: "ai_templates",
-          cardinality: [0, 1],
-        },
-        target_min_match: { type: Value.FLOAT, cardinality: [0, 1] },
-      },
-    },
-  },
-};
-
-export const ai_equipment_design_group: RootObjectEntryDescriptor = {
-  children: {
-    category: Enum("equipment_categories"),
-    blocked_for: {
-      type: Value.ARRAY,
-      cardinality: [0, 1],
-      values: Enum("country_tags"),
-    },
-    available_for: {
-      type: Value.ARRAY,
-      cardinality: [0, 1],
-      values: Enum("country_tags"),
-    },
-    roles: {
-      type: Value.ARRAY,
-      values: valueSet("ai_roles"),
-    },
-    priority: {
-      cardinality: [0, 1],
-      children: {
-        base_factor: { type: Value.FLOAT },
-        ...modifier_rule,
-      },
-    },
-  },
-  dynamicChildren: [
+const ai_focus = either(
+  obj(
+    {},
     {
-      key: ref("ai_equipment_design.design"),
-      value: {
-        children: {
-          priority: {
-            cardinality: [0, 1],
-            children: {
-              base_factor: { type: Value.FLOAT },
-              ...modifier_rule,
+      research: obj(
+        {},
+        {
+          research: obj(
+            {},
+            {
+              [enumRefKey("ai_research_areas")]: float({
+                cardinality: [0, Infinity],
+              }),
+              [enumRefKey("tech_category")]: float({
+                cardinality: [0, Infinity],
+              }),
             },
-          },
-          name: { type: Value.UNQUOTED, cardinality: [0, 1] },
-          role_icon_index: { type: Value.INT, cardinality: [0, 1] },
-          enable: {
-            cardinality: [0, 1],
-            children: triggers,
-          },
-          visible: { type: Value.BOOL, cardinality: [0, 1] },
-          target_variant: {
-            children: {
-              match_value: { type: Value.FLOAT, cardinality: [0, 1] },
-              type: [
-                ref("equipment"),
-                ref("nsb_armor_variants"),
-                ref("bba_air_variants"),
-                Enum("md_unique_dupe_archetypes"),
-              ],
-              modules: {
-                cardinality: [0, 1],
-                children: {},
-                dynamicChildren: [
-                  {
-                    key: Enum("module_slots"),
-                    value: Enum("module_categories"),
-                    cardinality: [0, Infinity],
-                  },
-                  {
-                    key: Enum("module_slots"),
-                    value: ref("module"),
-                    cardinality: [0, Infinity],
-                  },
-                  {
-                    key: Enum("module_slots"),
-                    value: literal("empty"),
-                    cardinality: [0, Infinity],
-                  },
-                  {
-                    key: Enum("module_slots"),
-                    cardinality: [0, Infinity],
-                    value: {
-                      children: {
-                        module: [
-                          Enum("module_categories"),
-                          ref("module"),
-                          literal("empty"),
-                        ],
-                        any_of: {
-                          type: Value.ARRAY,
-                          values: [ref("module"), Enum("module_categories")],
-                        },
-                        upgrade: {
-                          type: Value.UNQUOTED_LITERAL,
-                          cardinality: [0, 1],
-                          literal: "current",
-                        },
-                      },
-                    },
-                  },
-                ],
-              },
-            },
-          },
-          requirements: {
-            cardinality: [0, Infinity],
-            children: {
-              module: [
-                Enum("module_categories"),
-                { type: Value.REFERENCE_TO, tag: "module" },
-              ],
-            },
-          },
-          allowed_modules: {
-            type: Value.ARRAY,
-            cardinality: [0, 1],
-            values: [Enum("module_categories"), ref("module_categories")],
-          },
+          ),
+        },
+      ),
+    },
+  ),
+  obj(
+    {},
+    {
+      ai_national_focuses: array({}, [
+        typeRef({ cardinality: [0, Infinity] }, "focus"),
+        typeRef({ cardinality: [0, Infinity] }, "shared_focus"),
+      ]),
+    },
+  ),
+);
+
+const ai_peace = obj(
+  { replace_scope: { this: country(), root: country(), from: country() } },
+  {
+    enable: obj({}, { ...trigger }),
+    annex_randomness: int(),
+    liberate_randomness: int(),
+    puppet_randomness: int(),
+    take_states_randomness: int(),
+    force_government_randomness: int(),
+    build_temp_vars: obj({ cardinality: [0, 1] }, { ...trigger }),
+    annex: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+    liberate: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+    puppet: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+    puppet_all: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+    puppet_state: obj(
+      {
+        replace_scope: {
+          this: state(),
+          root: state(),
+          from: country(),
+          fromfrom: country(),
         },
       },
-    },
-  ],
-};
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+    take_states: obj(
+      { replace_scope: { this: country(), root: country(), from: state() } },
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+    force_government: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+  },
+);
+
+const ai_template = obj(
+  {},
+  {
+    roles: array({ cardinality: [1, Infinity] }, [
+      valueSet("ai_template_roles"),
+    ]),
+    available_for: array({ cardinality: [0, 1] }, [
+      enumRef({ cardinality: [1, Infinity] }, "country_tags"),
+    ]),
+    blocked_for: array({ cardinality: [0, 1] }, [
+      enumRef({ cardinality: [1, Infinity] }, "country_tags"),
+    ]),
+    match_to_count: float(),
+    upgrade_prio: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float(),
+        ...modifier_rule,
+      },
+    ),
+    scalar: obj(
+      { cardinality: [1, 10] },
+      {
+        upgrade_prio: obj(
+          {},
+          {
+            [enumRefKey("base_factor")]: float(),
+            ...modifier_rule,
+          },
+        ),
+        production_prio: obj(
+          { cardinality: [0, 1] },
+          {
+            [enumRefKey("base_factor")]: float(),
+            ...modifier_rule,
+          },
+        ),
+        can_upgrade_in_field: obj({ cardinality: [0, 1] }, { ...trigger }),
+        custom_icon: int({ cardinality: [0, 1] }),
+        reinforce_prio: int({ cardinality: [0, 1] }),
+        target_width: float(),
+        width_weight: float(),
+        column_swap_factor: float(),
+        enable: obj({ cardinality: [0, 1] }, { ...trigger }),
+        stat_weights: array({ cardinality: [33, 33] }, [float()]),
+        target_template: obj(
+          {},
+          {
+            weight: float(),
+            match_value: float(),
+            regiments: obj(
+              { cardinality: [1, 25] },
+              {
+                [typeRefKey("unit")]: int({}, 0, 24),
+              },
+            ),
+            support: obj(
+              { cardinality: [0, 1] },
+              {
+                [typeRefKey("unit")]: int({}, 0, 4),
+              },
+            ),
+          },
+        ),
+        allowed_types: array({ cardinality: [1, Infinity] }, [
+          typeRef({}, "unit"),
+        ]),
+        replace_at_match: float({ cardinality: [0, 1] }),
+        replace_with: enumRef({ cardinality: [0, 1] }, "ai_templates"),
+        target_min_match: float({ cardinality: [0, 1] }),
+      },
+    ),
+  },
+);
+
+const ai_equipment_design_group = obj(
+  {},
+  {
+    category: enumRef({}, "equipment_categories"),
+    blocked_for: array({ cardinality: [0, 1] }, [
+      enumRef({ cardinality: [1, Infinity] }, "country_tags"),
+    ]),
+    available_for: array({ cardinality: [0, 1] }, [
+      enumRef({ cardinality: [1, Infinity] }, "country_tags"),
+    ]),
+    roles: array({}, [valueSet("ai_equipment_roles")]),
+    priority: obj(
+      {},
+      {
+        [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+        ...modifier_rule,
+      },
+    ),
+    [typeDefKey("ai_equipment_design")]: obj(
+      { cardinality: [1, Infinity] },
+      {
+        priority: obj(
+          { cardinality: [0, 1] },
+          {
+            [enumRefKey("base_factor")]: float(),
+            ...modifier_rule,
+          },
+        ),
+        name: scalar({ cardinality: [0, 1] }),
+        role_icon_index: int({ cardinality: [0, 1] }),
+        enable: obj({ cardinality: [0, 1] }, { ...trigger }),
+        visible: bool({ cardinality: [0, 1] }),
+        target_variant: obj(
+          {},
+          {
+            match_value: float({ cardinality: [0, 1] }),
+            type: either(
+              typeRef({}, "equipment"),
+              value({}, "nsb_armor_variants"),
+              value({}, "bba_air_variants"),
+              enumRef({}, "md_unique_dupe_archetypes"),
+              enumRef({}, "equipment_bonus_type"),
+            ),
+            modules: obj(
+              { cardinality: [0, 1] },
+              {
+                [enumRefKey("module_slots")]: either(
+                  enumRef({}, "module_categories"),
+                  typeRef({}, "module"),
+                  literal({}, "empty"),
+                  obj(
+                    {},
+                    {
+                      module: either(
+                        enumRef({}, "module_categories"),
+                        typeRef({}, "module"),
+                        literal({}, "empty"),
+                      ),
+                      any_of: array({}, [
+                        typeRef({}, "module"),
+                        enumRef({}, "module_categories"),
+                      ]),
+                      upgrade: literal({}, "current"),
+                    },
+                  ),
+                ),
+              },
+            ),
+            upgrades: obj(
+              { cardinality: [0, 1] },
+              {
+                [typeRefKey("upgrade")]: int({
+                  cardinality: [0, Infinity],
+                }),
+                [typeRefKey("upgrade")]: obj(
+                  { cardinality: [0, Infinity] },
+                  {
+                    [enumRefKey("base_factor")]: int(),
+                    modifier: obj(
+                      {},
+                      {
+                        ...trigger,
+                        [enumRefKey("add_factor")]: int(),
+                      },
+                    ),
+                  },
+                ),
+              },
+            ),
+          },
+        ),
+        requirements: obj(
+          { cardinality: [0, 1] },
+          {
+            module: either(
+              enumRef({}, "module_categories"),
+              typeRef({}, "module"),
+            ),
+          },
+        ),
+        allowed_modules: array({ cardinality: [0, Infinity] }, [
+          typeRef({}, "module"),
+          enumRef({}, "module_categories"),
+        ]),
+      },
+    ),
+  },
+);
+
+export const aiTemplateRoles = [
+  "infantry",
+  "anti_tank",
+  "artillery",
+  "bicycle_battalion",
+  "cavalry",
+  "garrison",
+  "marines",
+  "mechanized",
+  "militia",
+  "mobile",
+  "motorized",
+  "mountaineers",
+  "paratroopers",
+  "suppression",
+  "fake_intel_unit",
+  "armor",
+  "light_armor",
+  "medium_armor",
+  "heavy_armor",
+  "modern_armor",
+];
+
+export const aiEquipmentRoles = [
+  "fighter",
+  "cas",
+  "naval_bomber",
+  "tactical_bomber",
+  "heavy_fighter",
+  "interceptor",
+  "scout_plane",
+  "suicide",
+  "strategic_bomber",
+  "cv_fighter",
+  "cv_cas",
+  "cv_naval_bomber",
+  "cv_suicide",
+  "cv_interceptor",
+  "naval_capital",
+  "naval_carrier",
+  "naval_screen",
+  "naval_sub",
+];
+
+export const aiResearchAreas = [
+  "defensive",
+  "offensive",
+  "carrier",
+  "battleship",
+  "cruiser",
+];
+
+export const aiAreaType = root(
+  { path: "game/common/ai_areas" },
+  {
+    areas: obj(
+      {},
+      {
+        [typeDefKey("ai_area")]: ai_area,
+      },
+    ),
+  },
+);
+
+export const aiFocusType = root(
+  { path: "game/common/ai_focuses" },
+  { [typeDefKey("ai_focus")]: ai_focus },
+);
+
+export const aiPeaceType = root(
+  { path: "game/common/ai_peace" },
+  { [typeDefKey("ai_peace")]: ai_peace },
+);
+
+export const aiTemplates = root(
+  { path: "game/common/ai_templates" },
+  { [typeDefKey("ai_templates")]: ai_template },
+);
+
+export const aiEquipment = root(
+  { path: "game/common/ai_equipment" },
+  {
+    [typeDefKey("ai_equipment_design_group")]: ai_equipment_design_group,
+  },
+);
