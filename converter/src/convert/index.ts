@@ -85,9 +85,10 @@ function annotate(text: string) {
         break;
       }
       if (ENTRY_REGEX.test(line)) {
-        result.push(
-          "\t".repeat(trimedLength) + "### Following block is an object block",
-        );
+        // Skip annnotations for objects, as theres so many objects
+        // result.push(
+        //   "\t".repeat(trimedLength) + "### Following block is an object block",
+        // );
         result.push(lines[tail]);
         break;
       }
