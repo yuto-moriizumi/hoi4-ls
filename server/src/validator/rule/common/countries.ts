@@ -1,57 +1,68 @@
-import { Value, RootObjectEntryDescriptor } from "../types";
-import { int, float } from "../utils";
+import {
+  root,
+  either,
+  obj,
+  array,
+  scalar,
+  bool,
+  filepath,
+  int,
+  float,
+} from "../utils";
 
-export const country_file: RootObjectEntryDescriptor = {
-  children: {
-    country: {
-      children: {
-        graphical_culture: { type: Value.UNQUOTED, cardinality: [0, Infinity] },
-        graphical_culture_2d: {
-          type: Value.UNQUOTED,
-          cardinality: [0, Infinity],
-        },
-        color: [
-          {
-            type: Value.ARRAY,
-            values: { cardinality: [3, 3], ...int() },
-          },
-          {
-            type: Value.ARRAY,
-            values: { cardinality: [3, 3], ...float() },
-          },
-        ],
-      },
-    },
-    cosmetic: {
-      children: {
-        scalar: {
-          children: {
-            color: [
-              {
-                type: Value.ARRAY,
-                values: { cardinality: [3, 3], ...int() },
-              },
-              {
-                type: Value.ARRAY,
-                values: { cardinality: [3, 3], ...float() },
-              },
-            ],
-            color_ui: [
-              {
-                type: Value.ARRAY,
-                values: { cardinality: [3, 3], ...int() },
-                cardinality: [0, 1],
-              },
-              {
-                type: Value.ARRAY,
-                values: { cardinality: [3, 3], ...float() },
-                cardinality: [0, 1],
-              },
-            ],
-          },
-          cardinality: [1, Infinity],
-        },
-      },
-    },
+const country_tag_file = obj(
+  {},
+  {
+    dynamic_tags: bool({ cardinality: [0, 1] }, true),
+    scalar: filepath({ cardinality: [1, Infinity] }, "common/"),
   },
-};
+);
+
+const country_file = obj(
+  {},
+  {
+    country: obj(
+      {},
+      {
+        graphical_culture: scalar({ cardinality: [0, Infinity] }),
+        graphical_culture_2d: scalar({ cardinality: [0, Infinity] }),
+        color: either(
+          array({ cardinality: [3, 3] }, [int()]),
+          array({ cardinality: [3, 3] }, [float()]),
+        ),
+      },
+    ),
+    cosmetic: obj(
+      {},
+      {
+        scalar: obj(
+          { cardinality: [1, Infinity] },
+          {
+            color: either(
+              array({ cardinality: [3, 3] }, [int()]),
+              array({ cardinality: [3, 3] }, [float()]),
+            ),
+            color_ui: either(
+              array({ cardinality: [0, 1] }, [int()]),
+              array({ cardinality: [0, 1] }, [float()]),
+            ),
+          },
+        ),
+      },
+    ),
+  },
+);
+
+export const countryFileType = root(
+  { path: "game/common/countries" },
+  {
+    country_file,
+  },
+);
+
+export const countryTagFileType = root(
+  { path: "game/common/country_tags" },
+  {
+    country_tag_file,
+  },
+);
