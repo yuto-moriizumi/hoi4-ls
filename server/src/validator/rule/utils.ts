@@ -281,7 +281,8 @@ export function variable_field(entryDescriptor?: BaseEntryDescriptor) {
   });
 }
 
-export function filepath(entryDescriptor: BaseEntryDescriptor) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function filepath(entryDescriptor: BaseEntryDescriptor, _: string) {
   return {
     type: Value.QUOTED,
     ...entryDescriptor,
