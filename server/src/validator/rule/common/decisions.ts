@@ -1,577 +1,794 @@
-import { effects } from "../effects";
+import { effect } from "../effects";
 import { modifier_rule } from "../modifier_rule";
-import { triggers } from "../triggers";
-import { RootObjectEntryDescriptor, Scope, Value } from "../types";
-import { Enum, int, localisation } from "../utils";
-import { int_variable_field, variable_field } from "../variable_field";
+import { modifier } from "../modifiers";
+import { trigger } from "../triggers";
+import {
+  root,
+  typeDefKey,
+  obj,
+  either,
+  bool,
+  scalar,
+  enumRef,
+  typeRef,
+  array,
+  country,
+  int,
+  enumRefKey,
+  float,
+  localisation,
+  state,
+  scopeRef,
+  variable_field,
+  valueRef,
+} from "../utils";
 
-export const decision_category: RootObjectEntryDescriptor = {
-  children: {
-    icon: [
-      { type: Value.UNQUOTED, cardinality: [0, Infinity] },
-      {
-        cardinality: [0, Infinity],
-        children: {
-          key: { type: Value.UNQUOTED },
-          trigger: { ...triggers },
-        },
-      },
-    ],
-    picture: { type: Value.UNQUOTED, cardinality: [0, 1] },
-    priority: [
-      { type: Value.INT, cardinality: [0, 1] },
-      {
-        cardinality: [0, 1],
-        children: {
-          base_factor: { type: Value.FLOAT },
-          ...modifier_rule,
-        },
-      },
-    ],
-    visible_when_empty: { type: Value.BOOL, cardinality: [0, 1] },
-    available: {
-      cardinality: [0, 1],
-      children: { ...triggers },
-      replaceScope: { this: Scope.COUNTRY, root: Scope.COUNTRY },
-    },
-    allowed: {
-      cardinality: [0, 1],
-      children: { ...triggers },
-      replaceScope: { this: Scope.COUNTRY, root: Scope.COUNTRY },
-    },
-    visible: {
-      cardinality: [0, 1],
-      children: { ...triggers },
-      replaceScope: { this: Scope.COUNTRY, root: Scope.COUNTRY },
-    },
-    cancel_trigger: {
-      cardinality: [0, 1],
-      children: { ...triggers },
-      replaceScope: { this: Scope.COUNTRY, root: Scope.COUNTRY },
-    },
-    custom_icon: {
-      cardinality: [0, Infinity],
-      children: {
-        tag: Enum("country_tags"),
-        value: { type: Value.UNQUOTED },
-        desc: localisation(),
-        visible: { ...triggers },
-      },
-    },
-    highlight_states: {
-      cardinality: [0, 1],
-      replaceScope: { this: Scope.STATE, root: Scope.COUNTRY },
-      children: {
-        highlight_states_trigger: {
-          cardinality: [0, 1],
-          children: { ...triggers },
-        },
-        highlight_state_targets: {
-          cardinality: [0, 1],
-          dynamicChildren: [
-            { key: "state", value: Value.REFERENCE_TO },
-            { key: "state", value: Scope.STATE },
-            { key: "state", value: variable_field },
-          ],
-          children: {},
-        },
-        highlight_provinces: {
-          cardinality: [0, 1],
-          type: Value.ARRAY,
-          values: Enum("provinces"),
-        },
-        highlight_color_before_active: { type: Value.INT, cardinality: [0, 1] },
-        highlight_color_while_active: { type: Value.INT, cardinality: [0, 1] },
-      },
-    },
-    visibility_type: {
-      type: Enum("targeted_decisions_state_map_modes"),
-      cardinality: [0, 1],
-    },
-    on_map_area: {
-      cardinality: [0, Infinity],
-      children: {
-        name: localisation(),
-        zoom: int(),
-        state: { type: Value.REFERENCE_TO, cardinality: [0, 1] },
-        targets: {
-          type: Value.ARRAY,
-          values: Value.REFERENCE_TO,
+// TODO: Support subtype validation
+// const decisionEither = either(
+//   obj(
+//     {},
+//     {
+//       state_target: bool({}, true),
+//       days_mission_timeout: scalar(),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       state_target: enumRef({}, "continents"),
+//       days_mission_timeout: scalar(),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       state_target: typeRef({}, "any_owned_state"),
+//       days_mission_timeout: scalar(),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       state_target: typeRef({}, "any_controlled_state"),
+//       days_mission_timeout: scalar(),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       days_mission_timeout: scalar(),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       state_target: bool({}, true),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       state_target: enumRef({}, "continents"),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       state_target: typeRef({}, "any_owned_state"),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       state_target: typeRef({}, "any_controlled_state"),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       target_trigger: obj({}),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       targets: obj({}),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       target_array: scalar(),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       custom_cost_trigger: obj({}),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       days_remove: scalar(),
+//     },
+//   ),
+//   obj(
+//     {},
+//     {
+//       days_mission_timeout: scalar(),
+//     },
+//   ),
+//   array({}, []),
+// );
+
+const decision_category = obj(
+  {},
+  {
+    icon: either(
+      scalar({ cardinality: [0, Infinity] }),
+      obj(
+        {
+          replace_scope: { this: country(), root: country() },
           cardinality: [0, Infinity],
         },
-        target_array: [
-          { type: Value.UNQUOTED, cardinality: [0, Infinity] },
-          {
-            type: Value.UNQUOTED,
-            cardinality: [0, Infinity],
-            values: variable_field,
-          },
-        ],
-        target_trigger: {
+        {
+          key: scalar(),
+          trigger: obj({}, trigger),
+        },
+      ),
+    ),
+    picture: scalar({ cardinality: [0, 1] }),
+    priority: either(
+      int({ cardinality: [0, 1] }),
+      obj(
+        {
+          replace_scope: { this: country(), root: country() },
           cardinality: [0, 1],
-          children: { ...triggers },
-          replaceScope: {
-            this: Scope.COUNTRY,
-            root: Scope.COUNTRY,
-            from: Scope.STATE,
-          },
         },
-        target_root_trigger: {
-          cardinality: [0, 1],
-          children: { ...triggers },
-          replaceScope: { this: Scope.COUNTRY, root: Scope.COUNTRY },
-        },
-      },
-    },
-    scripted_gui: {
-      type: Value.REFERENCE_TO,
-      cardinality: [0, 1],
-    },
-  },
-};
-
-export const decision: RootObjectEntryDescriptor = {
-  children: {
-    icon: [
-      { type: Value.UNQUOTED, cardinality: [0, Infinity] },
-      {
-        cardinality: [0, Infinity],
-        children: {
-          key: { type: Value.UNQUOTED },
-          trigger: { ...triggers },
-        },
-      },
-    ],
-    cosmetic_tag: { type: Enum("country_tags"), cardinality: [0, 1] },
-    cosmetic_ideology: { type: Scope.IDEOLOGY, cardinality: [0, 1] },
-    priority: [
-      { type: Value.INT, cardinality: [0, 1] },
-      {
-        cardinality: [0, 1],
-        children: {
-          base_factor: { type: Value.FLOAT },
+        {
+          [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
           ...modifier_rule,
         },
-      },
-    ],
-    name: localisation(),
-    desc: localisation(),
-    fire_only_once: { type: Value.BOOL, cardinality: [0, 1] },
-    ai_hint_pp_cost: { type: Value.INT, cardinality: [0, 1] },
-    state_target: { type: boolean(NO), cardinality: [0, 1] },
-    cancel_if_not_visible: { type: Value.BOOL, cardinality: [0, 1] },
-    allowed: {
-      children: { ...triggers },
-      cardinality: [0, 1],
-      replaceScope: { this: Scope.COUNTRY, root: Scope.COUNTRY },
-    },
-    cost: int_variable_field,
-    highlight_color_before_active: { type: Value.INT, cardinality: [0, 1] },
-    highlight_color_while_active: { type: Value.INT, cardinality: [0, 1] },
-    days_re_enable: int_variable_field,
-    fixed_random_seed: { type: Value.BOOL, cardinality: [0, 1] },
-    on_map_mode: {
-      type: Enum("targeted_decisions_state_map_modes"),
-      cardinality: [0, 1],
-    },
-    subtype: [
+      ),
+    ),
+    visible_when_empty: bool({ cardinality: [0, 1] }),
+    available: obj(
       {
-        // country subtype
-        children: {
-          available: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          visible: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          complete_effect: {
-            cardinality: [0, 1],
-            children: { ...effects },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          remove_effect: {
-            cardinality: [0, 1],
-            children: { ...effects },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          cancel_effect: {
-            cardinality: [0, 1],
-            children: { ...effects },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          ai_will_do: {
-            cardinality: [0, 1],
-            children: modifier_rule,
-          },
-          target_non_existing: { type: Value.BOOL, cardinality: [0, 1] },
-        },
+        replace_scope: { this: country(), root: country() },
+        cardinality: [0, 1],
       },
       {
-        // custom_cost subtype
-        children: {
-          custom_cost_trigger: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: { this: Scope.COUNTRY, root: Scope.COUNTRY },
-          },
-          custom_cost_text: localisation(),
-        },
+        ...trigger,
+      },
+    ),
+    allowed: obj(
+      {
+        replace_scope: { this: country(), root: country() },
+        cardinality: [0, 1],
       },
       {
-        // timed subtype
-        children: {
-          cancel_trigger: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          remove_trigger: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          days_remove: int_variable_field({
-            cardinality: [0, 1],
-          }),
-          alias_name: {
-            cardinality: [0, Infinity],
-            children: {
-              targeted_modifier_rule: modifier_rule,
-            },
-          },
-          modifier: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-        },
+        ...trigger,
+      },
+    ),
+    visible: obj(
+      {
+        replace_scope: { this: country(), root: country() },
+        cardinality: [0, 1],
       },
       {
-        // mission subtype
-        children: {
-          activation: {
-            children: { ...triggers },
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          is_good: { type: Value.BOOL },
-          days_mission_timeout: int_variable_field,
-          timeout_effect: {
-            cardinality: [0, 1],
-            children: effects,
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-          selectable_mission: {
-            type: Value.BOOL,
-            cardinality: [0, 1],
-          },
-          cancel_trigger: {
-            cardinality: [0, 1],
-            children: triggers,
-            replaceScope: {
-              this: Scope.COUNTRY,
-              root: Scope.COUNTRY,
-              from: Scope.COUNTRY,
-            },
-          },
-        },
+        ...trigger,
+      },
+    ),
+    cancel_trigger: obj(
+      {
+        replace_scope: { this: country(), root: country() },
+        cardinality: [0, 1],
       },
       {
-        state_mission: {
-          // state_mission subtype
-          children: [
-            {
-              cardinality: [0, 1],
-              children: {
-                activation: {
-                  children: { ...triggers },
-                  replaceScope: {
-                    this: Scope.COUNTRY,
-                    root: Scope.COUNTRY,
-                    from: Scope.STATE,
-                  },
-                },
-                is_good: { type: Value.BOOL },
-                days_mission_timeout: int_variable_field,
-                timeout_effect: {
-                  cardinality: [0, 1],
-                  children: effects,
-                  replaceScope: {
-                    this: Scope.COUNTRY,
-                    root: Scope.COUNTRY,
-                    from: Scope.STATE,
-                  },
-                },
-                state_target: [
-                  { type: Value.BOOL, cardinality: [0, 1] },
-                  Enum("continents"),
-                  {
-                    type: Value.REFERENCE_TO,
-                    tag: "owned_state",
-                    cardinality: [0, 1],
-                  },
-                  {
-                    type: Scope.STATE,
-                    values: Enum("any_controlled_state"),
-                    cardinality: [0, 1],
-                  },
-                ],
-                selectable_mission: { type: Value.BOOL, cardinality: [0, 1] },
-                cancel_trigger: {
-                  cardinality: [0, 1],
-                  children: triggers,
-                  replaceScope: {
-                    this: Scope.COUNTRY,
-                    root: Scope.COUNTRY,
-                    from: Scope.STATE,
-                  },
-                },
-              },
-            },
-          ],
-        },
+        ...trigger,
+      },
+    ),
+    custom_icon: obj(
+      { cardinality: [0, Infinity] },
+      {
+        tag: enumRef({}, "country_tags"),
+        value: scalar(),
+        desc: localisation(),
+        visible: obj({}, { ...trigger }),
+      },
+    ),
+    highlight_states: obj(
+      {
+        replace_scope: { this: state(), root: country() },
+        cardinality: [0, 1],
       },
       {
-        // targeted subtype
-        children: [
+        highlight_states_trigger: obj({ cardinality: [0, 1] }, { ...trigger }),
+        highlight_state_targets: obj(
+          { cardinality: [0, 1] },
           {
-            target_trigger: {
-              cardinality: [0, 1],
-              children: { ...triggers },
-              replaceScope: {
-                this: Scope.COUNTRY,
-                root: Scope.COUNTRY,
-                from: Scope.COUNTRY,
-              },
-            },
-            targets: {
-              type: Value.ARRAY,
-              cardinality: [0, 1],
-              values: [Scope.COUNTRY, Enum("country_tags"), variable_field],
-            },
-            targets_dynamic: { type: Value.BOOL, cardinality: [0, 1] },
-            target_root_trigger: {
-              cardinality: [0, 1],
-              children: { ...triggers },
-              replaceScope: {
-                this: Scope.COUNTRY,
-                root: Scope.COUNTRY,
-                from: Scope.COUNTRY,
-              },
-            },
-            highlight_states: {
-              cardinality: [0, 1],
-              replaceScope: {
-                this: Scope.STATE,
-                root: Scope.COUNTRY,
-                from: Scope.COUNTRY,
-              },
-              children: {
-                highlight_states_trigger: {
-                  cardinality: [0, 1],
-                  children: { ...triggers },
-                },
-                highlight_state_targets: {
-                  cardinality: [0, 1],
-                  dynamicChildren: [
-                    { key: "state", value: Value.REFERENCE_TO },
-                    { key: "state", value: Scope.STATE },
-                    { key: "state", value: variable_field },
-                  ],
-                },
-                highlight_provinces: {
-                  cardinality: [0, 1],
-                  type: Value.ARRAY,
-                  values: Enum("provinces"),
-                },
-              },
-            },
-            alias_name: {
-              cardinality: [0, Infinity],
-              children: {
-                targeted_modifier_rule: modifier_rule,
-              },
-            },
-            target_array: [
-              { type: Value.UNQUOTED, cardinality: [0, Infinity] },
-              { type: variable_field.UNQUOTED, cardinality: [0, Infinity] },
-            ],
-            target_non_existing: { type: Value.BOOL, cardinality: [0, 1] },
+            state: either(
+              typeRef({ cardinality: [0, Infinity] }, "state"),
+              scopeRef({ cardinality: [0, Infinity] }, "state"),
+              ...variable_field({ cardinality: [0, Infinity] }),
+            ),
           },
-        ],
+        ),
+        highlight_provinces: array({ cardinality: [0, 1] }, [
+          enumRef({ cardinality: [0, Infinity] }, "provinces"),
+        ]),
+        highlight_only_provinces: bool({ cardinality: [0, 1] }),
+        highlight_color_before_active: int({ cardinality: [0, 1] }),
+        highlight_color_while_active: int({ cardinality: [0, 1] }),
+      },
+    ),
+    visibility_type: enumRef(
+      { cardinality: [0, 1] },
+      "targeted_decisions_state_map_modes",
+    ),
+    on_map_area: obj(
+      { cardinality: [0, Infinity] },
+      {
+        name: localisation(),
+        zoom: int(),
+        state: typeRef({ cardinality: [0, 1] }, "state"),
+        targets: array({ cardinality: [0, 1] }, [
+          typeRef({ cardinality: [0, Infinity] }, "state"),
+        ]),
+        target_array: either(
+          valueRef({ cardinality: [0, Infinity] }, "array"),
+          ...variable_field({ cardinality: [0, Infinity] }),
+        ),
+        target_trigger: obj(
+          {
+            replace_scope: { this: country(), root: country(), from: state() },
+            cardinality: [0, 1],
+          },
+          {
+            ...trigger,
+          },
+        ),
+        target_root_trigger: obj(
+          {
+            replace_scope: { this: country(), root: country() },
+            cardinality: [0, 1],
+          },
+          {
+            ...trigger,
+          },
+        ),
+      },
+    ),
+    scripted_gui: typeRef({ cardinality: [0, 1] }, "scripted_gui"),
+  },
+);
+
+const decision = obj(
+  {},
+  {
+    icon: either(
+      scalar({ cardinality: [0, Infinity] }),
+      obj(
+        {
+          replace_scope: { this: country(), root: country() },
+          cardinality: [0, Infinity],
+        },
+        {
+          key: scalar(),
+          trigger: obj({}, trigger),
+        },
+      ),
+    ),
+    cosmetic_tag: enumRef({ cardinality: [0, 1] }, "country_tags"),
+    cosmetic_ideology: typeRef({ cardinality: [0, 1] }, "ideology"),
+    priority: either(
+      int({ cardinality: [0, 1] }),
+      obj(
+        {
+          replace_scope: { this: country(), root: country() },
+          cardinality: [0, 1],
+        },
+        {
+          [enumRefKey("base_factor")]: float({ cardinality: [0, 1] }),
+          ...modifier_rule,
+        },
+      ),
+    ),
+    name: localisation({ cardinality: [0, 1] }),
+    desc: localisation({ cardinality: [0, 1] }),
+    fire_only_once: bool({ cardinality: [0, 1] }),
+    ai_hint_pp_cost: int({ cardinality: [0, 1] }),
+    state_target: bool({ cardinality: [0, 1] }, false),
+    cost: variable_field({ cardinality: [0, 1] }),
+    highlight_states: obj(
+      {
+        replace_scope: { this: state(), root: country() },
+        cardinality: [0, 1],
       },
       {
-        // state_targeted subtype
-        children: {
-          visible: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
+        highlight_states_trigger: obj({ cardinality: [0, 1] }, { ...trigger }),
+        highlight_state_targets: obj(
+          { cardinality: [0, 1] },
+          {
+            state: either(
+              typeRef({ cardinality: [0, Infinity] }, "state"),
+              scopeRef({ cardinality: [0, Infinity] }, "state"),
+              ...variable_field({ cardinality: [0, Infinity] }),
+            ),
           },
-          available: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-          cancel_trigger: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-          complete_effect: {
-            cardinality: [0, 1],
-            children: { ...effects },
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-          remove_effect: {
-            cardinality: [0, 1],
-            children: effects,
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-          cancel_effect: {
-            cardinality: [0, 1],
-            children: { ...effects },
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-          target_trigger: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-          state_target: [
-            { type: Value.BOOL, cardinality: [0, 1] },
-            Enum("continents"),
-            {
-              type: Value.REFERENCE_TO,
-              tag: "owned_state",
-              cardinality: [0, 1],
-            },
-            {
-              type: Scope.STATE,
-              values: Enum("any_controlled_state"),
-              cardinality: [0, 1],
-            },
-          ],
-          targets: {
-            type: Value.ARRAY,
-            cardinality: [0, 1],
-            values: [
-              Value.REFERENCE_TO,
-              variable_field.STRING_VARIABLE_FIELD,
-              { type: Scope.STATE },
-            ],
-          },
-          target_root_trigger: {
-            cardinality: [0, 1],
-            children: { ...triggers },
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-          alias_name: {
-            cardinality: [0, Infinity],
-            children: {
-              targeted_modifier_rule: modifier_rule,
-            },
-          },
-          target_array: [
-            { type: Value.UNQUOTED, cardinality: [0, Infinity] },
-            {
-              type: variable_field.UNQUOTED,
-              cardinality: [0, Infinity],
-              key: "target_array",
-            },
-          ],
-          ai_will_do: {
-            cardinality: [0, 1],
-            dynamicChildren: [
-              {
-                key: Enum("base_factor"),
-                value: variable_field.STRING_VARIABLE_FIELD,
-              },
-              { key: "ai_will_do", value: modifier_rule },
-            ],
-            replaceScope: {
-              root: Scope.COUNTRY,
-              this: Scope.COUNTRY,
-              from: Scope.STATE,
-            },
-          },
-        },
+        ),
+        highlight_provinces: array({ cardinality: [0, 1] }, [
+          enumRef({ cardinality: [0, Infinity] }, "provinces"),
+        ]),
+        highlight_only_provinces: bool({ cardinality: [0, 1] }),
+        highlight_color_before_active: int({ cardinality: [0, 1] }),
+        highlight_color_while_active: int({ cardinality: [0, 1] }),
       },
-    ],
+    ),
+    highlight_color_before_active: int({ cardinality: [0, 1] }),
+    highlight_color_while_active: int({ cardinality: [0, 1] }),
+    subtype: obj(
+      {},
+      {
+        country: obj(
+          {},
+          {
+            available: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            visible: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            complete_effect: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            remove_effect: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            cancel_effect: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            ai_will_do: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                [enumRefKey("base_factor")]: variable_field({
+                  cardinality: [0, 1],
+                }),
+                ...modifier_rule,
+              },
+            ),
+            target_non_existing: bool({ cardinality: [0, 1] }),
+          },
+        ),
+        custom_cost: obj(
+          {},
+          {
+            custom_cost_trigger: obj(
+              { replace_scope: { this: country(), root: country() } },
+              {
+                ...trigger,
+              },
+            ),
+            custom_cost_text: localisation(),
+          },
+        ),
+        timed: obj(
+          {},
+          {
+            cancel_trigger: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            remove_trigger: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            days_remove: variable_field({ cardinality: [0, 1] }),
+            modifier: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...modifier,
+              },
+            ),
+          },
+        ),
+        mission: obj(
+          {},
+          {
+            activation: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+              },
+              {
+                ...trigger,
+              },
+            ),
+            is_good: bool(),
+            days_mission_timeout: variable_field(),
+            timeout_effect: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            selectable_mission: bool({ cardinality: [0, 1] }),
+            cancel_trigger: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+          },
+        ),
+        state_mission: obj(
+          {},
+          {
+            activation: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: state(),
+                },
+              },
+              {
+                ...trigger,
+              },
+            ),
+            is_good: bool(),
+            days_mission_timeout: variable_field(),
+            timeout_effect: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            state_target: either(
+              bool({ cardinality: [0, 1] }, true),
+              enumRef({ cardinality: [0, 1] }, "continents"),
+              typeRef({ cardinality: [0, 1] }, "any_owned_state"),
+              typeRef({ cardinality: [0, 1] }, "any_controlled_state"),
+            ),
+            selectable_mission: bool({ cardinality: [0, 1] }),
+            cancel_trigger: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+          },
+        ),
+        targeted: obj(
+          {},
+          {
+            target_trigger: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            targets: array({ cardinality: [0, 1] }, [
+              scopeRef({ cardinality: [0, Infinity] }, "country"),
+              enumRef({ cardinality: [0, Infinity] }, "country_tags"),
+              valueRef({ cardinality: [0, Infinity] }, "variable"),
+              ...variable_field({ cardinality: [0, Infinity] }),
+            ]),
+            targets_dynamic: bool({ cardinality: [0, 1] }),
+            target_root_trigger: obj(
+              {
+                replace_scope: { this: country(), root: country() },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            highlight_states: obj(
+              {
+                replace_scope: {
+                  this: state(),
+                  root: country(),
+                  from: country(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                highlight_states_trigger: obj(
+                  { cardinality: [0, 1] },
+                  { ...trigger },
+                ),
+                highlight_state_targets: obj(
+                  { cardinality: [0, 1] },
+                  {
+                    state: either(
+                      typeRef({ cardinality: [0, Infinity] }, "state"),
+                      scopeRef({ cardinality: [0, Infinity] }, "state"),
+                      ...variable_field({ cardinality: [0, Infinity] }),
+                    ),
+                  },
+                ),
+                highlight_provinces: array({ cardinality: [0, 1] }, [
+                  enumRef({ cardinality: [0, Infinity] }, "provinces"),
+                ]),
+                highlight_only_provinces: bool({ cardinality: [0, 1] }),
+              },
+            ),
+            target_array: either(
+              valueRef({ cardinality: [0, Infinity] }, "array"),
+              ...variable_field({ cardinality: [0, Infinity] }),
+            ),
+            target_non_existing: bool({ cardinality: [0, 1] }),
+          },
+        ),
+        state_targeted: obj(
+          {},
+          {
+            visible: obj(
+              {
+                replace_scope: {
+                  root: country(),
+                  this: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            available: obj(
+              {
+                replace_scope: {
+                  root: country(),
+                  this: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            cancel_trigger: obj(
+              {
+                replace_scope: {
+                  this: country(),
+                  root: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            complete_effect: obj(
+              {
+                replace_scope: {
+                  root: country(),
+                  this: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            remove_effect: obj(
+              {
+                replace_scope: {
+                  root: country(),
+                  this: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            cancel_effect: obj(
+              {
+                replace_scope: {
+                  root: country(),
+                  this: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...effect,
+              },
+            ),
+            target_trigger: obj(
+              {
+                replace_scope: {
+                  root: country(),
+                  this: country(),
+                  from: state(),
+                },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+            state_target: either(
+              bool({ cardinality: [0, 1] }, true),
+              enumRef({ cardinality: [0, 1] }, "continents"),
+              typeRef({ cardinality: [0, 1] }, "any_owned_state"),
+              typeRef({ cardinality: [0, 1] }, "any_controlled_state"),
+            ),
+            targets: array({ cardinality: [0, 1] }, [
+              typeRef({ cardinality: [0, Infinity] }, "state"),
+              valueRef({ cardinality: [0, Infinity] }, "variable"),
+              ...variable_field({ cardinality: [0, Infinity] }),
+            ]),
+            target_root_trigger: obj(
+              {
+                replace_scope: { this: country(), root: country() },
+                cardinality: [0, 1],
+              },
+              {
+                ...trigger,
+              },
+            ),
+          },
+        ),
+      },
+    ),
   },
-};
+);
+
+export const decisionType = root(
+  { path: "game/common/decisions", path_strict: true },
+  {
+    [typeDefKey("decision")]: decision,
+  },
+);
+
+export const decisionCategoryType = root(
+  { path: "game/common/decisions/categories" },
+  {
+    [typeDefKey("decision_category")]: decision_category,
+  },
+);
+
+export const war_with_on = [
+  "war_with_on_remove",
+  "war_with_on_complete",
+  "war_with_on_timeout",
+];
+export const war_with_target_on = [
+  "war_with_target_on_remove",
+  "war_with_target_on_complete",
+  "war_with_target_on_timeout",
+];
+export const targeted_decisions_state_map_modes = [
+  "map_only",
+  "decision_view_only",
+  "map_and_decisions_view",
+];
