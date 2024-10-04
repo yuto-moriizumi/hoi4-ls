@@ -46,6 +46,7 @@ export interface BaseEntryDescriptor {
   replaceScope?: { this?: Scope; root: Scope; from?: Scope; fromfrom?: Scope };
   /** Currently not used */
   severity?: string;
+  scope?: Scope;
 }
 
 export interface NumberValueDescriptor {
