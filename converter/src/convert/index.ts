@@ -69,7 +69,7 @@ function annotate(text: string) {
   const result = [];
   for (let tail = 0; tail < lines.length; tail++) {
     const line = lines[tail].trimStart();
-    if (line.startsWith("# ")) continue; // Skip comment outed lines
+    if (/^#[^#]/.test(line)) continue; // Skip comment outed lines
     if (line.startsWith("##") || !BLOCK_HEAD_REGEX.test(line)) {
       result.push(lines[tail]);
       continue;
