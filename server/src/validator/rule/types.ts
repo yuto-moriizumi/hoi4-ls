@@ -104,7 +104,8 @@ export type ArrayItem =
   | ReferenceToDescriptor
   | ArrayFloatItem
   | ArrayIntItem
-  | UnquotedValueDescriptor;
+  | UnquotedValueDescriptor
+  | EntryDescriptor;
 
 interface ArrayNumberItem {
   /** Defines how many times can this entry appear. Default value is [1,1] (required) */
