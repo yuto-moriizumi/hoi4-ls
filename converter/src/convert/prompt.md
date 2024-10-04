@@ -346,12 +346,13 @@ alias[effect:create_facility] = {
     ## cardinality = 1..1
     count = int
 }
+alias[modifier:custom_modifier_tooltip] = localisation
 ```
 
 This is converted to
 
 ```
-const effect = {
+export const effect = {
     create_starbase: either(
         obj(
             { cardinality:[1,Inf] },
@@ -367,10 +368,23 @@ const effect = {
         { count: int({cardinality:[1,1]}) }
     )
 }
+export const modifier = {
+    custom_modifier_tooltip: localisation()
+}
 ```
 
 Note that obj() should have `cardinality:[0,Inf]` for every alias definition.
 Defined variable `effect` will be used in other places.
+
+`alias` on the left side have `[]` bracket.
+For example if it has `alias[foo:bar]` structure, `foo` will be the constant variable name, and `bar` will be the key of the `foo` object.
+Example:
+
+```
+export const foo = {
+    bar: // omitted
+}
+```
 
 ### Alias usage
 
