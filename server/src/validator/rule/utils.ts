@@ -292,3 +292,9 @@ export function filepath(entryDescriptor: BaseEntryDescriptor, _: string) {
 export function combat() {
   return Scope.COMBAT;
 }
+
+export function national_spirt() {
+  return {
+    type: Value.QUOTED,
+  };
+}
