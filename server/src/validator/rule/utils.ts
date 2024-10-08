@@ -232,6 +232,10 @@ export function state() {
   return Scope.STATE;
 }
 
+export function military_industrial_organization() {
+  return Scope.MILITARY_INDUSTRIAL_ORGANIZATION;
+}
+
 export function obj(
   entryDescriptor: BaseEntryDescriptor,
   children: Entries,
