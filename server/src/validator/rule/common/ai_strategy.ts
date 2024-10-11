@@ -170,7 +170,7 @@ export const marketSellerStrats = ["equipment_market_buy"];
 
 export const researchStrats = ["research_tech", "research_weight_factor"];
 
-const ai_strategy_rule = either(
+export const ai_strategy_rule = either(
   obj(
     { cardinality: [0, Infinity] },
     {
