@@ -25,6 +25,7 @@ export const enum Scope {
   COMBAT = "combat",
   MILITARY_INDUSTRIAL_ORGANIZATION = "military_industrial_organization",
   OPERATION = "operation",
+  UNIT = "unit",
 }
 
 export const enum Context {
