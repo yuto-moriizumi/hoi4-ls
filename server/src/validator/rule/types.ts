@@ -27,6 +27,7 @@ export const enum Scope {
   OPERATION = "operation",
   UNIT = "unit",
   PURCHASE_CONTRACT = "purchase_contract",
+  OPERATIVE = "operative",
 }
 
 export const enum Context {
@@ -52,7 +53,7 @@ export interface BaseEntryDescriptor {
   push_scope?: Scope;
   /** Currently not used */
   severity?: string;
-  scope?: Scope;
+  scope?: Scope | Scope[];
 }
 
 export interface NumberValueDescriptor {
