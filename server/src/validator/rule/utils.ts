@@ -304,6 +304,10 @@ export function combat() {
   return Scope.COMBAT;
 }
 
+export function unit() {
+  return Scope.UNIT;
+}
+
 export function national_spirt() {
   return {
     type: Value.QUOTED,
