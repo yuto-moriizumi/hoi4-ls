@@ -226,6 +226,10 @@ export function unit_leader() {
   return Scope.UNIT_LEADER;
 }
 
+export function operative() {
+  return Scope.OPERATIVE;
+}
+
 export function country() {
   return Scope.COUNTRY;
 }
@@ -277,6 +281,10 @@ export function either(...items: EntryDescriptor[]) {
 
 export function air() {
   return Scope.AIR;
+}
+
+export function character() {
+  return Scope.CHARACTER;
 }
 
 export function variable_field(
