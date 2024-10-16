@@ -158,6 +158,7 @@ export function float(
 }
 
 export const number = float;
+export const percentage_field = float;
 
 export function literal(
   literal: string | number,
