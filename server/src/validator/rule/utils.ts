@@ -279,13 +279,18 @@ export function air() {
   return Scope.AIR;
 }
 
-export function variable_field(entryDescriptor?: BaseEntryDescriptor) {
-  return either(float(entryDescriptor), {
+export function variable_field(
+  entryDescriptor?: BaseEntryDescriptor,
+  min?: number,
+  max?: number,
+) {
+  return either(float(entryDescriptor, min, max), {
     type: Value.REFERENCE_TO,
     tag: "variable",
     ...entryDescriptor,
   });
 }
+export const int_variable_field = variable_field;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function filepath(entryDescriptor?: BaseEntryDescriptor, _?: string) {
