@@ -45,6 +45,7 @@ export interface BaseEntryDescriptor {
     root?: Scope;
     from?: Scope;
     fromfrom?: Scope;
+    prev?: Scope;
   };
   replaceScope?: { this?: Scope; root: Scope; from?: Scope; fromfrom?: Scope };
   push_scope?: Scope;
