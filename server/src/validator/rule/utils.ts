@@ -187,6 +187,7 @@ export function localisation(
 ): SimpleValueDescriptor {
   return { type: Value.LOCALISATION, ...entryDescriptor };
 }
+export const localisation_inline = localisation;
 
 export function int(
   entryDescriptor?: BaseEntryDescriptor,
