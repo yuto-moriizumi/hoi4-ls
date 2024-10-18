@@ -238,6 +238,10 @@ export function state() {
   return Scope.STATE;
 }
 
+export function purchase_contract() {
+  return Scope.PURCHASE_CONTRACT;
+}
+
 export function military_industrial_organization() {
   return Scope.MILITARY_INDUSTRIAL_ORGANIZATION;
 }
