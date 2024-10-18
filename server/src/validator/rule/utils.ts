@@ -312,6 +312,8 @@ export function filepath(entryDescriptor?: BaseEntryDescriptor, _?: string) {
   };
 }
 
+export const date_field = filepath;
+
 export function combat() {
   return Scope.COMBAT;
 }
