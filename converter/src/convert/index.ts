@@ -1,10 +1,11 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate, FewShotPromptTemplate } from "@langchain/core/prompts";
-
 import path, { join } from "path";
-
 import dotenv from "dotenv";
+
+const CHUNK_LINES = 200;
+
 dotenv.config();
 
 const model = new ChatOpenAI({
@@ -41,13 +42,17 @@ async function getTemplate() {
 // )
 
 export async function convert(filePath: string) {
-  const input = annotate(await readFile(filePath, "utf-8"));
-  console.log(input);
-  const prompt = await (await getTemplate()).format({ input });
-  const result = (await model.invoke(prompt)).content.toString();
-  const prettyResult = result.slice(
-    "```typescript\n".length,
-    result.length - "```".length,
+  const chunks = split2chunks(await readFile(filePath, "utf-8")).map(annotate);
+  console.log("Split into", chunks.length, "chunks");
+  const result = await Promise.all(
+    chunks.map(async (input) => {
+      const prompt = await (await getTemplate()).format({ input });
+      const result = (await model.invoke(prompt)).content.toString();
+      return result.slice(
+        "```typescript\n".length,
+        result.length - "```".length,
+      );
+    }),
   );
   const outputPath = filePath
     .replace(
@@ -56,7 +61,7 @@ export async function convert(filePath: string) {
     )
     .replace(".cwt", ".ts");
   await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, prettyResult);
+  await writeFile(outputPath, result.join("\n\n"));
   console.log("Saved to", outputPath);
 }
 
@@ -100,4 +105,30 @@ function annotate(text: string) {
     }
   }
   return result.join("\n");
+}
+
+function split2chunks(text: string, chunkLines = CHUNK_LINES): string[] {
+  const blocks = text.split("\n\n");
+  const chunks = [];
+  let currentChunk = [];
+  let currentChunkLines = 0;
+
+  for (const block of blocks) {
+    const blockLines = block.split("\n").length;
+
+    if (currentChunkLines + blockLines > chunkLines) {
+      chunks.push(currentChunk.join("\n\n"));
+      currentChunk = [];
+      currentChunkLines = 0;
+    }
+
+    currentChunk.push(block);
+    currentChunkLines += blockLines;
+  }
+
+  if (currentChunk.length > 0) {
+    chunks.push(currentChunk.join("\n\n"));
+  }
+
+  return chunks;
 }
