@@ -8,6 +8,7 @@ export async function validateTextDocument(
   setting: Settings,
   textDocument: TextDocument,
 ): Promise<void> {
+  return;
   // The validator creates diagnostics for all uppercase words length 2 and more
   const text = textDocument.getText();
   const ast = parse(text);
