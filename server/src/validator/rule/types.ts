@@ -28,6 +28,7 @@ export const enum Scope {
   UNIT = "unit",
   PURCHASE_CONTRACT = "purchase_contract",
   OPERATIVE = "operative",
+  ANY = "any",
 }
 
 export const enum Context {

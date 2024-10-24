@@ -291,6 +291,10 @@ export function character() {
   return Scope.CHARACTER;
 }
 
+export function any() {
+  return Scope.ANY;
+}
+
 export function variable_field(
   entryDescriptor?: BaseEntryDescriptor,
   min?: number,
