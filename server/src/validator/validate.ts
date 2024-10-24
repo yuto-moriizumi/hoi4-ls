@@ -1,5 +1,5 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { parse, ParseFailError } from "../parser/parse";
+import { parse } from "../parser/parse";
 import { Context, Settings } from "../server";
 import { abilityType } from "./rule/common/abilities";
 
@@ -8,18 +8,20 @@ export async function validateTextDocument(
   setting: Settings,
   textDocument: TextDocument,
 ): Promise<void> {
+  // return;
   // The validator creates diagnostics for all uppercase words length 2 and more
   const text = textDocument.getText();
   const ast = parse(text);
-
-  if (ast instanceof ParseFailError) {
+  if (ast === undefined) return;
+  if (ast instanceof Error) {
+    context.connection.console.error(JSON.stringify(ast));
     return context.connection.sendDiagnostics({
       uri: textDocument.uri,
       diagnostics: [
         {
           range: {
-            start: { character: 0, line: 0 },
-            end: { character: 0, line: 0 },
+            start: { character: ast.col, line: ast.line },
+            end: { character: ast.col + 1, line: ast.line },
           },
           message: "Failed to parse",
         },
@@ -29,7 +31,9 @@ export async function validateTextDocument(
 
   const rootTypes = [abilityType];
   rootTypes.filter((type) => {
-    console.log({ type: type.path, uri: textDocument.uri });
+    context.connection.console.log(
+      JSON.stringify({ type: type.path, uri: textDocument.uri }),
+    );
   });
 
   // // Send the computed diagnostics to VSCode.

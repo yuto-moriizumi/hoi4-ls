@@ -18,7 +18,7 @@ let client: LanguageClient;
 export function activate(context: ExtensionContext) {
   // The server is implemented in node
   const serverModule = context.asAbsolutePath(
-    path.join("server", "out", "server.js")
+    path.join("server", "out", "server.js"),
   );
   // The debug options for the server
   // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
@@ -50,13 +50,12 @@ export function activate(context: ExtensionContext) {
     "languageServerExample",
     "Language Server Example",
     serverOptions,
-    clientOptions
+    clientOptions,
   );
 
   // Start the client. This will also launch the server
-  client.start();
+  client.start().catch(console.error);
 }
-
 export function deactivate(): Thenable<void> | undefined {
   if (!client) {
     return undefined;

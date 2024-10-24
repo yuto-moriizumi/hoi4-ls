@@ -42,7 +42,7 @@ function main() {
 
   // Create a simple text document manager.
   const documents: TextDocuments<TextDocument> = new TextDocuments(
-    TextDocument
+    TextDocument,
   );
 
   const context: Context = { connection, documents };
@@ -75,9 +75,9 @@ function main() {
       );
     }
     // Revalidate all open text documents
-    documents
-      .all()
-      .forEach((document) => validateTextDocument(context, settings, document));
+    // documents
+    //   .all()
+    //   .forEach((document) => validateTextDocument(context, settings, document));
   });
 
   // Only keep settings for open documents
@@ -115,7 +115,7 @@ main();
 export function getDocumentSettings(
   { connection }: Context,
   { globalSettings, documentSettings }: Settings,
-  resource: string
+  resource: string,
 ): Thenable<ExampleSettings> {
   if (!hasConfigurationCapability) {
     return Promise.resolve(globalSettings);
