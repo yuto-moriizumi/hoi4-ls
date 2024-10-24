@@ -1,14 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Diagnostic } from "vscode-languageserver";
-import {
-  Context,
-  NormalizedRule,
-  NormalizedRuleDict,
-  Value as ValueType,
-} from "../../validator/rule/types";
+import { Context, Value as ValueType } from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pairs } from "./Pairs";
 import { Token } from "./Token";
-import effectRules from "../../validator/rule/effects";
 
 type Value = Pairs | string | boolean | number | Token;
 export class Pair {
@@ -52,7 +47,7 @@ export class Pair {
     return JSON.stringify(this);
   }
 
-  public validate(rule: NormalizedRule): Diagnostic[] {
+  public validate(rule: any): Diagnostic[] {
     const { key, value } = this;
     // Type check
     const actualType = this.getValueType();
@@ -72,12 +67,12 @@ export class Pair {
         };
         return [diagnostic];
       }
-      let mergedRuleDict: NormalizedRuleDict = {};
+      let mergedRuleDict: any = {};
       if (rule.children)
         mergedRuleDict = { ...mergedRuleDict, ...rule.children };
       if (rule.provide) {
         if (rule.provide.context === Context.EFFECT)
-          mergedRuleDict = { ...mergedRuleDict, ...effectRules };
+          mergedRuleDict = { ...mergedRuleDict };
       }
       return value.validate(mergedRuleDict, key);
     }

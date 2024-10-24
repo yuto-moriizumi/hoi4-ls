@@ -1,8 +1,7 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { parse } from "../parser/parse";
+import { parse, ParseFailError } from "../parser/parse";
 import { Context, Settings } from "../server";
-import country_event from "./rule/country_event";
-import { normalizeRuleDict } from "./rule/normalizer";
+import { abilityType } from "./rule/common/abilities";
 
 export async function validateTextDocument(
   context: Context,
@@ -13,13 +12,29 @@ export async function validateTextDocument(
   const text = textDocument.getText();
   const ast = parse(text);
 
-  // Convert raw rules to Rule Objects
-  const rawRules = { country_event };
-  const rules = normalizeRuleDict(rawRules);
+  if (ast instanceof ParseFailError) {
+    return context.connection.sendDiagnostics({
+      uri: textDocument.uri,
+      diagnostics: [
+        {
+          range: {
+            start: { character: 0, line: 0 },
+            end: { character: 0, line: 0 },
+          },
+          message: "Failed to parse",
+        },
+      ],
+    });
+  }
 
-  // Send the computed diagnostics to VSCode.
-  context.connection.sendDiagnostics({
-    uri: textDocument.uri,
-    diagnostics: ast?.validate(rules, undefined) ?? [],
+  const rootTypes = [abilityType];
+  rootTypes.filter((type) => {
+    console.log({ type: type.path, uri: textDocument.uri });
   });
+
+  // // Send the computed diagnostics to VSCode.
+  // context.connection.sendDiagnostics({
+  //   uri: textDocument.uri,
+  //   diagnostics: ast.validate(rules, undefined),
+  // });
 }
