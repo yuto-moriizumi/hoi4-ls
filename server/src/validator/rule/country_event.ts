@@ -1,22 +1,21 @@
-import { normalize } from "./normalizer";
-import { Context, Rule, Scope, Value } from "./types";
+import { triggers } from "./triggers";
+import { RootObjectEntryDescriptor, Value } from "./types";
 
-const country_event: Rule = {
+export const country_event: RootObjectEntryDescriptor = {
   children: {
-    id: { type: Value.UNQUOTED },
+    id: Value.UNQUOTED,
     title: [
-      { type: Value.UNQUOTED },
+      Value.UNQUOTED,
       {
+        cardinality: [0, Infinity],
         children: {
-          trigger: {
-            provide: { context: Context.TRIGGER, scope: Scope.COUNTRY },
-          },
-          text: { type: Value.UNQUOTED },
+          trigger: triggers,
+          text: Value.LOCALISATION,
         },
       },
     ],
-    desc: { type: Value.UNQUOTED },
-    picture: { type: Value.UNQUOTED },
+    desc: Value.UNQUOTED,
+    picture: Value.UNQUOTED,
     is_triggered_only: {
       type: Value.BOOL,
       cardinality: [0, 1],
@@ -29,20 +28,16 @@ const country_event: Rule = {
     },
     immediate: {
       cardinality: [0, 1],
-      provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
     },
     option: {
-      cardinality: [0, "inf"],
-      provide: { context: Context.EFFECT, scope: Scope.COUNTRY },
+      cardinality: [0, Infinity],
       children: {
         name: { type: Value.UNQUOTED },
         ai_chance: {
           cardinality: [0, 1],
-          children: { factor: { type: Value.NUMBER } },
+          children: { factor: { type: Value.FLOAT } },
         },
       },
     },
   },
 };
-
-export default normalize(country_event);

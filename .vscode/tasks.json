@@ -43,8 +43,17 @@
     },
     {
       "type": "shell",
-      "command": "npm run start -w converter \"${file}\"",
+      "command": "npm run start -w converter convert \"${file}\"",
       "label": "convert this rule",
+      "runOptions": {
+        "instanceLimit": 10
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "command": "npm run start -w converter parse \"${file}\"",
+      "label": "parse this rule",
       "runOptions": {
         "instanceLimit": 10
       },
