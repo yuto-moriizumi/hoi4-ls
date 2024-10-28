@@ -1,5 +1,5 @@
 {
-  "name": "lsp-sample",
+  "name": "hoi4-ls",
   "description": "A language server example",
   "author": "Microsoft Corporation",
   "license": "MIT",
@@ -56,10 +56,10 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "npm run --workspaces compile",
-    "watch": "concurrently 'npm run -w client watch' 'npm run -w server watch'",
+    "watch": "concurrently 'npm run -w client watch' 'npm run -w server watch' 'npm run -w common watch'",
     "lint": "eslint ./client/src ./server/src ./converter/src",
     "test": "sh ./scripts/e2e.sh",
-    "typecheck": "npm run --workspaces typecheck"
+    "typecheck": "npm run --ws typecheck"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
@@ -68,11 +68,13 @@
     "eslint": "^9.13.0",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
-    "typescript-eslint": "^8.12.2"
+    "typescript-eslint": "^8.12.2",
+    "vscode-languageserver-protocol": "^3.17.5"
   },
   "workspaces": [
     "server",
     "client",
-    "converter"
+    "converter",
+    "common"
   ]
 }

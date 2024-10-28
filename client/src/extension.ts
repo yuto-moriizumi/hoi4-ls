@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------------------------------ */
 
 import * as path from "path";
-import { workspace, ExtensionContext } from "vscode";
+import { workspace, ExtensionContext, window } from "vscode";
 
 import {
   LanguageClient,
@@ -12,6 +12,7 @@ import {
   ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node";
+import { MyNotificationType } from "common";
 
 let client: LanguageClient;
 
@@ -55,6 +56,9 @@ export function activate(context: ExtensionContext) {
 
   // Start the client. This will also launch the server
   client.start().catch(console.error);
+  client.onNotification(MyNotificationType, (params) => {
+    window.showInformationMessage(`Notification from server: ${params.msg}`);
+  });
 }
 export function deactivate(): Thenable<void> | undefined {
   if (!client) {
