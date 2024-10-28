@@ -1,5 +1,5 @@
 import { DocumentFormattingParams, TextEdit } from "vscode-languageserver";
-import { parse } from "./parser/parse";
+import { parse, ParseFailError } from "./parser/parse";
 import { Context } from "./server";
 
 export const format = (context: Context, params: DocumentFormattingParams) => {
@@ -8,7 +8,7 @@ export const format = (context: Context, params: DocumentFormattingParams) => {
     const document = context.documents.get(params.textDocument.uri);
     if (document === undefined) return undefined;
     const ast = parse(document.getText());
-    if (ast === undefined) return [];
+    if (ast instanceof ParseFailError) return [];
     const newText = ast.format();
     const textEdit: TextEdit = {
       range: {

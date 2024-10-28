@@ -35,8 +35,8 @@ const combat_tactic = obj(
     trigger: obj(
       {},
       {
-        is_attacker: bool(),
-        phase: enumRef({}, phases),
+        // is_attacker: bool(),
+        // phase: enumRef({}, phases),
         ...trigger,
       },
     ),

@@ -1,5 +1,5 @@
 import { Diagnostic } from "vscode-languageserver";
-import { NormalizedRuleDict } from "../../validator/rule/types";
+// import { NormalizedRuleDict } from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pair } from "./Pair";
 import { Token } from "./Token";
@@ -21,7 +21,8 @@ export class Pairs {
    * @param superkey The token that owns this pairs. If undefined, that means current scope is root.
    */
   public validate(
-    ruleDict: NormalizedRuleDict,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ruleDict: any,
     superkey: Token | undefined,
   ): Diagnostic[] {
     let diagnostics: Diagnostic[] = [];
@@ -31,7 +32,8 @@ export class Pairs {
     const expectedCardinality = Object.fromEntries(
       Object.entries(ruleDict).map(([k, v]) => {
         // TODO: fix here, it only refers to the very first rule
-        return [k, v[0].cardinality];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return [k, (v as any)[0].cardinality];
       }),
     );
     (this.pairs.filter((pair) => pair instanceof Pair) as Pair[]).forEach(
