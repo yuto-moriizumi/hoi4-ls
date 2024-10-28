@@ -5,11 +5,12 @@
 function id(d: any[]): any {
   return d[0];
 }
-declare let number: any;
-declare let quoted: any;
-declare let unquoted: any;
-declare let comment: any;
-declare let space: any;
+declare var number: any;
+declare var quoted: any;
+declare var unquoted: any;
+declare var operator: any;
+declare var comment: any;
+declare var space: any;
 
 import { Comment } from "./syntax/Comment";
 import { Pair } from "./syntax/Pair";
@@ -28,9 +29,7 @@ const lexer = compile({
   quoted: /"(?:\\["bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
   "{": "{",
   "}": "}",
-  "=": "=",
-  yes: "yes",
-  no: "no",
+  operator: ["=", ">", "<"],
   unquoted: /(?:[^"\\\n\s#={}[\],])+/,
   comment: /#.*$/,
 });
@@ -70,7 +69,6 @@ const grammar: Grammar = {
   ParserRules: [
     { name: "root", symbols: ["_", "pairs", "_"], postprocess: extractRoot },
     { name: "value", symbols: ["number"], postprocess: id },
-    { name: "value", symbols: ["boolean"], postprocess: id },
     { name: "value", symbols: ["quoted"], postprocess: id },
     { name: "value", symbols: ["unquoted"], postprocess: id },
     { name: "value", symbols: ["object"], postprocess: id },
@@ -87,10 +85,18 @@ const grammar: Grammar = {
     {
       name: "unquoted",
       symbols: [lexer.has("unquoted") ? { type: "unquoted" } : unquoted],
-      postprocess: (d) => new Token(d[0]),
+      postprocess: (d) =>
+        d[0].value === "yes"
+          ? true
+          : d[0].value === "no"
+            ? false
+            : new Token(d[0]),
     },
-    { name: "boolean", symbols: [{ literal: "yes" }], postprocess: () => true },
-    { name: "boolean", symbols: [{ literal: "no" }], postprocess: () => false },
+    {
+      name: "operator",
+      symbols: [lexer.has("operator") ? { type: "operator" } : operator],
+      postprocess: (d) => d[0].value,
+    },
     {
       name: "object",
       symbols: [{ literal: "{" }, "_", { literal: "}" }],
@@ -103,7 +109,7 @@ const grammar: Grammar = {
     },
     {
       name: "pair",
-      symbols: ["unquoted", "_", { literal: "=" }, "_", "value"],
+      symbols: ["unquoted", "_", "operator", "_", "value"],
       postprocess: (d) => new Pair(d[0], d[4]),
     },
     { name: "pairs$ebnf$1", symbols: [] },

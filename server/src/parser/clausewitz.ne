@@ -12,9 +12,7 @@ const lexer = compile({
     quoted: /"(?:\\["bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
     '{': '{',
     '}': '}',
-    '=': '=',
-    yes: 'yes',
-    no: 'no',
+    operator: ["=", ">", "<"],
     unquoted: /(?:[^"\\\n\s#={}[\],])+/,
     comment: /#.*$/,
 });
@@ -23,20 +21,20 @@ const lexer = compile({
 
 root -> _ pairs _  {% extractRoot %}
 
-value -> number {% id %} | boolean {% id %} | quoted {% id %} | unquoted {% id %} | object {% id %}
+value -> number {% id %} | quoted {% id %} | unquoted {% id %} | object {% id %}
     # | array {% id %}
 
 number -> %number {% (d) => parseFloat(d[0].value) %}
 quoted -> %quoted {% (d) => d[0].value %}
-unquoted -> %unquoted {% (d) => new Token(d[0]) %}
-boolean -> "yes" {% () => true %} | "no" {% () => false %}
+unquoted -> %unquoted {% (d) => d[0].value === "yes" ? true : d[0].value === "no" ? false : new Token(d[0]) %}
+operator -> %operator {% (d) => d[0].value %}
 
 object -> "{" _ "}" {% (d) => d[0] ? [d[0]] : [] %}
     | "{" root "}" {% (d) => d[1] %}
 
 # array -> "[" _ value (_ "," _ value):* _ "]" {% extractArray %}
 
-pair -> unquoted _ "=" _ value {% (d) => new Pair(d[0], d[4]) %}
+pair -> unquoted _ operator _ value {% (d) => new Pair(d[0], d[4]) %}
 
 pairs -> pair (__ pair):* {% extractPairs %}
 
