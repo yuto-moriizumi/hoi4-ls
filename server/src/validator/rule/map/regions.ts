@@ -79,7 +79,7 @@ export const region_weather = [
 ];
 
 export const supplyAreaType = root(
-  { path: "game/map/supplyareas" },
+  { path: "/map/supplyareas" },
   {
     id: obj(
       {},
@@ -91,7 +91,7 @@ export const supplyAreaType = root(
 );
 
 export const strategicRegionType = root(
-  { path: "game/map/strategicregions" },
+  { path: "/map/strategicregions" },
   {
     id: obj(
       {},

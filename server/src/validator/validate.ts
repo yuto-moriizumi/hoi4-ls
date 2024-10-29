@@ -48,13 +48,17 @@ export async function validateTextDocument(
     });
 
   // Find the applicable root rules
-  // TODO: Implement root rule finding
   const rootTypes = [abilityType];
-  rootTypes.filter((type) => {
-    connection.console.log(
-      JSON.stringify({ type: type.path, uri: textDocument.uri }),
-    );
+  const type2use = rootTypes.find((type) => {
+    /** `/common/abilities/generic_leader_abilities.txt` */
+    const relativePath = textDocument.uri.slice(folder.uri.length);
+    const isMatch = relativePath.startsWith(type.path);
+    console.log("Checking", type.path, "with", relativePath, "=>", isMatch);
+    return isMatch;
   });
+  if (type2use === undefined)
+    return console.log("No applicable root type found");
+  console.log("Using root type", type2use);
 
   // Validate
   // TODO: Implement validation

@@ -54,14 +54,14 @@ const country_file = obj(
 );
 
 export const countryFileType = root(
-  { path: "game/common/countries" },
+  { path: "/common/countries" },
   {
     country_file,
   },
 );
 
 export const countryTagFileType = root(
-  { path: "game/common/country_tags" },
+  { path: "/common/country_tags" },
   {
     country_tag_file,
   },

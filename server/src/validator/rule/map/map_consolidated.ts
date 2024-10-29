@@ -83,7 +83,7 @@ export const rocketsites = obj(
 );
 
 export const myAdjacenyRuleType = root(
-  { path: "game/map" },
+  { path: "/map" },
   {
     adjacency_rule: obj(
       {},
@@ -95,7 +95,7 @@ export const myAdjacenyRuleType = root(
 );
 
 export const myAirportsType = root(
-  { path: "game/map" },
+  { path: "/map" },
   {
     airports: obj(
       {},
@@ -107,7 +107,7 @@ export const myAirportsType = root(
 );
 
 export const myRocketsitesType = root(
-  { path: "game/map" },
+  { path: "/map" },
   {
     rocketsites: obj(
       {},

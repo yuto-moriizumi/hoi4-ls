@@ -290,6 +290,6 @@ const character = obj(
 );
 
 export const characterType = root(
-  { path: "game/common/characters", path_strict: true },
+  { path: "/common/characters", path_strict: true },
   { character },
 );

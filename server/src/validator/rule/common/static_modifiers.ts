@@ -27,7 +27,7 @@ const static_modifier = either(
 );
 
 export const staticModifierType = root(
-  { path: "game/common/modifiers" },
+  { path: "/common/modifiers" },
   {
     modifier: either(
       obj(

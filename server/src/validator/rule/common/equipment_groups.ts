@@ -27,7 +27,7 @@ export const equipmentGroupExceptions = [
 ];
 
 export const equipmentGroupType = root(
-  { path: "game/common/equipment_groups" },
+  { path: "/common/equipment_groups" },
   {
     equipment_group: obj(
       {},

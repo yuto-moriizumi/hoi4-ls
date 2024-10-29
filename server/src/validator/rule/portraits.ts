@@ -33,7 +33,7 @@ const portrait = obj(
 );
 
 export const portraitType = root(
-  { path: "game/portraits" },
+  { path: "/portraits" },
   {
     default: portrait,
     // continent: obj(

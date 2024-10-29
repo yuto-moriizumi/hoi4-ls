@@ -40,7 +40,7 @@ const unit_medal = obj(
 );
 
 export const unitMedalType = root(
-  { path: "game/common/unit_medals" },
+  { path: "/common/unit_medals" },
   {
     unit_medals: obj(
       {},

@@ -553,14 +553,14 @@ const ai_strategy_plan = obj(
 );
 
 export const aiStrategyType = root(
-  { path: "game/common/ai_strategy", path_strict: true },
+  { path: "/common/ai_strategy", path_strict: true },
   {
     [typeDefKey("ai_strategy")]: ai_strategy,
   },
 );
 
 export const aiStrategyPlanType = root(
-  { path: "game/common/ai_strategy_plans" },
+  { path: "/common/ai_strategy_plans" },
   {
     [typeDefKey("ai_strategy_plan")]: ai_strategy_plan,
   },

@@ -27,7 +27,7 @@ const achievement = obj(
 );
 
 export const achievementType = root(
-  { path: "game/common/achievements", unique: true },
+  { path: "/common/achievements", unique: true },
   {
     [typeDefKey("achievement")]: achievement,
   },

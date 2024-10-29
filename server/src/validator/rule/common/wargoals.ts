@@ -40,7 +40,7 @@ const wargoal = obj(
 );
 
 export const wargoalType = root(
-  { path: "game/common/wargoals" },
+  { path: "/common/wargoals" },
   {
     wargoal_types: obj(
       {},

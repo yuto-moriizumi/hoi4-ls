@@ -68,7 +68,7 @@ const country_leader_trait = obj(
 );
 
 export const countryLeaderTraitType = root(
-  { path: "game/common/country_leader" },
+  { path: "/common/country_leader" },
   {
     leader_traits: obj(
       {},
@@ -255,7 +255,7 @@ const unit_leader_trait = obj(
 );
 
 export const unitLeaderTraitType = root(
-  { path: "game/common/unit_leader" },
+  { path: "/common/unit_leader" },
   {
     unit_leader_trait,
     // leader_traits: either(

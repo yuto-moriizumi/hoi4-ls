@@ -10,7 +10,7 @@ import {
 } from "../utils";
 
 export const gameRuleType = root(
-  { path: "game/common/game_rules" },
+  { path: "/common/game_rules" },
   {
     game_rule: obj(
       {},

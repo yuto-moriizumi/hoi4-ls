@@ -185,7 +185,7 @@ const resistance_compliance_modifier = obj(
 );
 
 export const resistanceComplianceModifierType = root(
-  { path: "game/common/resistance_compliance_modifiers" },
+  { path: "/common/resistance_compliance_modifiers" },
   {
     [typeDefKey("resistance_compliance_modifier")]:
       resistance_compliance_modifier,

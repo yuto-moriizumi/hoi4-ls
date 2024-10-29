@@ -71,7 +71,7 @@ const idea_category = either(
 // );
 
 export const ideaCategoriesType = root(
-  { path: "game/common/idea_tags" },
+  { path: "/common/idea_tags" },
   {
     idea_categories: idea_category,
   },

@@ -23,7 +23,7 @@ import {
 } from "../utils";
 
 export const continousFocusTreeType = root(
-  { path: "game/common/continuous_focus" },
+  { path: "/common/continuous_focus" },
   {
     continous_focus_tree: obj(
       {},
@@ -38,7 +38,7 @@ export const continousFocusTreeType = root(
 );
 
 export const focusType = root(
-  { path: "game/common/national_focus" },
+  { path: "/common/national_focus" },
   {
     focus_tree: obj(
       {},
@@ -241,7 +241,7 @@ const focus_tree = obj(
 );
 
 export const focusTreeType = root(
-  { path: "game/common/national_focus" },
+  { path: "/common/national_focus" },
   {
     focus_tree: obj(
       {},
@@ -426,7 +426,7 @@ const shared_focus = obj(
 );
 
 export const sharedFocusType = root(
-  { path: "game/common/national_focus" },
+  { path: "/common/national_focus" },
   {
     shared_focus: obj(
       {},
@@ -533,7 +533,7 @@ const continous_focus_tree = obj(
 );
 
 export const continousFocusType = root(
-  { path: "game/common/continuous_focus" },
+  { path: "/common/continuous_focus" },
   {
     continuous_focus_palette: obj(
       {},
@@ -557,7 +557,7 @@ const style = obj(
 );
 
 export const focusStyleType = root(
-  { path: "game/common/national_focus" },
+  { path: "/common/national_focus" },
   {
     style: obj(
       {},
@@ -576,7 +576,7 @@ const search_filter_prios = obj(
 );
 
 export const searchFilterPriosType = root(
-  { path: "game/common/national_focus" },
+  { path: "/common/national_focus" },
   {
     search_filter_prios,
   },

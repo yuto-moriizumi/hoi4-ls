@@ -17,7 +17,7 @@ const mtth = obj(
 );
 
 export const mtthType = root(
-  { path: "game/common/mtth" },
+  { path: "/common/mtth" },
   {
     mtth: obj(
       {},

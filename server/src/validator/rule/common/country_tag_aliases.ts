@@ -72,7 +72,7 @@ const country_tag_alias = either(
 );
 
 export const countryTagAliasType = root(
-  { path: "game/common/country_tag_aliases" },
+  { path: "/common/country_tag_aliases" },
   {
     [typeDefKey("country_tag_alias")]: country_tag_alias,
   },

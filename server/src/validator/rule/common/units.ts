@@ -127,7 +127,7 @@ export const allowed_air_unit_missions = [
 ];
 
 // export const unit_category = complexEnum(
-//   { path: "game/common/unit_tags", start_from_root: true },
+//   { path: "/common/unit_tags", start_from_root: true },
 //   {
 //     name: obj(
 //       {},
@@ -139,7 +139,7 @@ export const allowed_air_unit_missions = [
 // );
 
 // export const sub_unit_modifiers = complexEnum(
-//   { path: "game/common/units/unit_modifiers", start_from_root: true },
+//   { path: "/common/units/unit_modifiers", start_from_root: true },
 //   {
 //     name: obj(
 //       {},
@@ -508,7 +508,7 @@ const division_name = obj(
 );
 
 export const unitType = root(
-  { path: "game/common/units" },
+  { path: "/common/units" },
   {
     unit,
     // sub_units: obj(
@@ -540,14 +540,14 @@ export const unitType = root(
 );
 
 export const divisionNameType = root(
-  { path: "game/common/units/names_divisions" },
+  { path: "/common/units/names_divisions" },
   {
     [typeDefKey("division_name")]: division_name,
   },
 );
 
 export const shipNameType = root(
-  { path: "game/common/units/names_ships" },
+  { path: "/common/units/names_ships" },
   {
     [typeDefKey("ship_name")]: ship_name,
   },

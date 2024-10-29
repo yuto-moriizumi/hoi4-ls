@@ -24,7 +24,7 @@ import {
 } from "../utils";
 
 export const operationType = root(
-  { path: "game/common/operations" },
+  { path: "/common/operations" },
   {
     operation: obj(
       {},

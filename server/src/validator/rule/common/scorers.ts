@@ -15,7 +15,7 @@ import {
 } from "../utils";
 
 export const countryScorerType = root(
-  { path: "game/common/scorers/country" },
+  { path: "/common/scorers/country" },
   {
     country_scorer: obj(
       {},

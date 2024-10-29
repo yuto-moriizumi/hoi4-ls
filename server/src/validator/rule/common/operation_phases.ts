@@ -51,7 +51,7 @@ const operation_phase = obj(
 );
 
 export const operationPhaseType = root(
-  { path: "game/common/operation_phases" },
+  { path: "/common/operation_phases" },
   {
     operation_phase: obj(
       {},

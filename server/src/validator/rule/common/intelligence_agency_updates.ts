@@ -16,7 +16,7 @@ import {
 
 // TODO: SUpport this
 // export const intelligenceAgencyBranchType = root(
-//   { path: "game/common/intelligence_agency_upgrades" },
+//   { path: "/common/intelligence_agency_upgrades" },
 //   {
 //     intelligence_agency_branch: obj(
 //       {},
@@ -81,7 +81,7 @@ const intelligence_agency_upgrade = obj(
 );
 
 export const intelligenceAgencyUpgradeType = root(
-  { path: "game/common/intelligence_agency_upgrades" },
+  { path: "/common/intelligence_agency_upgrades" },
   {
     any: obj(
       {},

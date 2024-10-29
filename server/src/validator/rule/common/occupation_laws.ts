@@ -17,7 +17,7 @@ import {
 } from "../utils";
 
 export const occupationLawType = root(
-  { path: "game/common/occupation_laws" },
+  { path: "/common/occupation_laws" },
   {
     occupation_law: obj(
       {},

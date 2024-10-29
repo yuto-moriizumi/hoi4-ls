@@ -22,7 +22,7 @@ import {
 } from "../utils";
 
 export const militaryIndustrialOrganizationType = root(
-  { path: "game/common/military_industrial_organization/organizations" },
+  { path: "/common/military_industrial_organization/organizations" },
   {
     military_industrial_organization: obj(
       {

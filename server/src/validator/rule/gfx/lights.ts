@@ -79,7 +79,7 @@ export const light_animations = obj(
 );
 
 export const lightType = root(
-  { path: "game/gfx/entities" },
+  { path: "/gfx/entities" },
   {
     light: obj(
       {},
