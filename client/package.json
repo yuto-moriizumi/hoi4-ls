@@ -20,6 +20,6 @@
     "@types/mocha": "^10.0.9",
     "@types/vscode": "^1.94.0",
     "@vscode/test-electron": "^2.4.1",
-    "mocha": "^10.7.3"
+    "mocha": "^10.8.0"
   }
 }
