@@ -74,13 +74,13 @@ export class Pair {
                 character: key.getRange().end.character + 1,
               },
             },
-            message: `Unexpected value for ${key.value}, expected one of ${rule.values.join(",")}`,
+            message: `値 ${key.value} が間違っています。次の値のうちいずれかである必要があります。 ${rule.values.join(",")}`,
           },
         ];
     } else if (actualType !== expectedType) {
       const diagnostic: Diagnostic = {
         range: key.getRange(),
-        message: `Wrong type for ${key.value}, expected ${expectedType} but ${actualType}`,
+        message: `キー ${key.value} の型は ${expectedType} である必要がありますが、 ${actualType} になっています`,
       };
       return [diagnostic];
     }
@@ -89,7 +89,7 @@ export class Pair {
       if (!("children" in rule)) {
         const diagnostic: Diagnostic = {
           range: key.getRange(),
-          message: `The rule ${key.value} is not supposed to have children`,
+          message: `キー ${key.value} が{}のカタマリを持つことはできません`,
         };
         return [diagnostic];
       }

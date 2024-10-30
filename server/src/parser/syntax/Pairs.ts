@@ -76,7 +76,7 @@ export class Pairs {
         }
         const diagnostic: Diagnostic = {
           range: key.getRange(),
-          message: `Unknown syntax: ${key.value}, expected one of ${Object.keys(children)}`,
+          message: `キー ${key.value} は、 ${superkey?.value} には存在しません。ありえるのは、次のいずれかです ${Object.keys(children)}`,
         };
         diagnostics.push(diagnostic);
       },
@@ -91,9 +91,9 @@ export class Pairs {
       if (actual < min) {
         const diagnostic: Diagnostic = {
           range: superkey.getRange(),
-          message: `Insufficient ${k} syntax for ${
+          message: `キー ${k} の数が足りません。 ${
             superkey.value
-          }, it's needed at least ${min} but there is ${actual}: ${superkey.getRange()}`,
+          } の中に少なくとも ${min} 個必要ですが、${actual}個しかありません`,
         };
         diagnostics.push(diagnostic);
         return;
@@ -102,9 +102,9 @@ export class Pairs {
       if (max < actual) {
         const diagnostic: Diagnostic = {
           range: superkey.getRange(),
-          message: `Too much ${k} syntax for ${
+          message: `キー ${k} の数が多すぎます。 ${
             superkey.value
-          }, it's limited to ${max} but there are ${actual}: ${superkey.getRange()}`,
+          } は最大 ${max} 個の ${k} を持てますが、${actual}個あります。`,
         };
         diagnostics.push(diagnostic);
         return;
