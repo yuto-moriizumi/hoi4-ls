@@ -1,20 +1,20 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { Context, Settings } from "../server";
 import { validateTextDocument } from "./validate";
+import { _Connection } from "vscode-languageserver";
 
 describe("validate", () => {
   const context = {
-    connection: { sendDiagnostics: jest.fn() },
+    connection: {
+      sendDiagnostics: jest.fn(),
+      // workspace: {},
+    } as Partial<_Connection>,
   } as unknown as Context;
 
   it("should validate empty string", async () => {
     const textDocument = getTextDocument("");
     await validateTextDocument(context, {} as Settings, textDocument);
-    expect(context.connection.sendDiagnostics).toHaveBeenCalledWith(
-      expect.objectContaining({
-        diagnostics: expect.arrayContaining([]),
-      }),
-    );
+    expect(context.connection.sendDiagnostics).not.toHaveBeenCalled();
   });
 
   it.skip("should return unexpected syntax", async () => {
