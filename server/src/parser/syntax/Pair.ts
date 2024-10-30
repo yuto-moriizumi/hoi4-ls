@@ -1,11 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Diagnostic } from "vscode-languageserver";
-import { Context, Value as ValueType } from "../../validator/rule/types";
+import {
+  EntryDescriptor,
+  ValueDescriptor,
+  Value as ValueType,
+} from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pairs } from "./Pairs";
 import { Token } from "./Token";
 
 type Value = Pairs | string | boolean | number | Token;
+/**
+ * Lexical token for the key-value pair
+ */
 export class Pair {
   public readonly key: Token;
   public readonly value: Value;
@@ -47,7 +53,7 @@ export class Pair {
     return JSON.stringify(this);
   }
 
-  public validate(rule: any): Diagnostic[] {
+  public validate(rule: EntryDescriptor<ValueDescriptor>): Diagnostic[] {
     const { key, value } = this;
     // Type check
     const actualType = this.getValueType();
@@ -59,22 +65,16 @@ export class Pair {
       };
       return [diagnostic];
     }
+    // if value is Pairs, it means value is an object
     if (value instanceof Pairs) {
-      if (rule.children === undefined && rule.provide === undefined) {
+      if (!("children" in rule)) {
         const diagnostic: Diagnostic = {
           range: key.getRange(),
           message: `The rule ${key.value} is not supposed to have children`,
         };
         return [diagnostic];
       }
-      let mergedRuleDict: any = {};
-      if (rule.children)
-        mergedRuleDict = { ...mergedRuleDict, ...rule.children };
-      if (rule.provide) {
-        if (rule.provide.context === Context.EFFECT)
-          mergedRuleDict = { ...mergedRuleDict };
-      }
-      return value.validate(mergedRuleDict, key);
+      return value.validate(rule, key);
     }
 
     return [];

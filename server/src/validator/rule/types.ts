@@ -1,3 +1,18 @@
+/**
+ * This file contains the types for the rules
+ * Each part of hoi4 syntax has name for identification
+ * ```
+ * key = {
+ *  ### cardinarity = 1
+ *  key2 = value2
+ * }
+ * ```
+ * The rules for value is called `ValueDescriptor`
+ * The rules for key is called `KeyDescriptor`
+ * The rules for the pair of key and value is called `PairDescriptor`
+ * The rule containing all rules for the key, value and pair is called `EntryDescriptor`
+ */
+
 export const Value = {
   QUOTED: "quoted",
   UNQUOTED: "unquoted",
@@ -40,7 +55,7 @@ export const enum Context {
 
 export type Cardinality = [number, number];
 
-export interface BaseEntryDescriptor {
+export interface PairDescriptor {
   /** Defines how many times can this entry appear. Default value is [1,1] (required) */
   cardinality?: Cardinality;
   replace_scope?: {
@@ -114,7 +129,7 @@ export type ArrayItem =
   | ArrayFloatItem
   | ArrayIntItem
   | UnquotedValueDescriptor
-  | EntryDescriptor;
+  | EntryDescriptor<ValueDescriptor>;
 
 interface ArrayNumberItem {
   /** Defines how many times can this entry appear. Default value is [1,1] (required) */
@@ -162,13 +177,15 @@ export type ValueDescriptor =
   | ReferenceToDescriptor
   | ObjectValueDescriptor;
 
-export type EntryDescriptor = BaseEntryDescriptor & ValueDescriptor;
+export type EntryDescriptor<VD extends ValueDescriptor> = PairDescriptor & VD;
 export type Entries = {
-  [key: string]: EntryDescriptor | OneOf<EntryDescriptor>;
+  [key: string]:
+    | EntryDescriptor<ValueDescriptor>
+    | OneOf<EntryDescriptor<ValueDescriptor>>;
 };
 
 /** The topmost object representing entire file as an object */
-export interface RootObjectEntryDescriptor extends BaseEntryDescriptor {
+export interface RootObjectPairDescriptor extends PairDescriptor {
   /** Path of the files to apply this rule
    * By default, it will be applied to all files which has the path of the rule in their paths
    * ex. common/aces.ts will be applied to all files which has common/aces in their paths */
@@ -180,3 +197,6 @@ export interface RootObjectEntryDescriptor extends BaseEntryDescriptor {
   // Currently not used
   start_from_root?: boolean;
 }
+export interface RootObjectEntryDescriptor
+  extends RootObjectPairDescriptor,
+    ObjectValueDescriptor {}

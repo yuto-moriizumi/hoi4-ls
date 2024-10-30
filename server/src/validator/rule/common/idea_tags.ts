@@ -20,7 +20,7 @@ const idea_category = either(
         { cardinality: [1, Infinity] },
         "character_advisor_slot",
       ),
-      type: national_spirit(),
+      // type: national_spirit(),
     },
   ),
   obj(
@@ -76,8 +76,3 @@ export const ideaCategoriesType = root(
     idea_categories: idea_category,
   },
 );
-function national_spirit():
-  | import("../types").EntryDescriptor
-  | import("../types").EntryDescriptor[] {
-  throw new Error("Function not implemented.");
-}

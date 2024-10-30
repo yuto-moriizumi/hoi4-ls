@@ -3,7 +3,15 @@ import { Diagnostic } from "vscode-languageserver";
 import { PairOrCommentArr } from "../postProcess";
 import { Pair } from "./Pair";
 import { Token } from "./Token";
+import {
+  EntryDescriptor,
+  ObjectValueDescriptor,
+} from "../../validator/rule/types";
 
+/**
+ * Lexical token for object entries and comments
+ * contains a list of {@link Pair} and {@link Comment}
+ */
 export class Pairs {
   public readonly pairs: PairOrCommentArr;
   constructor(pairs: PairOrCommentArr) {
@@ -17,41 +25,46 @@ export class Pairs {
   }
 
   /**
-   * @param ruleDict Dict of expected keys and corresponding rules
    * @param superkey The token that owns this pairs. If undefined, that means current scope is root.
    */
   public validate(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ruleDict: any,
+    objectRule: EntryDescriptor<ObjectValueDescriptor>,
     superkey: Token | undefined,
   ): Diagnostic[] {
+    const children =
+      objectRule.children instanceof Array
+        ? objectRule.children[0]
+        : objectRule.children;
+
     let diagnostics: Diagnostic[] = [];
     const count = new Map<string, number>();
 
     // Calc expected cardinality
     const expectedCardinality = Object.fromEntries(
-      Object.entries(ruleDict).map(([k, v]) => {
+      Object.entries(children).map(([k, v]) => {
         // TODO: fix here, it only refers to the very first rule
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return [k, (v as any)[0].cardinality];
+        const value = v instanceof Array ? v[0] : v;
+        return [k, value.cardinality];
       }),
     );
     (this.pairs.filter((pair) => pair instanceof Pair) as Pair[]).forEach(
       (pair) => {
         const { key } = pair;
         count.set(key.value, (count.get(key.value) ?? 0) + 1);
-        if (!(key.value in ruleDict)) {
+        if (!(key.value in children)) {
           const diagnostic: Diagnostic = {
             range: key.getRange(),
-            message: `Unknown syntax: ${key.value}`,
+            message: `Unknown syntax: ${key.value}, expected one of ${Object.keys(children)}`,
           };
           diagnostics.push(diagnostic);
           return;
         }
 
-        const rule = ruleDict[key.value];
-        // TODO: Fix here, it only refers to the very first rule
-        diagnostics = [...diagnostics, ...pair.validate(rule[0])];
+        const rule = children[key.value];
+        diagnostics = [
+          ...diagnostics, // TODO: Fix here, it only refers to the very first rule
+          ...pair.validate(rule instanceof Array ? rule[0] : rule),
+        ];
       },
     );
     // Validate cardinality
@@ -59,7 +72,7 @@ export class Pairs {
     if (superkey === undefined) return diagnostics;
     Object.entries(expectedCardinality).forEach(([k, v]) => {
       const actual = count.get(k) ?? 0;
-      const [min, max] = v;
+      const [min, max] = v ?? [0, Infinity];
       // Validate min cardinality
       if (actual < min) {
         const diagnostic: Diagnostic = {

@@ -61,15 +61,11 @@ export async function validateTextDocument(
   console.log("Using root type", type2use);
 
   // Validate
-  // TODO: Implement validation
-
-  // Send the computed diagnostics to VSCode.
-  // TODO: Implement diagnostics
-
-  // context.connection.sendDiagnostics({
-  //   uri: textDocument.uri,
-  //   diagnostics: ast.validate(rules, undefined),
-  // });
+  const diagnostics = ast.validate(type2use);
+  context.connection.sendDiagnostics({
+    uri: textDocument.uri,
+    diagnostics,
+  });
 }
 
 /**
