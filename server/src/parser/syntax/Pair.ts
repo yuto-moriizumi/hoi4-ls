@@ -43,7 +43,10 @@ export class Pair {
     if (this.value instanceof Token) return ValueType.UNQUOTED;
     const type = typeof this.value;
     if (type === "boolean") return ValueType.BOOL;
-    if (type === "number") return ValueType.FLOAT;
+    if (type === "number") {
+      if (Number.isInteger(this.value)) return ValueType.INT;
+      return ValueType.FLOAT;
+    }
     if (type === "object") return ValueType.OBJECT;
     if (type === "string") return ValueType.QUOTED;
     throw new Error("Unexpected type");
