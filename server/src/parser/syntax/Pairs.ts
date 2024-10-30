@@ -36,7 +36,12 @@ export class Pairs {
         ? objectRule.children[0]
         : objectRule.children;
 
-    let diagnostics: Diagnostic[] = [];
+    // check if children has dynamic keys.
+    // As the dynamic key is built with JSON.stringify, it should start with "{"
+    // TODO: There might be multiple dynamicKeys
+    const dynamicKey = Object.keys(children).find((key) => key.startsWith("{"));
+
+    const diagnostics: Diagnostic[] = [];
     const count = new Map<string, number>();
 
     // Calc expected cardinality
@@ -51,20 +56,29 @@ export class Pairs {
       (pair) => {
         const { key } = pair;
         count.set(key.value, (count.get(key.value) ?? 0) + 1);
-        if (!(key.value in children)) {
-          const diagnostic: Diagnostic = {
-            range: key.getRange(),
-            message: `Unknown syntax: ${key.value}, expected one of ${Object.keys(children)}`,
-          };
-          diagnostics.push(diagnostic);
+        const isKeyExist = key.value in children;
+        if (isKeyExist) {
+          const rule = children[key.value];
+          diagnostics.push(
+            // TODO: Fix here, it only refers to the very first rule
+            ...pair.validate(rule instanceof Array ? rule[0] : rule),
+          );
           return;
         }
-
-        const rule = children[key.value];
-        diagnostics = [
-          ...diagnostics, // TODO: Fix here, it only refers to the very first rule
-          ...pair.validate(rule instanceof Array ? rule[0] : rule),
-        ];
+        if (dynamicKey !== undefined) {
+          // assume the key is dynamicKey
+          const rule = children[dynamicKey];
+          diagnostics.push(
+            // TODO: Fix here, it only refers to the very first rule
+            ...pair.validate(rule instanceof Array ? rule[0] : rule),
+          );
+          return;
+        }
+        const diagnostic: Diagnostic = {
+          range: key.getRange(),
+          message: `Unknown syntax: ${key.value}, expected one of ${Object.keys(children)}`,
+        };
+        diagnostics.push(diagnostic);
       },
     );
     // Validate cardinality
