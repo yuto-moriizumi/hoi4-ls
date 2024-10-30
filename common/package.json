@@ -5,8 +5,6 @@
   "types": "out/index.d.ts",
   "devDependencies": {},
   "scripts": {
-    "compile": "tsc -b",
-    "watch": "tsc -w",
     "typecheck": "tsc --noEmit"
   },
   "author": "",

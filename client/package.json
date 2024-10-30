@@ -5,8 +5,6 @@
   "main": "index.js",
   "publisher": "vscode",
   "scripts": {
-    "compile": "tsc -b",
-    "watch": "tsc -w",
     "typecheck": "tsc --noEmit"
   },
   "engines": {

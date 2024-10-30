@@ -9,8 +9,6 @@
   "scripts": {
     "start": "ts-node ./src/parser/parse.ts",
     "gen-parser": "nearleyc ./src/parser/clausewitz.ne -o ./src/parser/clausewitz.ts",
-    "compile": "tsc -b",
-    "watch": "tsc -w",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
