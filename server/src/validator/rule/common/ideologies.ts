@@ -51,7 +51,7 @@ export const ai_ideology = [
 ];
 
 export const sub_ideology = root(
-  { path: "game/common/ideologies" },
+  { path: "/common/ideologies" },
   {
     name: obj(
       {},
@@ -75,7 +75,7 @@ export const sub_ideology = root(
 );
 
 export const ideologyType = root(
-  { path: "game/common/ideologies" },
+  { path: "/common/ideologies" },
   {
     ideologies: either(
       obj(

@@ -64,7 +64,7 @@ const scripted_loc = obj(
 );
 
 export const scriptedTriggerType = root(
-  { path: "game/common/scripted_triggers" },
+  { path: "/common/scripted_triggers" },
   {
     trigger: obj(
       {},
@@ -76,7 +76,7 @@ export const scriptedTriggerType = root(
 );
 
 export const scriptedEffectType = root(
-  { path: "game/common/scripted_effects" },
+  { path: "/common/scripted_effects" },
   {
     effect: obj(
       {},
@@ -88,7 +88,7 @@ export const scriptedEffectType = root(
 );
 
 export const scriptedLocType = root(
-  { path: "game/common/scripted_loc" },
+  { path: "/common/scripted_loc" },
   {
     name: literal("name"),
     loc: obj(

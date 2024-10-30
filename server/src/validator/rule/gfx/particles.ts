@@ -23,7 +23,7 @@ const pdxparticle = obj(
 );
 
 export const pdxparticleType = root(
-  { path: "game/gfx/particles" },
+  { path: "/gfx/particles" },
   {
     objectTypes: obj(
       {},
@@ -349,7 +349,7 @@ const particle = obj(
 );
 
 export const particleType = root(
-  { path: "game/gfx/particles" },
+  { path: "/gfx/particles" },
   {
     [typeDefKey("particle")]: particle,
   },

@@ -95,7 +95,7 @@ const event = obj(
 );
 
 export const eventType = root(
-  { path: "game/events" },
+  { path: "/events" },
   {
     // event: obj(
     //   {},

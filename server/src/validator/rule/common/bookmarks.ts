@@ -62,7 +62,7 @@ const bookmark = obj(
 );
 
 export const bookmarkType = root(
-  { path: "game/common/bookmarks" },
+  { path: "/common/bookmarks" },
   {
     bookmarks: obj(
       {},

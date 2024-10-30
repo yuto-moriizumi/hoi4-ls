@@ -27,7 +27,7 @@ const operation_token = obj(
 );
 
 export const operationTokenType = root(
-  { path: "game/common/operation_tokens" },
+  { path: "/common/operation_tokens" },
   {
     operation_token: obj(
       {},

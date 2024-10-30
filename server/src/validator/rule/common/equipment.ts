@@ -329,7 +329,7 @@ const equipment = obj(
 // );
 
 export const equipmentType = root(
-  { path: "game/common/units/equipment" },
+  { path: "/common/units/equipment" },
   {
     equipments: obj(
       {},
@@ -444,7 +444,7 @@ const upgrade = obj(
 );
 
 export const upgradeType = root(
-  { path: "game/common/units/equipment" },
+  { path: "/common/units/equipment" },
   {
     upgrades: obj({}, { [typeDefKey("upgrade")]: upgrade }),
   },
@@ -598,7 +598,7 @@ const module = obj(
   },
 );
 export const moduleType = root(
-  { path: "game/common/units/equipment/modules" },
+  { path: "/common/units/equipment/modules" },
   {
     equipment_modules: obj({}, { [typeDefKey("module")]: module }),
   },
@@ -622,7 +622,7 @@ const critical_part = obj(
   },
 );
 export const criticalPartType = root(
-  { path: "game/common/units/equipment/modules" },
+  { path: "/common/units/equipment/modules" },
   {
     critical_parts: obj({}, { [typeDefKey("critical_part")]: critical_part }),
   },

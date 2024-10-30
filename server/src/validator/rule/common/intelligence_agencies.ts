@@ -25,7 +25,7 @@ const intelligence_agency = obj(
 );
 
 export const intelligenceAgencyType = root(
-  { path: "game/common/intelligence_agencies" },
+  { path: "/common/intelligence_agencies" },
   {
     intelligence_agency: obj(
       {},

@@ -22,7 +22,7 @@ const difficulty_setting = obj(
 );
 
 export const difficultySettingType = root(
-  { path: "game/common/difficulty_settings" },
+  { path: "/common/difficulty_settings" },
   {
     difficulty_settings: obj(
       {},

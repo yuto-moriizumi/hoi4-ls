@@ -16,7 +16,7 @@ const opinion = obj(
 export const opinion_timer = ["days", "months", "years"];
 
 export const opinionType = root(
-  { path: "game/common/opinion_modifiers" },
+  { path: "/common/opinion_modifiers" },
   {
     opinion_modifiers: obj(
       {},

@@ -15,7 +15,7 @@ import {
 } from "../utils";
 
 export const autonomyType = root(
-  { path: "game/common/autonomous_states" },
+  { path: "/common/autonomous_states" },
   {
     autonomy: obj(
       {},

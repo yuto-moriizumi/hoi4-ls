@@ -5,14 +5,13 @@
   "main": "index.js",
   "publisher": "vscode",
   "scripts": {
-    "compile": "tsc -b",
-    "watch": "tsc -w",
     "typecheck": "tsc --noEmit"
   },
   "engines": {
     "vscode": "^1.63.0"
   },
   "dependencies": {
+    "common": "^1.0.0",
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {

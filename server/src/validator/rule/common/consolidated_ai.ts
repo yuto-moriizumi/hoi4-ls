@@ -372,7 +372,7 @@ export const aiResearchAreas = [
 ];
 
 export const aiAreaType = root(
-  { path: "game/common/ai_areas" },
+  { path: "/common/ai_areas" },
   {
     areas: obj(
       {},
@@ -384,22 +384,22 @@ export const aiAreaType = root(
 );
 
 export const aiFocusType = root(
-  { path: "game/common/ai_focuses" },
+  { path: "/common/ai_focuses" },
   { [typeDefKey("ai_focus")]: ai_focus },
 );
 
 export const aiPeaceType = root(
-  { path: "game/common/ai_peace" },
+  { path: "/common/ai_peace" },
   { [typeDefKey("ai_peace")]: ai_peace },
 );
 
 export const aiTemplates = root(
-  { path: "game/common/ai_templates" },
+  { path: "/common/ai_templates" },
   { [typeDefKey("ai_templates")]: ai_template },
 );
 
 export const aiEquipment = root(
-  { path: "game/common/ai_equipment" },
+  { path: "/common/ai_equipment" },
   {
     [typeDefKey("ai_equipment_design_group")]: ai_equipment_design_group,
   },

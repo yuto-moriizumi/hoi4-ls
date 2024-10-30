@@ -20,7 +20,7 @@ import {
 } from "../utils";
 
 export const oobType = root(
-  { path: "game/history/units" },
+  { path: "/history/units" },
   {
     oob: obj(
       {},

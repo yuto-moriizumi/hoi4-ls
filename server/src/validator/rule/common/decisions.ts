@@ -764,14 +764,14 @@ const decision = obj(
 );
 
 export const decisionType = root(
-  { path: "game/common/decisions", path_strict: true },
+  { path: "/common/decisions", path_strict: true },
   {
     [typeDefKey("decision")]: decision,
   },
 );
 
 export const decisionCategoryType = root(
-  { path: "game/common/decisions/categories" },
+  { path: "/common/decisions/categories" },
   {
     [typeDefKey("decision_category")]: decision_category,
   },

@@ -35,7 +35,7 @@ const dynamic_modifier = obj(
 );
 
 export const dynamicModifierType = root(
-  { path: "game/common/dynamic_modifiers" },
+  { path: "/common/dynamic_modifiers" },
   {
     dynamic_modifier: obj(
       {},

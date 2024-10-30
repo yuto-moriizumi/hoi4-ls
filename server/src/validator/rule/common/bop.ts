@@ -13,7 +13,7 @@ import {
 } from "../utils";
 
 export const balanceOfPowerType = root(
-  { path: "game/common/bop" },
+  { path: "/common/bop" },
   {
     balance_of_power: obj(
       {},

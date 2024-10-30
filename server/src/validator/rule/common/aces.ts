@@ -26,7 +26,7 @@ const ace = obj(
 );
 
 export const aceType = root(
-  { path: "game/common/aces" },
+  { path: "/common/aces" },
   {
     modifiers: obj(
       {},

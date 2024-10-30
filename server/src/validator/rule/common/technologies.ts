@@ -188,7 +188,7 @@ const tech_sharing_group = obj(
 );
 
 export const techSharingGroupType = root(
-  { path: "game/common/technology_sharing" },
+  { path: "/common/technology_sharing" },
   {
     tech_sharing_group,
   },
@@ -196,7 +196,7 @@ export const techSharingGroupType = root(
 
 export const complex_enum = {
   tech_category: root(
-    { path: "game/common/technology_tags", start_from_root: true },
+    { path: "/common/technology_tags", start_from_root: true },
     {
       name: array({}, [
         obj(
@@ -209,7 +209,7 @@ export const complex_enum = {
     },
   ),
   tech_folder: root(
-    { path: "game/common/technology_tags", start_from_root: true },
+    { path: "/common/technology_tags", start_from_root: true },
     {
       name: array({}, [
         obj(
@@ -227,7 +227,7 @@ export const complex_enum = {
 };
 
 export const technologyType = root(
-  { path: "game/common/technologies" },
+  { path: "/common/technologies" },
   {
     technologies: technology,
     // technologies: either(

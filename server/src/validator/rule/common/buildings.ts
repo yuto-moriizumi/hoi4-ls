@@ -52,7 +52,7 @@ const building = obj(
 );
 
 export const buildingType = root(
-  { path: "game/common/buildings" },
+  { path: "/common/buildings" },
   {
     buildings: obj(
       {},

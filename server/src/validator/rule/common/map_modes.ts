@@ -53,7 +53,7 @@ const scripted_map_modes = either(
 );
 
 export const scriptedMapModesType = root(
-  { path: "game/common/map_modes" },
+  { path: "/common/map_modes" },
   {
     scripted_map_modes: obj(
       {},

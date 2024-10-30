@@ -24,7 +24,7 @@ const peace_action_categories = obj(
 );
 
 export const peaceActionCategoriesType = root(
-  { path: "game/common/peace_conference/categories" },
+  { path: "/common/peace_conference/categories" },
   {
     peace_action_categories: obj(
       {},
@@ -57,7 +57,7 @@ const peace_ai_desires = obj(
 );
 
 export const peaceAiDesiresType = root(
-  { path: "game/common/peace_conference/ai_peace" },
+  { path: "/common/peace_conference/ai_peace" },
   {
     peace_ai_desires: obj(
       {},
@@ -90,7 +90,7 @@ const peace_action_modifiers = obj(
 );
 
 export const peaceActionModifiersType = root(
-  { path: "game/common/peace_conference/cost_modifiers" },
+  { path: "/common/peace_conference/cost_modifiers" },
   {
     peace_action_modifiers: obj(
       {},

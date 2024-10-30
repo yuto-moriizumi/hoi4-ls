@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------------------------------ */
 
 import * as path from "path";
-import { workspace, ExtensionContext } from "vscode";
+import { workspace, ExtensionContext, window } from "vscode";
 
 import {
   LanguageClient,
@@ -12,14 +12,13 @@ import {
   ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node";
+import { MyNotificationType } from "common";
 
 let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
   // The server is implemented in node
-  const serverModule = context.asAbsolutePath(
-    path.join("server", "out", "server.js")
-  );
+  const serverModule = context.asAbsolutePath(path.join("dist", "server.js"));
   // The debug options for the server
   // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
   const debugOptions = { execArgv: ["--nolazy", "--inspect=6009"] };
@@ -50,13 +49,15 @@ export function activate(context: ExtensionContext) {
     "languageServerExample",
     "Language Server Example",
     serverOptions,
-    clientOptions
+    clientOptions,
   );
 
   // Start the client. This will also launch the server
-  client.start();
+  client.start().catch(console.error);
+  client.onNotification(MyNotificationType, (params) => {
+    window.showInformationMessage(`Notification from server: ${params.msg}`);
+  });
 }
-
 export function deactivate(): Thenable<void> | undefined {
   if (!client) {
     return undefined;

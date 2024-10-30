@@ -53,7 +53,7 @@ export const guiTextFormatsVertical = ["top", "center", "centre", "bottom"];
 export const animationTypes = ["decelerated", "accelerated", "linear"];
 
 export const horizontal_scrollbar_types = {
-  path: "game/interface",
+  path: "/interface",
   name: {
     extendedScrollbarType: {
       name: "enum_name",
@@ -67,7 +67,7 @@ export const horizontal_scrollbar_types = {
 };
 
 export const scrollbar_types = {
-  path: "game/interface",
+  path: "/interface",
   name: {
     extendedScrollbarType: {
       name: "enum_name",
@@ -79,7 +79,7 @@ export const scrollbar_types = {
 };
 
 export const guiElementsProperties = {
-  path: "game/interface",
+  path: "/interface",
   name: {
     buttonType: {
       name: "enum_name",
@@ -91,7 +91,7 @@ export const guiElementsProperties = {
 };
 
 export const guiButtons = {
-  path: "game/interface",
+  path: "/interface",
   name: {
     buttonType: {
       name: "enum_name",
@@ -100,7 +100,7 @@ export const guiButtons = {
 };
 
 export const guiDynamicLists = {
-  path: "game/interface",
+  path: "/interface",
   name: {
     gridBoxType: {
       name: "enum_name",
@@ -793,7 +793,7 @@ const containerWindowType = obj(
 
 export const types = {
   containerWindowType: root(
-    { path: "game/interface" },
+    { path: "/interface" },
     {
       guiTypes: obj(
         {},

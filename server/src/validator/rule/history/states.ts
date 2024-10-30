@@ -108,7 +108,7 @@ const state_category = obj(
 );
 
 export const stateType = root(
-  { path: "game/history/states" },
+  { path: "/history/states" },
   {
     id: obj(
       {},
@@ -120,7 +120,7 @@ export const stateType = root(
 );
 
 export const stateCategoryType = root(
-  { path: "game/common/state_category" },
+  { path: "/common/state_category" },
   {
     state_categories: obj(
       {},

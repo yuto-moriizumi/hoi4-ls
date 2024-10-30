@@ -373,7 +373,7 @@ This is converted to
 const my_ability = obj() // omitted
 
 export const myAbilityType = root(
-{ path: "game/common/abilities" },
+{ path: "/common/abilities" },
 {
 ability: obj(
 {},

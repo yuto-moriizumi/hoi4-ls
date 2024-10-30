@@ -16,7 +16,7 @@ import {
 } from "../utils";
 
 export const mioPolicyType = root(
-  { path: "game/common/military_industrial_organization/policies" },
+  { path: "/common/military_industrial_organization/policies" },
   {
     military_industrial_organization: obj(
       {

@@ -183,7 +183,7 @@ const graphic_db = obj(
 );
 
 export const graphicDbType = root(
-  { path: "game/gfx/interface/equipmentdesigner/graphic_db" },
+  { path: "/gfx/interface/equipmentdesigner/graphic_db" },
   {
     default: graphic_db,
   },

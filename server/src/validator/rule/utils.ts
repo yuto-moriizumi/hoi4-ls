@@ -10,13 +10,15 @@ import {
   UnquotedValueDescriptor,
   Value,
   Scope,
-  BaseEntryDescriptor,
+  PairDescriptor,
   ObjectValueDescriptor,
   BoolValueDescriptor,
-  RootObjectEntryDescriptor,
+  RootObjectPairDescriptor,
   ArrayValueDescriptor,
   ArrayItem,
   EntryDescriptor,
+  RootObjectEntryDescriptor,
+  ValueDescriptor,
 } from "./types";
 
 export function ref(tag: string | string[]): ReferenceToDescriptor {
@@ -28,12 +30,12 @@ export function ref(tag: string | string[]): ReferenceToDescriptor {
 
 export function typeRef(type: string): ReferenceToDescriptor;
 export function typeRef(
-  entryDescriptor: BaseEntryDescriptor,
+  entryDescriptor: PairDescriptor,
   type: string,
 ): ReferenceToDescriptor;
 
 export function typeRef(
-  typeOrEntryDescriptor: string | BaseEntryDescriptor,
+  typeOrEntryDescriptor: string | PairDescriptor,
   type?: string,
 ): ReferenceToDescriptor {
   if (typeof typeOrEntryDescriptor === "string")
@@ -96,33 +98,33 @@ export function Enum(keyOrValues: string | string[]) {
 export function enumRef(key: string): ReferenceToDescriptor;
 export function enumRef(values: string[]): ReferenceToDescriptor;
 export function enumRef(
-  entryDescriptor: BaseEntryDescriptor,
+  pairDescriptor: PairDescriptor,
   key: string,
 ): ReferenceToDescriptor;
 export function enumRef(
-  entryDescriptor: BaseEntryDescriptor,
+  pairDescriptor: PairDescriptor,
   values: string[],
 ): EnumValueDescriptor;
 
 export function enumRef(
-  keyOrValuesOrEntryDescriptor: string | string[] | BaseEntryDescriptor,
+  keyOrValuesOrPairDescriptor: string | string[] | PairDescriptor,
   keyOrValues?: string | string[],
 ) {
-  if (keyOrValuesOrEntryDescriptor instanceof Array)
-    return ref(keyOrValuesOrEntryDescriptor);
-  if (typeof keyOrValuesOrEntryDescriptor === "string")
-    return ref(keyOrValuesOrEntryDescriptor);
+  if (keyOrValuesOrPairDescriptor instanceof Array)
+    return ref(keyOrValuesOrPairDescriptor);
+  if (typeof keyOrValuesOrPairDescriptor === "string")
+    return ref(keyOrValuesOrPairDescriptor);
   if (keyOrValues instanceof Array) {
     return {
       type: Value.ENUM,
       values: keyOrValues,
-      ...keyOrValuesOrEntryDescriptor,
+      ...keyOrValuesOrPairDescriptor,
     } satisfies EnumValueDescriptor;
   }
   return {
     type: Value.REFERENCE_TO,
     tag: keyOrValues as string,
-    ...keyOrValuesOrEntryDescriptor,
+    ...keyOrValuesOrPairDescriptor,
   };
 }
 export const valueRef = enumRef;
@@ -144,17 +146,17 @@ export function valueSet(tag: string): UnquotedValueDescriptor {
   return { type: Value.UNQUOTED, referencedBy: tag };
 }
 
-export function value_set(entryDescriptor: BaseEntryDescriptor, tag: string) {
+export function value_set(entryDescriptor: PairDescriptor, tag: string) {
   return { type: Value.UNQUOTED, referencedBy: tag, ...entryDescriptor };
 }
 
 export function float(
-  entryDescriptor?: BaseEntryDescriptor,
+  pairDescriptor?: PairDescriptor,
   min?: number,
   max?: number,
 ): FloatValueDescriptor {
-  if (min === undefined) return { type: Value.FLOAT, ...entryDescriptor };
-  return { type: Value.FLOAT, ...entryDescriptor, range: [min, max!] };
+  if (min === undefined) return { type: Value.FLOAT, ...pairDescriptor };
+  return { type: Value.FLOAT, ...pairDescriptor, range: [min, max!] };
 }
 
 export const number = float;
@@ -164,56 +166,56 @@ export function literal(
   literal: string | number,
 ): UnquotedLiteralValueDescriptor;
 export function literal(
-  entryDescriptor: BaseEntryDescriptor,
+  pairDescriptor: PairDescriptor,
   literal: string | number,
 ): UnquotedLiteralValueDescriptor;
 export function literal(
-  literalOrEntryDescriptor?: BaseEntryDescriptor | string | number,
+  literalOrPairDescriptor?: PairDescriptor | string | number,
   literal?: string | number,
 ): UnquotedLiteralValueDescriptor {
   if (
-    typeof literalOrEntryDescriptor === "string" ||
-    typeof literalOrEntryDescriptor === "number"
+    typeof literalOrPairDescriptor === "string" ||
+    typeof literalOrPairDescriptor === "number"
   )
-    return { type: Value.UNQUOTED_LITERAL, literal: literalOrEntryDescriptor };
+    return { type: Value.UNQUOTED_LITERAL, literal: literalOrPairDescriptor };
   return {
     type: Value.UNQUOTED_LITERAL,
     literal: literal!,
-    ...literalOrEntryDescriptor,
+    ...literalOrPairDescriptor,
   };
 }
 
 export function localisation(
-  entryDescriptor?: BaseEntryDescriptor,
+  pairDescriptor?: PairDescriptor,
 ): SimpleValueDescriptor {
-  return { type: Value.LOCALISATION, ...entryDescriptor };
+  return { type: Value.LOCALISATION, ...pairDescriptor };
 }
 export const localisation_inline = localisation;
 
 export function int(
-  entryDescriptor?: BaseEntryDescriptor,
+  pairDescriptor?: PairDescriptor,
   min?: number,
   max?: number,
 ): IntValueDescriptor {
-  if (min === undefined) return { type: Value.INT, ...entryDescriptor };
-  return { type: Value.INT, ...entryDescriptor, range: [min, max!] };
+  if (min === undefined) return { type: Value.INT, ...pairDescriptor };
+  return { type: Value.INT, ...pairDescriptor, range: [min, max!] };
 }
 
 export function bool(
-  entryDescriptor?: BaseEntryDescriptor,
+  pairDescriptor?: PairDescriptor,
   defaultValue?: boolean,
 ): BoolValueDescriptor {
-  return { type: Value.BOOL, ...entryDescriptor, defaultValue };
+  return { type: Value.BOOL, ...pairDescriptor, defaultValue };
 }
 
 export function datetime_field(
-  entryDescriptor?: BaseEntryDescriptor,
+  entryDescriptor?: PairDescriptor,
 ): SimpleValueDescriptor {
   return { type: Value.DATETIME, ...entryDescriptor };
 }
 
 export function scalar(
-  entryDescriptor?: BaseEntryDescriptor,
+  entryDescriptor?: PairDescriptor,
 ): UnquotedValueDescriptor {
   return { type: Value.UNQUOTED, ...entryDescriptor };
 }
@@ -247,7 +249,7 @@ export function military_industrial_organization() {
 }
 
 export function obj(
-  entryDescriptor: BaseEntryDescriptor,
+  entryDescriptor: PairDescriptor,
   children: Entries,
 ): ObjectValueDescriptor {
   return {
@@ -258,28 +260,28 @@ export function obj(
 }
 
 export function root(
-  entryDescriptor: RootObjectEntryDescriptor,
+  pairDescriptor: RootObjectPairDescriptor,
   children: Entries,
-): RootObjectEntryDescriptor & ObjectValueDescriptor {
+): RootObjectEntryDescriptor {
   return {
     type: Value.OBJECT,
-    ...entryDescriptor,
+    ...pairDescriptor,
     children,
   };
 }
 
 export function array(
-  entryDescriptor: BaseEntryDescriptor,
+  pairDescriptor: PairDescriptor,
   items: ArrayItem[],
 ): ArrayValueDescriptor {
   return {
     type: Value.ARRAY,
     values: items,
-    ...entryDescriptor,
+    ...pairDescriptor,
   };
 }
 
-export function either(...items: EntryDescriptor[]) {
+export function either(...items: EntryDescriptor<ValueDescriptor>[]) {
   return items;
 }
 
@@ -296,7 +298,7 @@ export function any() {
 }
 
 export function variable_field(
-  entryDescriptor?: BaseEntryDescriptor,
+  entryDescriptor?: PairDescriptor,
   min?: number,
   max?: number,
 ) {
@@ -309,7 +311,7 @@ export function variable_field(
 export const int_variable_field = variable_field;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function filepath(entryDescriptor?: BaseEntryDescriptor, _?: string) {
+export function filepath(entryDescriptor?: PairDescriptor, _?: string) {
   return {
     type: Value.QUOTED,
     ...entryDescriptor,

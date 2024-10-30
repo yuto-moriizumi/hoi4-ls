@@ -59,7 +59,7 @@ const combat_tactic = obj(
 );
 
 export const combatTacticType = root(
-  { path: "game/common" },
+  { path: "/common" },
   {
     combat_tactic: obj(
       {},

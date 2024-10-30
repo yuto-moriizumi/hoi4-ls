@@ -28,7 +28,7 @@ import {
 
 // TODO: Support this
 // export const ideaCategoriesType = root(
-//   { path: "game/common/ideas" },
+//   { path: "/common/ideas" },
 //   {
 //     ideas: obj(
 //       {},
@@ -408,7 +408,7 @@ const idea = obj(
 );
 
 export const ideaType = root(
-  { path: "game/common/ideas" },
+  { path: "/common/ideas" },
   {
     [typeDefKey("idea")]: idea,
   },

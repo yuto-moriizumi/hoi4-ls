@@ -69,7 +69,7 @@ const ability = obj(
 );
 
 export const abilityType = root(
-  { path: "game/common/abilities" },
+  { path: "/common/abilities" },
   {
     ability: obj(
       {},

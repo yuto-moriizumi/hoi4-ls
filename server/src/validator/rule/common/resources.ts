@@ -10,7 +10,7 @@ const resource = obj(
 );
 
 export const resourceType = root(
-  { path: "game/common/resources" },
+  { path: "/common/resources" },
   {
     resources: obj(
       {},

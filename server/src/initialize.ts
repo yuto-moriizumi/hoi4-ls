@@ -44,6 +44,7 @@ export const onInitialize = (params: InitializeParams) => {
       },
     };
   }
+  console.log("on Initialize");
   return result;
 };
 
@@ -52,7 +53,7 @@ export const onInitialized = ({ connection }: Context) => {
     // Register for all configuration changes.
     connection.client.register(
       DidChangeConfigurationNotification.type,
-      undefined
+      undefined,
     );
   }
   if (hasWorkspaceFolderCapability) {
@@ -60,5 +61,5 @@ export const onInitialized = ({ connection }: Context) => {
       connection.console.log("Workspace folder change event received.");
     });
   }
-  connection.console.log("Hello!");
+  connection.console.log("Hello! desune");
 };

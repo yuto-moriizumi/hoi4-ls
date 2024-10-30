@@ -41,7 +41,7 @@ const country_history = obj(
 );
 
 export const countryHistoryType = root(
-  { path: "game/history/countries" },
+  { path: "/history/countries" },
   {
     country_history: obj(
       {},

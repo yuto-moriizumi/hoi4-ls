@@ -42,7 +42,7 @@ const modifier_definition = obj(
 );
 
 export const modifierDefinitionType = root(
-  { path: "game/common/modifier_definitions" },
+  { path: "/common/modifier_definitions" },
   {
     modifier_definition: obj(
       {},

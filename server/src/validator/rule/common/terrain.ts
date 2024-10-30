@@ -21,7 +21,7 @@ export const terrainModifiers = [
 ];
 
 export const terrainType = root(
-  { path: "game/common/terrain" },
+  { path: "/common/terrain" },
   {
     categories: either(
       obj({ cardinality: [0, 0] }, { movement_cost: float() }),
@@ -33,7 +33,7 @@ export const terrainType = root(
 );
 
 export const acclimatizationType = root(
-  { path: "game/common/acclimatation.txt" },
+  { path: "/common/acclimatation.txt" },
   {},
 );
 
@@ -83,7 +83,7 @@ const terrain = either(
 );
 
 export const graphicalTerrainType = root(
-  { path: "game/common/terrain" },
+  { path: "/common/terrain" },
   {
     terrain,
   },

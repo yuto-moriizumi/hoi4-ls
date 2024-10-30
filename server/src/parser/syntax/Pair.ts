@@ -1,11 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Diagnostic } from "vscode-languageserver";
-import { Context, Value as ValueType } from "../../validator/rule/types";
+import {
+  EntryDescriptor,
+  ValueDescriptor,
+  Value as ValueType,
+} from "../../validator/rule/types";
 import { PairOrCommentArr } from "../postProcess";
 import { Pairs } from "./Pairs";
 import { Token } from "./Token";
 
 type Value = Pairs | string | boolean | number | Token;
+/**
+ * Lexical token for the key-value pair
+ */
 export class Pair {
   public readonly key: Token;
   public readonly value: Value;
@@ -33,11 +39,14 @@ export class Pair {
     throw new Error("unexpected value type: " + this.value);
   }
 
-  public getValueType(): ValueType {
+  public getValueType() {
     if (this.value instanceof Token) return ValueType.UNQUOTED;
     const type = typeof this.value;
     if (type === "boolean") return ValueType.BOOL;
-    if (type === "number") return ValueType.FLOAT;
+    if (type === "number") {
+      if (Number.isInteger(this.value)) return ValueType.INT;
+      return ValueType.FLOAT;
+    }
     if (type === "object") return ValueType.OBJECT;
     if (type === "string") return ValueType.QUOTED;
     throw new Error("Unexpected type");
@@ -47,34 +56,44 @@ export class Pair {
     return JSON.stringify(this);
   }
 
-  public validate(rule: any): Diagnostic[] {
+  public validate(rule: EntryDescriptor<ValueDescriptor>): Diagnostic[] {
     const { key, value } = this;
     // Type check
     const actualType = this.getValueType();
     const expectedType = rule.type;
-    if (actualType !== expectedType) {
+    if (expectedType === ValueType.ENUM && actualType !== "object") {
+      // check if value is in the enum
+      // if the value is object there is no need to check
+      if (!rule.values.includes(value.toString()))
+        return [
+          {
+            range: {
+              start: key.getRange().end,
+              end: {
+                line: key.getRange().end.line,
+                character: key.getRange().end.character + 1,
+              },
+            },
+            message: `値 ${key.value} が間違っています。次の値のうちいずれかである必要があります。 ${rule.values.join(",")}`,
+          },
+        ];
+    } else if (actualType !== expectedType) {
       const diagnostic: Diagnostic = {
         range: key.getRange(),
-        message: `Wrong type for ${key.value}, expected ${expectedType} but ${actualType}`,
+        message: `キー ${key.value} の型は ${expectedType} である必要がありますが、 ${actualType} になっています`,
       };
       return [diagnostic];
     }
+    // if value is Pairs, it means value is an object
     if (value instanceof Pairs) {
-      if (rule.children === undefined && rule.provide === undefined) {
+      if (!("children" in rule)) {
         const diagnostic: Diagnostic = {
           range: key.getRange(),
-          message: `The rule ${key.value} is not supposed to have children`,
+          message: `キー ${key.value} が{}のカタマリを持つことはできません`,
         };
         return [diagnostic];
       }
-      let mergedRuleDict: any = {};
-      if (rule.children)
-        mergedRuleDict = { ...mergedRuleDict, ...rule.children };
-      if (rule.provide) {
-        if (rule.provide.context === Context.EFFECT)
-          mergedRuleDict = { ...mergedRuleDict };
-      }
-      return value.validate(mergedRuleDict, key);
+      return value.validate(rule, key);
     }
 
     return [];

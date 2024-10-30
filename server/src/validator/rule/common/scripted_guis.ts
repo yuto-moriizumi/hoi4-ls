@@ -679,7 +679,7 @@ const scripted_gui = obj(
 );
 
 export const scriptedGuiType = root(
-  { path: "game/common/scripted_guis" },
+  { path: "/common/scripted_guis" },
   {
     scripted_gui,
     // any_context: obj(
