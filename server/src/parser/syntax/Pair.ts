@@ -39,7 +39,7 @@ export class Pair {
     throw new Error("unexpected value type: " + this.value);
   }
 
-  public getValueType(): ValueType {
+  public getValueType() {
     if (this.value instanceof Token) return ValueType.UNQUOTED;
     const type = typeof this.value;
     if (type === "boolean") return ValueType.BOOL;
@@ -58,7 +58,23 @@ export class Pair {
     // Type check
     const actualType = this.getValueType();
     const expectedType = rule.type;
-    if (actualType !== expectedType) {
+    if (expectedType === ValueType.ENUM && actualType !== "object") {
+      // check if value is in the enum
+      // if the value is object there is no need to check
+      if (!rule.values.includes(value.toString()))
+        return [
+          {
+            range: {
+              start: key.getRange().end,
+              end: {
+                line: key.getRange().end.line,
+                character: key.getRange().end.character + 1,
+              },
+            },
+            message: `Unexpected value for ${key.value}, expected one of ${rule.values.join(",")}`,
+          },
+        ];
+    } else if (actualType !== expectedType) {
       const diagnostic: Diagnostic = {
         range: key.getRange(),
         message: `Wrong type for ${key.value}, expected ${expectedType} but ${actualType}`,
