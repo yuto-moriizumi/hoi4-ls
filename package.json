@@ -67,7 +67,7 @@
     "build": "rm -rf dist && webpack",
     "watch": "webpack --watch",
     "pack": "npm run build && vsce package --allow-star-activation -o dist",
-    "publish": "npm run pack && vsce publish --allow-star-activation"
+    "publish": "npm run build && vsce publish --allow-star-activation"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
