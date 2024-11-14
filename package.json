@@ -1,17 +1,25 @@
 {
   "name": "hoi4-ls",
-  "description": "A language server example",
-  "author": "Microsoft Corporation",
+  "description": "The language support for the hoi4 files",
+  "author": "VolgaKurvar",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/vscode-extension-samples"
+    "url": "https://github.com/yuto-moriizumi/hoi4-ls"
   },
   "publisher": "VolgaKurvar",
-  "categories": [],
+  "categories": [
+    "Programming Languages",
+    "Debuggers",
+    "Formatters",
+    "Linters"
+  ],
   "keywords": [
-    "multi-root ready"
+    "hearts of iron",
+    "hearts of iron 4",
+    "hoi4",
+    "paradox"
   ],
   "engines": {
     "vscode": "^1.63.0"
@@ -58,7 +66,8 @@
     "typecheck": "npm run --ws typecheck",
     "build": "rm -rf dist && webpack",
     "watch": "webpack --watch",
-    "pack": "npm run build && vsce package --allow-star-activation -o dist"
+    "pack": "npm run build && vsce package --allow-star-activation -o dist",
+    "publish": "npm run build && vsce publish --allow-star-activation"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
