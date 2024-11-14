@@ -3,7 +3,7 @@
   "description": "The language support for the hoi4 files",
   "author": "VolgaKurvar",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/yuto-moriizumi/hoi4-ls"
@@ -67,7 +67,7 @@
     "build": "rm -rf dist && webpack",
     "watch": "webpack --watch",
     "pack": "npm run build && vsce package --allow-star-activation -o dist",
-    "publish": "vsce publish --allow-star-activation"
+    "publish": "npm run pack && vsce publish --allow-star-activation"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
