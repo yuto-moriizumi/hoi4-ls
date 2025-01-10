@@ -76,7 +76,7 @@
     "eslint": "^9.17.0",
     "prettier": "^3.4.2",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.7.2",
+    "typescript": "^5.7.3",
     "typescript-eslint": "^8.19.1",
     "vscode-languageserver-protocol": "^3.17.5",
     "webpack": "^5.97.1",
