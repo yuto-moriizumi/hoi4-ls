@@ -70,7 +70,7 @@
     "publish": "npm run build && vsce publish --allow-star-activation"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.4",
+    "@tsconfig/node20": "^20.1.5",
     "@types/node": "^22.13.13",
     "@vscode/vsce": "^3.3.0",
     "eslint": "^9.23.0",
