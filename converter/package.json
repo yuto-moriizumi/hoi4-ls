@@ -10,7 +10,7 @@
     "commander": "^14.0.0",
     "dotenv": "^16.5.0",
     "jomini": "^0.9.1",
-    "langchain": "^0.3.27",
+    "langchain": "^0.3.28",
     "langsmith": "^0.3.31"
   },
   "scripts": {
