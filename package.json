@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.6",
-    "@types/node": "^24.0.3",
+    "@types/node": "^24.0.4",
     "@vscode/vsce": "^3.5.0",
     "eslint": "^9.29.0",
     "prettier": "^3.5.3",
