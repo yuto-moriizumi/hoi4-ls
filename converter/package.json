@@ -11,7 +11,7 @@
     "dotenv": "^17.2.0",
     "jomini": "^0.9.1",
     "langchain": "^0.3.29",
-    "langsmith": "^0.3.42"
+    "langsmith": "^0.3.45"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
