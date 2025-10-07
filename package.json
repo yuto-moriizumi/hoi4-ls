@@ -79,7 +79,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.0",
     "vscode-languageserver-protocol": "^3.17.5",
-    "webpack": "^5.102.0",
+    "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
   },
   "workspaces": [
